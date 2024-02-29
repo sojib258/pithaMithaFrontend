@@ -1,0 +1,66 @@
+/**
+ *
+ * Mixins
+ *
+ *
+*/
+
+@mixin xsScreen {
+  @media only screen and (min-width: $extra-small) {
+    @content;
+  }
+}
+
+@mixin smScreen {
+  @media only screen and (min-width: $small) {
+    @content;
+  }
+}
+
+@mixin mdScreen {
+  @media only screen and (min-width: $medium) {
+    @content;
+  }
+}
+
+@mixin lgScreen {
+  @media only screen and (min-width: $large) {
+    @content;
+  }
+}
+
+@mixin xlScreen {
+  @media only screen and (min-width: $extra-large) {
+    @content;
+  }
+}
+
+@mixin downSmScreen {
+  @media only screen and (max-width: 599.5px) {
+    @content;
+  }
+}
+
+@mixin downMdScreen {
+  @media only screen and (max-width: 899.5px) {
+    @content;
+  }
+}
+
+@mixin downLgScreen {
+  @media only screen and (max-width: 1199.5px) {
+    @content;
+  }
+}
+
+@mixin downXlScreen {
+  @media only screen and (max-width: 1535.5px) {
+    @content;
+  }
+}
+
+@mixin between($start, $end) {
+  @media (min-width: $start) and (max-width: $end) {
+    @content;
+  }
+}

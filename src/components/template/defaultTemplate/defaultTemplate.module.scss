@@ -1,0 +1,19 @@
+@import "@/styles/style.scss";
+// NewsLetter Area
+.newsLetter {
+  width: 100%;
+  height: auto;
+  background-color: #f7f7f7;
+  padding: 60px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .newsLetter__wrapper {
+      width: 85%;
+    }
+  }
+}

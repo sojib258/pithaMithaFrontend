@@ -1,0 +1,195 @@
+@import "@/styles/style.scss";
+// Featured Service Area
+.featuredService {
+  width: "100%";
+  height: "auto";
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+    margin-top: -60px;
+  }
+
+  //   For Responsive
+  @include smScreen {
+    .featured__wrapper {
+      width: 85%;
+      margin-top: -75px;
+    }
+  }
+  @include lgScreen {
+    .featured__wrapper {
+      margin-top: -60px;
+    }
+  }
+}
+
+// Categories Area
+.categories {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 50px 0px 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .categories__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Popular Prducts Area
+.popularProducts {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .popularProducts__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Products Banner Area
+.productBanner {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .productBanner__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Hot Deals Area
+.hotDeals {
+  width: 100%;
+  height: auto;
+  background-color: #f7f7f7;
+  padding: 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .hotDeals__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Discover Banner Area
+.discoverBanner {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .discoverBanner__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Featured Product Area
+.featuredProduct {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .featuredProduct__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Latest News Area
+.latestNews {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 50px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .latestNews__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Testimonial Area
+.testimonial {
+  width: 100%;
+  height: auto;
+  background-color: $gray-100;
+  padding: 60px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .testimonial__wrapper {
+      width: 85%;
+    }
+  }
+}
+
+// Company Area
+.company {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 60px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .company__wrapper {
+      width: 85%;
+    }
+  }
+}

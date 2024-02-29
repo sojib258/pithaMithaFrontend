@@ -1,0 +1,20 @@
+@import "@/styles/style.scss";
+.textField {
+  width: 100%;
+  height: auto;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 1px solid $gray-300;
+  outline: none;
+  font-size: 0.9rem;
+  color: $gray-1000;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  &:hover {
+    border: 1px solid $gray5;
+  }
+  &:focus {
+    border: 1px solid $primary;
+  }
+}

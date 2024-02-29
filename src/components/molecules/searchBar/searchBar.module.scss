@@ -1,0 +1,16 @@
+@import "@/styles/style.scss";
+.btn {
+  margin-left: 3px;
+  text-transform: none;
+  color: $gray-600;
+  font-weight: 500;
+  border: 1px solid $gray-400;
+  padding: 0px 15px 0px 15px;
+  font-size: 0.9rem;
+  &:hover {
+    border: 1px solid $gray5;
+  }
+  &__icon {
+    font-size: 1.1rem;
+  }
+}

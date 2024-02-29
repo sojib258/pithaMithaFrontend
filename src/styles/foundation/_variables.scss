@@ -1,0 +1,106 @@
+/* Variables */
+
+// System Variables
+/**
+ * Table Of Contents
+ *
+ * Colors
+ *
+ * Font Families ....................
+ * Font Sizes  ......................
+ * Heading Font Size ................
+ * Font Weights .....................
+ * 
+ * BreakPoints
+ * global responsive breakpoints ....
+ *
+ */
+
+/*=============================================
+ =            Colors            =
+ =============================================*/
+// Main Colors
+$softPrimary: #84d187;
+$primary: #00b207;
+$hardPrimary: #2c742f;
+$deepPrimary: #006703;
+$warning: #ff8a00;
+$danger: #ea4b48;
+$white: #ffffff;
+$black: #000000;
+
+// Gray Colors
+$gray1: #f2f2f2;
+$gray2: #e6e6e6;
+$gray3: #cccccc;
+$gray4: #b3b3b3;
+$gray5: #999999;
+$gray6: #808080;
+$gray7: #666666;
+$gray8: #4d4d4d;
+$gray9: #4d4d4d;
+$gray10: #1a1a1a;
+
+// Green Gray
+$greenGray1: #edf2ee;
+$greenGray2: #dae5da;
+$greenGray3: #b4ccb4;
+$greenGray4: #96b297;
+$greenGray5: #7a997c;
+$greenGray6: #618062;
+$greenGray7: #406b42;
+$greenGray8: #2b572e;
+$greenGray9: #173b1a;
+$greenGray10: #002603;
+
+/*=====  End of Colors  ======*/
+
+/*=============================================
+=            Typography            =
+=============================================*/
+
+/* Font Family */
+
+$poppins: "Poppins", sans-serif;
+
+/* Font Sizes */
+
+$fs-xxs: 0.625rem; // 10px
+$fs-xs: 0.75rem; // 12px
+$fs-sm: 0.875rem; // 14px
+$fs-md: 1rem; // 16px
+$fs-lg: 1.125rem; // 18px
+$fs-xl: 1.25rem; // 20px
+$fs-xxl: 1.5rem; // 24px
+$fs-xxxl: 1.75rem; // 28px
+
+/* Heading Font Sizes */
+
+$h1: 4.5rem; // 72px
+$h2: 3.5rem; // 56px
+$h3: 3rem; // 48px
+$h4: 2.5rem; // 40px
+$h5: 2.25rem; // 36px
+$h6: 2rem; // 32px
+
+// Font Weights
+
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+/*=====  End of Typography  ======*/
+
+/*=============================================
+=            Breakpoints            =
+=============================================*/
+
+$extra-small: 0px;
+$small: 37.5rem; // 600px
+$medium: 56.25rem; // 900px
+$large: 75rem; // 1200px
+$extra-large: 96rem; // 1536px
+
+/*=====  End of Breakpoints  ======*/

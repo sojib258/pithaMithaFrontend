@@ -1,0 +1,27 @@
+@import "@/styles/style.scss";
+.socialIcons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  &__wrapper {
+    margin-right: 5px;
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+    svg path {
+      -webkit-transition: 0.4s;
+      -o-transition: 0.4s;
+      transition: 0.4s;
+    }
+    &:hover {
+      background-color: $primary;
+      svg path {
+        fill: $white;
+      }
+    }
+  }
+}

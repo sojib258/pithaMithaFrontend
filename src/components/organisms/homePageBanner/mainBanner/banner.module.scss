@@ -1,0 +1,121 @@
+@import "@/styles/style.scss";
+.banner {
+  height: 100%;
+  background-color: $gray-100;
+  padding: 30px 45px 130px 45px;
+  &__Img {
+    width: 100%;
+    height: auto;
+  }
+  &__leftContentGrid {
+    margin-bottom: 40px;
+  }
+  &__leftContent {
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  &__welcome {
+    color: $primary;
+    font-size: 14px;
+    font-weight: $medium;
+    line-height: 100%; /* 14px */
+    letter-spacing: 2%;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  &__title {
+    @extend %display-01-600;
+    padding-right: 20px;
+    margin-bottom: 28px;
+    color: $gray-1000;
+  }
+  &__sale {
+    @extend %heading-05-400;
+    color: $gray-1000;
+    margin-bottom: 6px;
+  }
+  &__saleDiscount {
+    @extend %heading-05-600;
+    color: $warning;
+  }
+  &__description {
+    @extend %body-sm-400;
+    color: $gray-600;
+    margin-bottom: 32px;
+    max-width: 500px;
+  }
+  &__rightContent {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+  }
+
+  // For Responsive
+
+  @include downXlScreen {
+    &__title {
+      font-size: $h2;
+    }
+  }
+  @include downLgScreen {
+    &__title {
+      font-size: $h4;
+    }
+    &__sale {
+      font-size: $fs-xxl;
+    }
+    &__saleDiscount {
+      font-size: $fs-xxl;
+    }
+  }
+  @include downMdScreen {
+    &__title {
+      font-size: $fs-xxl;
+    }
+    &__sale {
+      font-size: $fs-md;
+    }
+    &__saleDiscount {
+      font-size: $fs-md;
+    }
+  }
+  @include downSmScreen {
+    padding: 30px 15px 130px 15px;
+    &__leftContent {
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+    &__title {
+      text-align: center;
+      font-size: $fs-xxl;
+    }
+    &__description {
+      text-align: center;
+      font-size: $fs-xs;
+    }
+    &__sale {
+      font-size: $fs-md;
+    }
+    &__saleDiscount {
+      font-size: $fs-md;
+    }
+  }
+}

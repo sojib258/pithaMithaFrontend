@@ -1,0 +1,52 @@
+@import "@/styles/style.scss";
+
+.atomBtn {
+  padding: 8px 20px;
+  text-transform: none;
+  background-color: $primary;
+  color: $white;
+  font-family: $poppins;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+
+  &__arrowIcon {
+    display: inline-block;
+    font-size: 1rem;
+    margin-left: 3px;
+    margin-top: 1px;
+  }
+  &__cartIcon {
+    display: inline-block;
+    font-size: 1rem;
+    color: $white;
+    margin-left: 3px;
+    margin-top: 1px;
+  }
+  &__addIcon {
+    display: inline-block;
+    font-size: 1rem;
+    color: $white;
+    margin-left: 3px;
+    margin-top: 1px;
+  }
+  &:hover {
+    background-color: $hardPrimary;
+  }
+
+  // For Small Screen
+  &__mediumScreen {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+  &__smallScreen {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+}

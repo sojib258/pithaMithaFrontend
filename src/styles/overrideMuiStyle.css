@@ -1,0 +1,264 @@
+/*=============================================
+=            These Styles for Overrite Material Ui            =
+=============================================*/
+
+/*=============================================
+=       If you want to find your desired styling for any component
+        then press (ctrl + f) and search component related keyword
+=============================================*/
+
+/* This is for InputText Component in Atoms============================ */
+
+.inputTextIcon input {
+  padding: 16.5px 50px 16.5px 16.5px;
+}
+.inputText .MuiInputLabel-root.Mui-focused {
+  color: #2b572e;
+}
+.inputText .MuiInputLabel-outlined {
+  font-size: 14px;
+}
+.inputText .MuiOutlinedInput-input {
+  width: 100%;
+  height: 25px;
+  padding: 8px 50px 8px 15px;
+}
+.inputText .MuiOutlinedInput-notchedOutline {
+  border-color: #b3b3b3;
+}
+.inputText .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #2b572e;
+}
+.inputText .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #2b572e;
+}
+.inputText .MuiOutlinedInput-input .Mui-focused {
+  border: 1px solid black;
+}
+
+/* This is for Location component in molecules========================= */
+.location .css-11h6kcg-MuiButtonBase-root-MuiAccordionSummary-root {
+  padding: 0px;
+}
+.location .css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+  box-shadow: none;
+}
+
+/* This Is for Tooltip in header icons ================================ */
+.MuiTooltip-arrow {
+  color: #00b207;
+}
+.MuiTooltip-tooltip {
+  background-color: #00b207;
+  color: white;
+}
+
+/* This is for login and register component =========================== */
+/* This style will apply login and register checkbox border color */
+.login .MuiCheckbox-colorPrimary,
+.register .MuiCheckbox-colorPrimary {
+  color: #4d4d4d;
+}
+
+.loginDialog .MuiDialog-paper,
+.registerDialog .MuiDialog-paper {
+  border-radius: 20px;
+  width: 600px;
+  align-items: center;
+}
+
+/* This styles for background overlay color when open login/registration form */
+.loginDialog .MuiModal-backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.registerDialog .MuiModal-backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* This style will apply on label inside checkbox in login and register component */
+.login .MuiFormGroup-root .MuiFormControlLabel-label,
+.register .MuiFormGroup-root .MuiFormControlLabel-label {
+  color: #4d4d4d;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  text-transform: none;
+  user-select: none;
+}
+
+/* This style will apply on label inside checkbox when smallScreen */
+.login__smallScreen .MuiFormGroup-root .MuiFormControlLabel-label,
+.register_smallScreen .MuiFormGroup-root .MuiFormControlLabel-label {
+  font-size: 12px;
+}
+
+/* This style will apply on checkbox in login and register component */
+.login .MuiFormGroup-root .MuiCheckbox-root,
+.register .MuiFormGroup-root .MuiCheckbox-root {
+  padding: 9px 4px 9px 9px;
+}
+
+/* This style will apply on checkbox when focused in login and register component */
+.login .MuiFormGroup-root .Mui-checked,
+.register .MuiFormGroup-root .Mui-checked {
+  color: #00b207;
+}
+
+/* This is for Newsletter Component ============================== */
+.newsLetter .newsLetter__checkBox .css-ahj2mt-MuiTypography-root {
+  color: #4d4d4d;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  user-select: none;
+}
+.newsLetter .newsLetter__checkBox .css-i4bv87-MuiSvgIcon-root {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.newsLetter
+  .newsLetter__checkBox
+  .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
+  padding: 9px 4px 9px 9px;
+}
+.newsLetter
+  .newsLetter__checkBox
+  .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+  color: #00b207;
+}
+/* Dialog Box Width For NewsLetter Component in Organisms */
+.newsLetter__dialog .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  max-width: 872px;
+  margin: 0px;
+}
+.newsLetter__dialog .css-ypiqx9-MuiDialogContent-root {
+  padding: 0px;
+}
+
+/* This style for Rating compoent in Molecules======================  */
+.rating .MuiRating-icon {
+  color: #ff8a00;
+}
+
+/* This styles for QuickView Carousel */
+.quickViewDialog .MuiPaper-root {
+  max-width: 1250px;
+  height: calc(100% - 30px);
+}
+.quickView .carousel-slider img {
+  border-radius: 6px;
+}
+.quickView .carousel .thumbs-wrapper button {
+  color: green;
+}
+.quickView .carousel .thumbs-wrapper ul {
+  display: flex;
+  justify-content: center;
+}
+.quickView .carousel .thumbs-wrapper li {
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 0px;
+  cursor: pointer;
+}
+.quickView .carousel .thumbs-wrapper li.selected img {
+  border: 3px solid #00b207;
+}
+.quickView .carousel .thumbs-wrapper li img {
+  border-radius: 6px;
+  border: 3px solid transparent;
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+.quickView .carousel .control-prev.control-arrow::before {
+  border-right: 8px solid #000000;
+}
+
+/* This Styles for Categories Slider Section in Categories Organisms */
+.categories ul.react-multi-carousel-track {
+  margin: 40px 0px 0px 0px;
+}
+.categories button.react-multiple-carousel__arrow {
+  min-width: 23px;
+  min-height: 23px;
+}
+.categories button::before {
+  font-size: 12px;
+}
+.categories button.react-multiple-carousel__arrow:hover {
+  background-color: #00b207;
+}
+.categories button.react-multiple-carousel__arrow {
+  top: 0;
+}
+.categories button.react-multiple-carousel__arrow--left {
+  left: calc(100% - 55px);
+}
+.categories button.react-multiple-carousel__arrow--right {
+  right: 0px;
+}
+.categories ul li.react-multi-carousel-dot--active button {
+  background-color: #00b207;
+}
+/* For Responsive */
+.categories__smScreen ul.react-multi-carousel-track {
+  margin: 65px 0px 35px 0px;
+}
+.categories__smScreen button.react-multiple-carousel__arrow {
+  min-width: 33px;
+  min-height: 33px;
+}
+.categories__smScreen button::before {
+  font-size: 15px;
+}
+.categories__smScreen button.react-multiple-carousel__arrow--left {
+  left: calc(100% - 75px);
+}
+/* End This Styles for Categories Slider Section in Categories Organisms */
+
+/* This Styles for Testimonial Slider Section in Testimonial Organisms */
+.testimonial ul.react-multi-carousel-track {
+  margin: 40px 0px 0px 0px;
+}
+.testimonial button.react-multiple-carousel__arrow {
+  min-width: 23px;
+  min-height: 23px;
+}
+.testimonial button::before {
+  font-size: 12px;
+}
+.testimonial button.react-multiple-carousel__arrow:hover {
+  background-color: #00b207;
+}
+.testimonial button.react-multiple-carousel__arrow {
+  top: 0;
+}
+.testimonial button.react-multiple-carousel__arrow--left {
+  left: calc(100% - 55px);
+}
+.testimonial button.react-multiple-carousel__arrow--right {
+  right: 0px;
+}
+.testimonial ul li.react-multi-carousel-dot--active button {
+  background-color: #00b207;
+}
+/* For Responsive */
+.testimonial__smScreen ul.react-multi-carousel-track {
+  margin: 65px 0px 35px 0px;
+}
+.testimonial__smScreen button.react-multiple-carousel__arrow {
+  min-width: 33px;
+  min-height: 33px;
+}
+.testimonial__smScreen button::before {
+  font-size: 15px;
+}
+.testimonial__smScreen button.react-multiple-carousel__arrow--left {
+  left: calc(100% - 75px);
+}
+/* End This Styles for Testimonial Slider Section in Testimonial Organisms */
+/*=====  End of These Styles for Overrite Material Ui Styles  ======*/

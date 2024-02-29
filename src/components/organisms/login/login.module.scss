@@ -1,0 +1,77 @@
+@import "@/styles/style.scss";
+.login {
+  width: 500px;
+  height: 400px;
+  padding: 0px 30px;
+  border-radius: 8px;
+  background: $white;
+  text-align: center;
+  &__text {
+    @extend %heading-05-600;
+    color: $gray-1000;
+    margin-bottom: 30px;
+  }
+  &__checkboxGroup {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+  &__remember {
+    @extend %body-sm-400;
+    color: $gray-700;
+  }
+  &__forget {
+    @extend %body-sm-400;
+    color: $primary;
+    background-color: transparent;
+    text-transform: none;
+  }
+  &__haveAccount {
+    @extend %body-sm-400;
+    color: $gray-700;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  &__registerBtn {
+    color: $primary;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    text-transform: none;
+    padding: 0px 5px;
+    min-width: 0px;
+  }
+
+  // For Small Screen
+  @include downSmScreen {
+    & {
+      width: 100%;
+      padding: 0px;
+    }
+    .login__text {
+      font-size: 26px;
+    }
+    .login__forget {
+      font-size: 12px;
+    }
+    .login__haveAccount {
+      font-size: 12px;
+    }
+    .login__registerBtn {
+      font-size: 12px;
+    }
+  }
+}
