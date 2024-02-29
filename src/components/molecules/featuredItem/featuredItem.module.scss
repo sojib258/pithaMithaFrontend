@@ -1,0 +1,39 @@
+@import "@/styles/style.scss";
+.featured {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 5px;
+  &__icon {
+    width: 28px;
+    height: auto;
+    margin-right: 10px;
+  }
+  &__title {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+  &__description {
+    @extend %body-sm-400;
+    color: $gray-500;
+  }
+
+  // For Responsive
+
+  @include downSmScreen {
+    width: 250px;
+    margin: 0px auto;
+    &__title {
+      font-size: $fs-sm;
+    }
+    &__description {
+      font-size: $fs-xs;
+    }
+  }
+}

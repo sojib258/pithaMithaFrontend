@@ -1,0 +1,21 @@
+@import "@/styles/style.scss";
+.news {
+  &__headText {
+    @extend %heading-05-600;
+    color: $gray-1000;
+    margin-bottom: 32px;
+  }
+
+  // For Responsive
+  @include downMdScreen {
+    &__headText {
+      font-size: $fs-xxxl;
+    }
+  }
+
+  @include downSmScreen {
+    &__headText {
+      font-size: $fs-md;
+    }
+  }
+}

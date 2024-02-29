@@ -1,4 +1,5 @@
 import DefaultTemplate from "@/components/template/defaultTemplate/DefaultTemplate";
+import Providers from "@/store/Provider";
 import "@/styles/overrideMuiStyle.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.variable}>
-        <DefaultTemplate>{children}</DefaultTemplate>
+        <DefaultTemplate>
+          <Providers> {children}</Providers>
+        </DefaultTemplate>
       </body>
     </html>
   );

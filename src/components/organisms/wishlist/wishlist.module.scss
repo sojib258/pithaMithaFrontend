@@ -1,0 +1,101 @@
+@import "@/styles/style.scss";
+.wishList {
+  width: 100%;
+  height: auto;
+  &__head {
+    color: $gray5;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: 0.42px;
+  }
+  &__productName {
+    color: $gray5;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+  &__productImage {
+    width: 90px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+  }
+  &__discountPrice {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray5;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    margin-right: 5px;
+  }
+  &__price {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray5;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+  }
+  &__priceCondition {
+    color: $gray2;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    text-decoration: line-through;
+  }
+
+  // For Responsive
+  &__largeScreen {
+    .wishList__productName {
+      font-size: 10px;
+    }
+    .wishList__discountPrice {
+      font-size: 12px;
+    }
+    .wishList__priceCondition {
+      font-size: 10px;
+    }
+    .wishList__price {
+      font-size: 12px;
+    }
+    .wishList__currencyIcon {
+      width: 14px;
+      height: 14px;
+      margin-top: -2px;
+    }
+  }
+}

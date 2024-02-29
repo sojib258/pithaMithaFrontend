@@ -1,0 +1,7 @@
+@import "@/styles/style.scss";
+.description {
+  &__text {
+    @extend %body-sm-400;
+    color: $gray-600;
+  }
+}

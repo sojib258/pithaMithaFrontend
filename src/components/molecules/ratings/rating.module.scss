@@ -1,0 +1,23 @@
+@import "@/styles/style.scss";
+.rating {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  &__icon {
+    color: $danger;
+    font-size: 20px;
+  }
+  &__reviewText {
+    color: $gray-700;
+    @extend %body-sm-400;
+    margin-left: 5px;
+  }
+}

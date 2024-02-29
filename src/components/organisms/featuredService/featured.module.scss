@@ -1,0 +1,26 @@
+@import "@/styles/style.scss";
+.featured {
+  width: 100%;
+  height: auto;
+  padding: 20px 16px;
+  background-color: $white;
+  -webkit-box-shadow: 0px 8px 40px 0px rgba(0, 38, 3, 0.08);
+  box-shadow: 0px 8px 40px 0px rgba(0, 38, 3, 0.08);
+  border-radius: 8px;
+  margin-bottom: 25px;
+
+  &__gridBox {
+    margin-bottom: 25px;
+    &:nth-child(4) {
+      margin-bottom: 0;
+    }
+  }
+
+  // For Responsive
+  @include lgScreen {
+    padding: 40px 20px;
+    .featured__gridBox {
+      margin-bottom: 0px;
+    }
+  }
+}

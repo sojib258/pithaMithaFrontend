@@ -1,0 +1,32 @@
+@import "@/styles/style.scss";
+.featured {
+  &__head {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  &__headText {
+    @extend %heading-05-600;
+    color: $gray-1000;
+  }
+
+  // For Responsive
+  @include downMdScreen {
+    &__headText {
+      font-size: $fs-xxxl;
+    }
+  }
+
+  @include downSmScreen {
+    &__headText {
+      font-size: $fs-md;
+    }
+  }
+}
