@@ -1,0 +1,70 @@
+@import "@/styles/style.scss";
+.bannerCart {
+  width: 100%;
+  height: 400px;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 8px;
+  &__contents {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 35px;
+  }
+  &__subhead {
+    color: $white;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 14px */
+    letter-spacing: 0.42px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  &__headText {
+    color: $white;
+    text-align: center;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 48px */
+    margin-bottom: 14px;
+  }
+  &__text {
+    color: $white;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 27px */
+    margin-bottom: 30px;
+  }
+  &__price {
+    color: $warning;
+  }
+
+  @include mdScreen {
+    height: 500px;
+    .bannerCart__subhead {
+      font-size: 14px;
+    }
+    .bannerCart__headText {
+      font-size: 40px;
+    }
+    .bannerCart__text {
+      font-size: 18px;
+    }
+  }
+}
