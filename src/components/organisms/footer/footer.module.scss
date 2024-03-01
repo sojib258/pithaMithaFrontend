@@ -2,7 +2,7 @@
 .footer {
   width: 100%;
   height: auto;
-  padding: 30px 16px;
+  padding: 30px 16px 0px 30px;
   background-color: $gray-1000;
   &__itemWrapper {
     margin-bottom: 50px;
@@ -108,9 +108,19 @@
     }
   }
 
+  &__bottom {
+    border-top: 1px solid $gray-800;
+    padding: 15px;
+  }
+  &__copyrightText {
+    @extend %body-sm-400;
+    color: $gray-600;
+    text-align: center;
+  }
+
   // For Responsive
   @include smScreen {
-    padding: 30px 24px;
+    padding: 30px 24px 0px 24px;
     .footer__itemOne {
       text-align: left;
     }

@@ -149,6 +149,11 @@ const Footer = () => {
           </Box>
         </Grid>
       </Grid>
+      <Box className={styles.footer__bottom}>
+        <Typography className={styles.footer__copyrightText}>
+          PithaMitha eCommerce © 2024. All Rights Reserved
+        </Typography>
+      </Box>
     </Box>
   );
 };

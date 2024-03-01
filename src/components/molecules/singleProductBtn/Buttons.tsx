@@ -9,7 +9,6 @@ interface ButtonProps {
 }
 
 const Buttons: React.FC<ButtonProps> = ({ handleBtnClick, activeBtn }) => {
-  console.log("ACtiveB", activeBtn);
   return (
     <Box className={styles.buttonWrapper}>
       <Button

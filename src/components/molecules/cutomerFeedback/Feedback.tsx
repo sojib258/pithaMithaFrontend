@@ -3,7 +3,10 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Rating from "../ratings/Rating";
 import styles from "./feedback.module.scss";
-const Feedback = () => {
+interface FeedbackProps {
+  productId: string | number;
+}
+const Feedback: React.FC<FeedbackProps> = ({ productId }) => {
   return (
     <>
       <Box className={styles.feedback}>

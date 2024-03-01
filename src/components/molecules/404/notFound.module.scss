@@ -1,0 +1,45 @@
+@import "@/styles/style.scss";
+.notFound {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 50px 10px;
+  &__img {
+    height: 250px;
+    width: auto;
+    margin-bottom: 32pxe;
+  }
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  &__ops {
+    @extend %heading-03-600;
+    color: $gray-1000;
+    margin-bottom: 20px;
+  }
+  &__para {
+    @extend %body-md-400;
+    color: $gray-600;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  @include downSmScreen {
+    &__img {
+      width: 250px;
+      height: auto;
+    }
+    &__ops {
+      font-size: 1.5rem;
+    }
+    &__para {
+      font-size: 0.875rem;
+    }
+  }
+}

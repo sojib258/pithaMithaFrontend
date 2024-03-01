@@ -3,8 +3,10 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import styles from "./information.module.scss";
-
-const Information: React.FC = () => {
+interface InformationProps {
+  productId: string | number;
+}
+const Information: React.FC<InformationProps> = ({ productId }) => {
   const values: { [key: string]: string | string[] } = {
     Weight: "03",
     Color: "green",

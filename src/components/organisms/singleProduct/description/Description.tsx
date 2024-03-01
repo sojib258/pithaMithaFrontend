@@ -1,8 +1,10 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import styles from "./description.module.scss";
-
-const Desciption = () => {
+interface DesciptionProps {
+  productId: string | number;
+}
+const Desciption: React.FC<DesciptionProps> = ({ productId }) => {
   return (
     <Box className={styles.description}>
       <Typography className={styles.description__text}>
