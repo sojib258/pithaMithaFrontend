@@ -1,8 +1,10 @@
+"use client";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
+import useResponsive from "@/hooks/useResponsive";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Carousel from "react-multi-carousel";
 import { useSelector } from "react-redux";
 import styles from "./relatedProduct.module.scss";
 
@@ -12,6 +14,7 @@ interface RelatedProductProps {
 
 const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
   const { items } = useSelector((state: RootState) => state.products);
+  const { smScreen } = useResponsive();
 
   // Get the category of the current product based on its ID
   const currentProduct = items.find((item) => item.id === productId);
@@ -20,39 +23,61 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
     : null;
 
   // Filter products to find related products with the same category
-  const relatedProducts = items
-    .filter(
-      (item) =>
-        item.id !== productId &&
-        item.attributes.category.name === currentCategory
-    )
-    .slice(0, 5); // Limit the number of related products to display
+  const relatedProducts = items.filter(
+    (item) =>
+      item.id !== productId && item.attributes.category.name === currentCategory
+  );
 
-  console.log("RelatedProduct", relatedProducts);
+  const responsive = {
+    xl: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 6000, min: 3000 },
+      items: 6,
+    },
+    lg: {
+      breakpoint: { max: 2999, min: 1200 },
+      items: 5,
+    },
+    md: {
+      breakpoint: { max: 1199, min: 900 },
+      items: 4,
+    },
+    sm: {
+      breakpoint: { max: 899, min: 600 },
+      items: 3,
+    },
+    xs: {
+      breakpoint: { max: 599, min: 0 },
+      items: 2,
+    },
+  };
+
+  const lists = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <Box className={styles.product}>
-      <Typography className={styles.product__headText}>
+    <Box
+      className={`relatedProduct ${styles.relatedProduct} ${
+        smScreen && "relatedProduct__smScreen"
+      }`}
+    >
+      <Typography className={styles.relatedProduct__headText}>
         Related Products
       </Typography>
-      <Box className={styles.product__content}>
-        <Grid container spacing={{ xs: 1, sm: 2 }}>
-          {relatedProducts.map((item) => (
-            <Grid flexGrow={1} key={item.id} xs={6} sm={4} md={3} lg={2.4} item>
-              <ProductCart
-                id={item.id}
-                ratingValue={item.attributes.ratingValue}
-                price={item.attributes.price}
-                title={item.attributes.name}
-                category={item.attributes.category.name}
-                description={item.attributes.description}
-                discountPrice={item.attributes.discountPrice}
-                images={item.attributes.images}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+      <Carousel responsive={responsive} ssr={true}>
+        {relatedProducts.map((item) => (
+          <ProductCart
+            key={item.id}
+            id={item.id}
+            ratingValue={item.attributes.ratingValue}
+            price={item.attributes.price}
+            title={item.attributes.name}
+            category={item.attributes.category.name}
+            description={item.attributes.description}
+            discountPrice={item.attributes.discountPrice}
+            images={item.attributes.images}
+          />
+        ))}
+      </Carousel>
     </Box>
   );
 };

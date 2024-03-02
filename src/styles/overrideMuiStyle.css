@@ -261,4 +261,51 @@
   left: calc(100% - 75px);
 }
 /* End This Styles for Testimonial Slider Section in Testimonial Organisms */
+
+/*=============================================
+=            Related Product Carousel            =
+=============================================*/
+/* This Styles for Testimonial Slider Section in Testimonial Organisms */
+.relatedProduct ul.react-multi-carousel-track {
+  margin: 40px 0px 0px 0px;
+}
+.relatedProduct button.react-multiple-carousel__arrow {
+  min-width: 23px;
+  min-height: 23px;
+}
+.relatedProduct button::before {
+  font-size: 12px;
+}
+.relatedProduct button.react-multiple-carousel__arrow:hover {
+  background-color: #00b207;
+}
+.relatedProduct button.react-multiple-carousel__arrow {
+  top: 0;
+}
+.relatedProduct button.react-multiple-carousel__arrow--left {
+  left: calc(100% - 55px);
+}
+.relatedProduct button.react-multiple-carousel__arrow--right {
+  right: 0px;
+}
+.relatedProduct ul li.react-multi-carousel-dot--active button {
+  background-color: #00b207;
+}
+/* For Responsive */
+.relatedProduct__smScreen ul.react-multi-carousel-track {
+  margin: 65px 0px 35px 0px;
+}
+.relatedProduct__smScreen button.react-multiple-carousel__arrow {
+  min-width: 33px;
+  min-height: 33px;
+}
+.relatedProduct__smScreen button::before {
+  font-size: 15px;
+}
+.relatedProduct__smScreen button.react-multiple-carousel__arrow--left {
+  left: calc(100% - 75px);
+}
+
+/*=====  End of Related Product Carousel  ======*/
+
 /*=====  End of These Styles for Overrite Material Ui Styles  ======*/

@@ -18,8 +18,8 @@ const NotFound = () => {
           Oops! page not found
         </Typography>
         <Typography className={styles.notFound__para}>
-          Sorry! the page you are looking for doesn't exist or an other error
-          occured.
+          Sorry! the page you are looking for doesn&apos;t exist or an other
+          error occured.
         </Typography>
         <Link href={"/"}>
           <Button customStyle={{ borderRadius: "25px" }} text="Back to Home" />
