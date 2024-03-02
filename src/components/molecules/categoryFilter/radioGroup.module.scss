@@ -1,0 +1,7 @@
+@import "@/styles/style.scss";
+.radioGroup {
+  &__title {
+    @extend %body-xl-500;
+    color: $gray-1000;
+  }
+}

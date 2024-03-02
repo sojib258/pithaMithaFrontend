@@ -1,0 +1,11 @@
+@import "@/styles/style.scss";
+.priceRange {
+  &__priceText {
+    @extend %body-sm-400;
+    color: $gray-800;
+  }
+  &__priceNumber {
+    @extend %body-sm-500;
+    color: $gray-1000;
+  }
+}

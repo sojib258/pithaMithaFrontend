@@ -1,0 +1,10 @@
+@import "@/styles/style.scss";
+.radioAtom {
+  @extend %body-sm-400;
+  color: $gray-1000;
+  &__count {
+    color: $gray-600;
+    margin-left: 5px;
+    @extend %body-sm-400;
+  }
+}

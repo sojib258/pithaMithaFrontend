@@ -1,0 +1,9 @@
+@import "@/styles/style.scss";
+.accordion {
+  border-bottom: 2px solid $gray-200;
+  padding-bottom: 15px;
+  &__title {
+    @extend %body-xl-500;
+    color: $gray-1000;
+  }
+}

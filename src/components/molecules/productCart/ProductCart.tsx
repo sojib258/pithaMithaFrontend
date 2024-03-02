@@ -78,7 +78,7 @@ const ProductCart: React.FC<productProps> = ({
           </Box>
         </Box>
 
-        <Link className={styles.productCart__link} href={`/product/${id}`}>
+        <Link className={styles.productCart__link} href={`/products/${id}`}>
           <Box className={styles.productCart__content}>
             <Typography className={styles.productCart__title}>
               {title}

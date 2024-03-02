@@ -1,0 +1,15 @@
+.shop {
+  width: 100%;
+  height: auto;
+  padding: 50px 24px;
+  display: flex;
+  justify-content: flex-start;
+  &__leftContent {
+    min-width: 250px;
+    max-width: 300px;
+    margin-right: 24px;
+  }
+  &__priceFilterSection {
+    margin-top: 20px;
+  }
+}

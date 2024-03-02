@@ -8,7 +8,6 @@
 =============================================*/
 
 /* This is for InputText Component in Atoms============================ */
-
 .inputTextIcon input {
   padding: 16.5px 50px 16.5px 16.5px;
 }
@@ -307,5 +306,51 @@
 }
 
 /*=====  End of Related Product Carousel  ======*/
+
+/*=============================================
+=            Products page filter by category radio button style            =
+=============================================*/
+.shopPage .MuiRadio-root {
+  color: #00b207;
+}
+.shopPage .MuiAccordion-root {
+  box-shadow: none;
+}
+
+.shopPage .MuiAccordionSummary-root {
+  padding: 0px;
+  margin-bottom: 15px;
+  min-height: 20px;
+}
+.shopPage .MuiAccordionSummary-content {
+  margin: 0px;
+}
+.shopPage .MuiAccordionDetails-root {
+  padding: 0px;
+}
+
+/*=====  End of Products page filter by category radio button style  ======*/
+
+/*=============================================
+=            Products apge filter by price slider styles            =
+=============================================*/
+.shopPage .MuiSlider-rail {
+  background-color: #000;
+}
+.shopPage .MuiSlider-track {
+  background-color: #00b207;
+}
+.shopPage .MuiSlider-thumb {
+  background-color: #fff;
+  border: 5px solid #00b207;
+}
+.shopPage .MuiSlider-valueLabelOpen {
+  background-color: #00b207;
+}
+.shopPage .MuiSlider-valueLabel {
+  background-color: #00b207;
+}
+
+/*=====  End of Products apge filter by price slider styles  ======*/
 
 /*=====  End of These Styles for Overrite Material Ui Styles  ======*/
