@@ -1,3 +1,4 @@
+"use client";
 import useResponsive from "@/hooks/useResponsive";
 import { Rating as MuiRating } from "@mui/material";
 import Box from "@mui/material/Box";

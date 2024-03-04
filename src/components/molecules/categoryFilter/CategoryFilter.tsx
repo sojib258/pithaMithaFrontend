@@ -1,16 +1,22 @@
 "use client";
 import RadioAtom from "@/components/atoms/radio/Radio";
+import FilterAccordion from "@/components/molecules/filterAccordion/FilterAccordion";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import FilterAccordion from "../filterAccordion/FilterAccordion";
 
-const RadioLabel = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+interface CategoryFilterProps {
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+}
+
+const CategoryFilter: React.FC<CategoryFilterProps> = ({
+  selectedCategory,
+  setSelectedCategory,
+}) => {
   const { category, products } = useSelector((state: RootState) => state);
 
   const {
@@ -76,4 +82,4 @@ const RadioLabel = () => {
   );
 };
 
-export default RadioLabel;
+export default CategoryFilter;

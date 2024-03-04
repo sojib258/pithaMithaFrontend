@@ -7,6 +7,19 @@
         then press (ctrl + f) and search component related keyword
 =============================================*/
 
+/*=============================================
+=            This is for Checkbox Component in Atoms            =
+=============================================*/
+.MuiCheckbox-root {
+  padding: 0px;
+  color: #4d4d4d;
+}
+.MuiCheckbox-root.Mui-checked {
+  color: #00b207;
+}
+
+/*=====  End of This is for Checkbox Component in Atoms  ======*/
+
 /* This is for InputText Component in Atoms============================ */
 .inputTextIcon input {
   padding: 16.5px 50px 16.5px 16.5px;
@@ -310,8 +323,16 @@
 /*=============================================
 =            Products page filter by category radio button style            =
 =============================================*/
+.shopPage .radioAtom .MuiTypography-root {
+  font-size: 0.875rem;
+  line-height: 150%;
+  font-weight: 400;
+  letter-spacing: 0;
+}
 .shopPage .MuiRadio-root {
   color: #00b207;
+  padding: 0px;
+  padding-right: 5px;
 }
 .shopPage .MuiAccordion-root {
   box-shadow: none;
@@ -328,12 +349,19 @@
 .shopPage .MuiAccordionDetails-root {
   padding: 0px;
 }
+.shopPage .MuiFormControlLabel-root {
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
 
 /*=====  End of Products page filter by category radio button style  ======*/
 
 /*=============================================
 =            Products apge filter by price slider styles            =
 =============================================*/
+.shopPage .MuiSlider-root {
+  color: transparent;
+}
 .shopPage .MuiSlider-rail {
   background-color: #000;
 }
@@ -342,7 +370,9 @@
 }
 .shopPage .MuiSlider-thumb {
   background-color: #fff;
-  border: 5px solid #00b207;
+  border: 3px solid #00b207;
+  width: 17px;
+  height: 17px;
 }
 .shopPage .MuiSlider-valueLabelOpen {
   background-color: #00b207;
@@ -352,5 +382,42 @@
 }
 
 /*=====  End of Products apge filter by price slider styles  ======*/
+
+/*=============================================
+=            Product/Shop page filter by Rating value with checkbox         =
+=============================================*/
+.shop .filterByRating .MuiRating-root {
+  font-size: 17px;
+}
+
+/*=====  End of Section comment block  ======*/
+
+/*=============================================
+=            Product/Shop page sort by selectBox styling            =
+=============================================*/
+
+.shopPage .selectBox .MuiOutlinedInput-input {
+  padding: 12px 10px;
+}
+.shopPage .selectBox .MuiFormLabel-root.Mui-focused {
+  color: #00b207;
+}
+.shopPage .selectBox .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #00b207;
+}
+.shopPage
+  .selectBox
+  .MuiInputBase-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #00b207;
+}
+.MuiButtonBase-root.Mui-selected {
+  background-color: #00b207;
+  color: #fff;
+}
+.MuiButtonBase-root.Mui-selected:hover {
+  background-color: #00b207;
+}
+/*=====  End of Product/Shop page sort by selectBox styling  ======*/
 
 /*=====  End of These Styles for Overrite Material Ui Styles  ======*/

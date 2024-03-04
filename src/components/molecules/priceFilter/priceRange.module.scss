@@ -1,5 +1,7 @@
 @import "@/styles/style.scss";
 .priceRange {
+  width: 80%;
+  margin-left: 8px;
   &__priceText {
     @extend %body-sm-400;
     color: $gray-800;

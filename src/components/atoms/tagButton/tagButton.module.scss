@@ -1,0 +1,18 @@
+@import "@/styles/style.scss";
+.tagBtn {
+  @extend %body-sm-400;
+  background-color: $gray-200;
+  color: $gray-1000;
+  border-radius: 25px;
+  margin: 0px 10px 10px 0px;
+  box-shadow: none;
+  text-transform: capitalize;
+  &:hover {
+    background-color: $primary;
+    color: $white;
+  }
+  &.tagBtnActive {
+    background-color: $primary;
+    color: $white;
+  }
+}

@@ -27,7 +27,7 @@ const RadioAtom: React.FC<RadioAtomProps> = ({
       <FormControlLabel
         className={`radioAtom ${styles.radioAtom}`}
         value={value}
-        control={<Radio />}
+        control={<Radio size="small" />}
         label={
           <>
             {label}

@@ -3,22 +3,23 @@ import FilterAccordion from "@/components/molecules/filterAccordion/FilterAccord
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import { useState } from "react";
 import styles from "./priceRange.module.scss";
 
-const PriceRange = () => {
-  const [value, setValue] = useState<number[]>([0, 2000]);
-
+interface PriceFilterProps {
+  price: number[];
+  setPrice: React.Dispatch<React.SetStateAction<number[]>>;
+}
+const PriceRange: React.FC<PriceFilterProps> = ({ price, setPrice }) => {
   const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
+    setPrice(newValue as number[]);
   };
 
   return (
     <FilterAccordion title="Price">
-      <Box className={styles.priceRange} sx={{ width: "100%" }}>
+      <Box className={styles.priceRange}>
         <Slider
           getAriaLabel={() => "price range"}
-          value={value}
+          value={price}
           onChange={handleChange}
           valueLabelDisplay="auto"
           min={0} // Set the minimum value of the range
@@ -32,7 +33,7 @@ const PriceRange = () => {
           className={styles.priceRange__priceNumber}
           component={"span"}
         >
-          {value[0]} - {value[1]}
+          {price[0]} - {price[1]}
         </Typography>
       </Typography>
     </FilterAccordion>

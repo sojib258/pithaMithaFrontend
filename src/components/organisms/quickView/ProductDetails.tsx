@@ -1,8 +1,8 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
+import Rating from "@/components/atoms/ratings/Rating";
 import Stock from "@/components/atoms/stockStatus/Stock";
 import Quantity from "@/components/molecules/addQuantity/Quantity";
-import Rating from "@/components/molecules/ratings/Rating";
 import SocialIcon from "@/components/molecules/socialIcons/SocialIcon";
 import useResponsive from "@/hooks/useResponsive";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";

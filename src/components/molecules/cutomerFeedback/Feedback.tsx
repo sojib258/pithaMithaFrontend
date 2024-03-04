@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import Rating from "../ratings/Rating";
+import Rating from "../../atoms/ratings/Rating";
 import styles from "./feedback.module.scss";
 interface FeedbackProps {
   productId: string | number;

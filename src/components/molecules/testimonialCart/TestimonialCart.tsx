@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import Rating from "../ratings/Rating";
+import Rating from "../../atoms/ratings/Rating";
 import styles from "./testimonialCart.module.scss";
 interface testimonialProps {
   msg: string;

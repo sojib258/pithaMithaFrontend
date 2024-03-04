@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import Rating from "../../atoms/ratings/Rating";
 import ProductIcon from "../productCartIcons/ProductIcons";
-import Rating from "../ratings/Rating";
 import styles from "./productCart.module.scss";
 
 interface Image {
