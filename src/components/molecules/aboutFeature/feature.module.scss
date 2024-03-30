@@ -1,0 +1,31 @@
+@import "@/styles/style.scss";
+.feature {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  &__icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 16px;
+  }
+  &__heading {
+    @extend %body-md-500;
+    color: $gray-1000;
+  }
+  &__description {
+    @extend %body-sm-400;
+    color: $gray-600;
+  }
+
+  // For Responsive
+  @include downXlScreen {
+    &__heading {
+      font-size: 0.875rem;
+    }
+    &__description {
+      font-size: 0.75rem;
+    }
+  }
+}

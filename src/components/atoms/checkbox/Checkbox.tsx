@@ -1,20 +1,25 @@
 "use client";
 import Checkbox from "@mui/material/Checkbox";
+import { UseFormRegisterReturn } from "react-hook-form";
 import styles from "./checkbox.module.scss";
 
 interface CheckboxAtomProps {
   id?: string;
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
+  register?: UseFormRegisterReturn;
 }
 
 const CheckboxAtom: React.FC<CheckboxAtomProps> = ({
   id,
-  checked,
+  checked = false,
   onChange,
+  register,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.checked);
+    if (onChange) {
+      onChange(event.target.checked);
+    }
   };
 
   return (
@@ -24,6 +29,7 @@ const CheckboxAtom: React.FC<CheckboxAtomProps> = ({
       checked={checked}
       onChange={handleChange}
       inputProps={{ "aria-label": "controlled" }}
+      {...(register && register)}
     />
   );
 };

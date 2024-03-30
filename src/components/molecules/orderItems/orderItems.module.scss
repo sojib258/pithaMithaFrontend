@@ -1,0 +1,39 @@
+@import "@/styles/style.scss";
+.cart {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  &__image {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 12px;
+  }
+  &__title {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    width: 60%;
+  }
+  &__quantity {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    margin: 0px 20px;
+  }
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    user-select: none;
+  }
+  &__price {
+    @extend %body-sm-400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $gray-1000;
+    margin-left: auto;
+  }
+}

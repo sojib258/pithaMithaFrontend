@@ -12,6 +12,7 @@ interface InputTextProps {
   type?: "text" | "email" | "password";
   customStyle?: object;
   icon?: boolean;
+  placeholder?: string;
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -23,6 +24,7 @@ const InputText: React.FC<InputTextProps> = ({
   onBlur,
   onFocus,
   customStyle,
+  placeholder,
 }) => {
   const { downSmScreen } = useResponsive();
 
@@ -44,6 +46,7 @@ const InputText: React.FC<InputTextProps> = ({
           type={type}
           size="small"
           fullWidth={true}
+          placeholder={placeholder}
         />
         {icon && (
           <Box

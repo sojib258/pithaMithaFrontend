@@ -13,7 +13,7 @@ import styles from "./header.module.scss";
 const Header: React.FC = () => {
   const { mdScreen, downSmScreen } = useResponsive();
   return (
-    <Box className={`${styles.navbar} navbar`}>
+    <Box component={"section"} className={`${styles.navbar} navbar`}>
       <AppBar position="sticky">
         <Toolbar>
           {!mdScreen && (

@@ -13,7 +13,42 @@
   // For Responsive
   @include smScreen {
     .newsLetter__wrapper {
-      width: 85%;
+      width: 90%;
+    }
+  }
+}
+
+// BreadCrumb Area
+.breadcrumb {
+  width: 100%;
+  height: auto;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .breadcrumb__wrapper {
+      width: 90%;
+    }
+  }
+}
+
+// Navigation Area
+.navigation {
+  width: 100%;
+  height: auto;
+  background-color: $gray-1000;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    .navigation__wrapper {
+      width: 90%;
     }
   }
 }

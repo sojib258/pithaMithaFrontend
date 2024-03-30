@@ -1,0 +1,35 @@
+@import "@/styles/style.scss";
+.blogSidebar {
+  width: 100%;
+  height: auto;
+  &__searchBar {
+    padding: 0px 0px 20px 0px;
+  }
+  &__categoriesFilterSection {
+    padding: 0px 0px 20px 0px;
+    border-bottom: 1px solid $gray-200;
+  }
+  &__categoriesText {
+    @extend %body-xl-500;
+    color: $gray-1000;
+    margin-bottom: 8px;
+  }
+  &__tagText {
+    @extend %body-xl-500;
+    color: $gray-1000;
+    margin-bottom: 16px;
+  }
+  &__tagsFilterSection {
+    padding: 20px 0px;
+    border-bottom: 1px solid $gray-200;
+  }
+  &__recectBlogArea {
+    padding: 20px 0px;
+    border-bottom: 1px solid $gray-200;
+  }
+  &__recentText {
+    @extend %body-md-500;
+    color: $gray-1000;
+    margin-bottom: 16px;
+  }
+}

@@ -1,4 +1,4 @@
-import NewsCart from "@/components/molecules/newsCart/NewsCart";
+import BlogCart from "@/components/molecules/blogCart/BlogCart";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -43,7 +43,7 @@ const LatestNews = () => {
       <Grid container spacing={2}>
         {news.map((item, index) => (
           <Grid key={index} xs={12} sm={6} md={4} item>
-            <NewsCart
+            <BlogCart
               title={item.title}
               admin={item.admin}
               commentCount={item.commentCount}

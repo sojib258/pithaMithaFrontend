@@ -2,7 +2,6 @@
 import Button from "@/components/atoms/button/Button";
 import Rating from "@/components/atoms/ratings/Rating";
 import Stock from "@/components/atoms/stockStatus/Stock";
-import Quantity from "@/components/molecules/addQuantity/Quantity";
 import SocialIcon from "@/components/molecules/socialIcons/SocialIcon";
 import useResponsive from "@/hooks/useResponsive";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -106,7 +105,7 @@ const QuickView: React.FC<quickViewProps> = ({
             <Rating
               customStyle={{ maxWidth: "200px" }}
               value={ratingValue}
-              reviewText
+              reviewText={"Hello"}
               readOnly
             />
             <Stock customStyle={{ marginLeft: "6px" }} inStock />
@@ -154,11 +153,6 @@ const QuickView: React.FC<quickViewProps> = ({
 
           {/* Product Actions Area */}
           <Box className={styles.quickView__cartButtonBox}>
-            {/* Product Quantity Action */}
-            <Quantity
-              smallScreen={downSmScreen ? true : false}
-              mediumScreen={mdToLg ? true : false}
-            />
 
             {/* Product Add Cart Button Action */}
             <Button

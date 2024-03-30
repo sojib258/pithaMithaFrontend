@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
+import useResponsive from "@/hooks/useResponsive";
 import { fetchItems } from "@/store/feature/product/ProductSlice";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
@@ -14,6 +15,8 @@ const Products = () => {
   const { items: products, loading } = useSelector(
     (state: RootState) => state.products
   );
+
+  const { downSmScreen } = useResponsive();
 
   useEffect(() => {
     dispatch(fetchItems() as any);
@@ -43,10 +46,23 @@ const Products = () => {
           <Typography>Loading...</Typography>
         ) : (
           products.map((item) => (
-            <Grid flexGrow={1} key={item.id} xs={6} sm={4} md={3} lg={2.4} item>
+            <Grid
+              flexGrow={1}
+              key={item.id}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2.4}
+              item
+              sx={
+                downSmScreen
+                  ? { display: "flex", justifyContent: "center" }
+                  : undefined
+              }
+            >
               <ProductCart
                 id={item.id}
-                ratingValue={item.attributes.ratingValue}
                 price={item.attributes.price}
                 title={item.attributes.name}
                 category={item.attributes.category.name}

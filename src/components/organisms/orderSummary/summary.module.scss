@@ -1,0 +1,61 @@
+@import "@/styles/style.scss";
+.cartTotal {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  &__text {
+    @extend %body-xl-500;
+    color: $gray-1000;
+    margin-bottom: 8px;
+  }
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $gray-200;
+    padding: 12px 0px;
+  }
+  &__items {
+    @extend %body-sm-400;
+    color: $gray-800;
+  }
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    user-select: none;
+  }
+  &__price {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    @extend %body-sm-500;
+    color: $gray-1000;
+  }
+  &__grandTotal {
+    @extend %body-md-600;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-1000;
+  }
+  &__btn {
+    margin-top: 20px;
+    width: 100%;
+  }
+  @include downLgScreen {
+    width: 100%;
+  }
+}

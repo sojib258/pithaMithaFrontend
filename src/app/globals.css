@@ -19,3 +19,30 @@ h5,
 h6 {
   font-family: var(--font-poppins) !important;
 }
+a {
+  text-decoration: none;
+}
+
+/* Target the scrollbar for the table */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px;
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #fff; /* Color of the track */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #84d187; /* Color of the handle */
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #00b207; /* Color of the handle on hover */
+}
+
+/* box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.25); */

@@ -16,6 +16,13 @@
     z-index: 1000;
   }
   // For Responsive
+  @include smScreen {
+    &__headText {
+      top: -2px;
+      min-height: 33px;
+    }
+  }
+
   @include downMdScreen {
     &__headText {
       font-size: $fs-xxxl;

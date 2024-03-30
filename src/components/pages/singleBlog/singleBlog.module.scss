@@ -1,0 +1,24 @@
+@import "@/styles/style.scss";
+.blog {
+  width: 100%;
+  margin: 30px auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  &__leftContent {
+    width: 100%;
+    height: auto;
+    margin-right: 48px;
+  }
+  &__rightContent {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  @include downMdScreen {
+    &__leftContent {
+      margin-right: 0px;
+    }
+  }
+}

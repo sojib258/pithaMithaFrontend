@@ -52,11 +52,7 @@ const ProductCart: React.FC<productProps> = ({
 
   return (
     <>
-      <Box
-        className={`${styles.productCart} ${
-          downMdScreen && styles.productCart__mdScreen
-        }`}
-      >
+      <Box className={styles.productCart}>
         <Box className={styles.productCart__header}>
           <Image
             width={210}

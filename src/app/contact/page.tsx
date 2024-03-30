@@ -1,0 +1,19 @@
+import Contact from "@/components/organisms/contact/Contact";
+import Box from "@mui/material/Box";
+const ContactPage = () => {
+  return (
+    <Box sx={{ width: "100%", height: "auto", backgroundColor: "#fff" }}>
+      <Box
+        sx={{
+          width: { xs: "95%", sm: "90%" },
+          height: "auto",
+          margin: "0px auto",
+        }}
+      >
+        <Contact />
+      </Box>
+    </Box>
+  );
+};
+
+export default ContactPage;

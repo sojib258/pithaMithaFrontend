@@ -1,0 +1,17 @@
+@import "@/styles/style.scss";
+.breadcrumb {
+  width: 100%;
+  height: auto;
+  padding: 20px 0px;
+  margin-bottom: 32px;
+  &__homeIcon {
+    color: $primary;
+    svg {
+      font-size: 1.4rem;
+    }
+  }
+  &__link {
+    @extend %body-md-400;
+    color: $primary;
+  }
+}

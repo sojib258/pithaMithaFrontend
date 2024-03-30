@@ -4,21 +4,32 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
 import styles from "./quantity.module.scss";
 
 interface quantityProps {
+  id: string | number;
   mediumScreen?: boolean;
   smallScreen?: boolean;
+  quantityValue: number;
+  updateQuantity: (id: string | number, quantity: number) => void;
+  sx?: object;
+  iconSx?: object;
 }
 
-const Quantity: React.FC<quantityProps> = ({ mediumScreen, smallScreen }) => {
-  const [value, setValue] = useState<number>(1);
+const Quantity: React.FC<quantityProps> = ({
+  id,
+  mediumScreen,
+  smallScreen,
+  quantityValue,
+  updateQuantity,
+  sx,
+  iconSx,
+}) => {
   const handleIncrementValue = () => {
-    setValue(value + 1);
+    updateQuantity(id, quantityValue + 1);
   };
   const handleDecrementValue = () => {
-    setValue(value - 1);
+    updateQuantity(id, quantityValue - 1);
   };
 
   return (
@@ -27,23 +38,28 @@ const Quantity: React.FC<quantityProps> = ({ mediumScreen, smallScreen }) => {
         className={`${styles.quantity} ${
           mediumScreen && styles.quantity__mediumScreen
         } ${smallScreen && styles.quantity__smallScreen}`}
+        sx={sx}
       >
         {/* Decrement Button */}
         <IconButton
           className={styles.quantity__btn}
           onClick={handleDecrementValue}
-          disabled={value <= 0}
+          disabled={quantityValue <= 0}
+          sx={iconSx}
         >
           <RemoveIcon className={styles.quantity__icon} />
         </IconButton>
 
         {/* Value */}
-        <Typography className={styles.quantity__value}>{value}</Typography>
+        <Typography className={styles.quantity__value}>
+          {quantityValue}
+        </Typography>
 
         {/* Increment Button */}
         <IconButton
           className={styles.quantity__btn}
           onClick={handleIncrementValue}
+          sx={iconSx}
         >
           <AddIcon className={styles.quantity__icon} />
         </IconButton>

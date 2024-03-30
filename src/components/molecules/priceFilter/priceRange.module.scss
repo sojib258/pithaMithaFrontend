@@ -10,4 +10,13 @@
     @extend %body-sm-500;
     color: $gray-1000;
   }
+
+  @include downMdScreen {
+    &__priceText {
+      font-size: 0.75rem;
+    }
+    &__priceNumber {
+      font-size: 0.75rem;
+    }
+  }
 }

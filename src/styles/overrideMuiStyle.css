@@ -8,6 +8,16 @@
 =============================================*/
 
 /*=============================================
+=            Navbar Area Styling            =
+=============================================*/
+
+.navbar .MuiToolbar-root {
+  padding: 0px;
+}
+
+/*=====  End of Navbar Area Styling  ======*/
+
+/*=============================================
 =            This is for Checkbox Component in Atoms            =
 =============================================*/
 .MuiCheckbox-root {
@@ -47,6 +57,47 @@
 .inputText .MuiOutlinedInput-input .Mui-focused {
   border: 1px solid black;
 }
+
+/*=============================================
+=            selectBox Atom Styling            =
+=============================================*/
+
+.selectBox .MuiInputLabel-root.Mui-focused {
+  color: #2b572e;
+}
+.selectBox .MuiInputLabel-outlined {
+  font-size: 14px;
+}
+.selectBox .MuiOutlinedInput-input {
+  width: 100%;
+  height: auto;
+  max-height: 15px;
+  min-height: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.selectBox .MuiFormLabel-root.Mui-focused {
+  color: #00b207;
+}
+.selectBox .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #00b207;
+}
+.selectBox .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #00b207;
+}
+.MuiButtonBase-root.MuiMenuItem-root.Mui-selected {
+  background-color: #00b207;
+}
+.MuiMenuItem-root.Mui-selected {
+  background-color: #00b207;
+  color: #fff;
+}
+.MuiMenuItem-root.Mui-selected:hover {
+  background-color: #00b207;
+}
+
+/*=====  End of selectBox Atom Styling  ======*/
 
 /* This is for Location component in molecules========================= */
 .location .css-11h6kcg-MuiButtonBase-root-MuiAccordionSummary-root {
@@ -323,35 +374,44 @@
 /*=============================================
 =            Products page filter by category radio button style            =
 =============================================*/
-.shopPage .radioAtom .MuiTypography-root {
-  font-size: 0.875rem;
-  line-height: 150%;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.shopPage .MuiRadio-root {
+.categoryFilter .MuiRadio-root {
   color: #00b207;
   padding: 0px;
   padding-right: 5px;
 }
-.shopPage .MuiAccordion-root {
+.MuiAccordion-root {
   box-shadow: none;
 }
-
-.shopPage .MuiAccordionSummary-root {
+.MuiAccordionDetails-root {
   padding: 0px;
-  margin-bottom: 15px;
-  min-height: 20px;
 }
-.shopPage .MuiAccordionSummary-content {
+.categoryFilter .MuiFormControlLabel-label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.MuiAccordionSummary-root {
+  padding: 0px;
+  min-height: 30px;
+}
+.MuiAccordionSummary-root.Mui-expanded {
+  min-height: 20px;
+  max-height: 45px;
+}
+
+.categoryFilter .MuiAccordionSummary-content {
   margin: 0px;
 }
-.shopPage .MuiAccordionDetails-root {
+.categoryFilter .MuiAccordionDetails-root {
   padding: 0px;
 }
-.shopPage .MuiFormControlLabel-root {
+.categoryFilter .MuiFormControlLabel-root {
   margin-left: 0px;
   margin-bottom: 10px;
+}
+.MuiFormControlLabel-root {
+  margin: 5px 0px;
 }
 
 /*=====  End of Products page filter by category radio button style  ======*/
@@ -386,38 +446,37 @@
 /*=============================================
 =            Product/Shop page filter by Rating value with checkbox         =
 =============================================*/
-.shop .filterByRating .MuiRating-root {
+.shopPage .filterByRating .MuiRating-root {
   font-size: 17px;
 }
 
-/*=====  End of Section comment block  ======*/
+/*=====  End Product/Shop page filter by Rating value with checkbox   ======*/
 
 /*=============================================
-=            Product/Shop page sort by selectBox styling            =
+=            Shopping Cart Page Coupon Dialog            =
 =============================================*/
+.coupon .MuiPaper-root {
+  width: 100%;
+  max-width: 380px;
+}
+.coupon .MuiInputLabel-root {
+  color: #1a1a1a;
+}
+.coupon .MuiInputLabel-root.Mui-focused {
+  color: #2b572e;
+}
+.coupon .MuiInputBase-root::after {
+  border-bottom: 2px solid #2b572e;
+}
 
-.shopPage .selectBox .MuiOutlinedInput-input {
-  padding: 12px 10px;
-}
-.shopPage .selectBox .MuiFormLabel-root.Mui-focused {
-  color: #00b207;
-}
-.shopPage .selectBox .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
-  border-color: #00b207;
-}
-.shopPage
-  .selectBox
-  .MuiInputBase-root.Mui-focused
-  .MuiOutlinedInput-notchedOutline {
-  border-color: #00b207;
-}
-.MuiButtonBase-root.Mui-selected {
-  background-color: #00b207;
-  color: #fff;
-}
-.MuiButtonBase-root.Mui-selected:hover {
-  background-color: #00b207;
-}
-/*=====  End of Product/Shop page sort by selectBox styling  ======*/
+/*=====  End of Shopping Cart Page Coupon Dialog  ======*/
 
-/*=====  End of These Styles for Overrite Material Ui Styles  ======*/
+/*=============================================
+=            Address Dialog            =
+=============================================*/
+.addressDialog .MuiPaper-root {
+  max-width: 800px;
+  /* max-height: calc(100% - 50px); */
+}
+
+/*=====  End of Address Dialog  ======*/

@@ -16,7 +16,9 @@ const Home = () => {
   return (
     <>
       {/* Main Banner Area */}
+      <Box component={"section"} className={styles.banner}> 
       <Banner />
+      </Box>
 
       {/* Featured Area */}
       <Box component={"section"} className={styles.featuredService}>

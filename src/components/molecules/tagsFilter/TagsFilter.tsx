@@ -1,7 +1,6 @@
 import TagAtom from "@/components/atoms/tagButton/TagButton";
 import Box from "@mui/material/Box";
 import React from "react";
-import FilterAccordion from "../filterAccordion/FilterAccordion";
 
 interface TagsFilterProps {
   selectedTags: string[];
@@ -23,18 +22,17 @@ const TagsFilter: React.FC<TagsFilterProps> = ({
   };
 
   return (
-    <FilterAccordion title="Popular Tags">
-      <Box display="flex" flexWrap="wrap">
-        {popularTags.map((tag) => (
-          <TagAtom
-            key={tag}
-            label={tag}
-            selected={selectedTags.includes(tag)}
-            onClick={() => handleTagClick(tag)}
-          />
-        ))}
-      </Box>
-    </FilterAccordion>
+    <Box display="flex" flexWrap="wrap">
+      {popularTags.map((tag) => (
+        <TagAtom
+          key={tag}
+          label={tag}
+          selected={selectedTags.includes(tag)}
+          onClick={() => handleTagClick(tag)}
+          sx={{ margin: "0px 10px 10px 0px" }}
+        />
+      ))}
+    </Box>
   );
 };
 

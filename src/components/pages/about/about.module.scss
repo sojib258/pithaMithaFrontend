@@ -1,0 +1,105 @@
+@import "@/styles/style.scss";
+.about {
+  width: 100%;
+  height: auto;
+  margin: 20px auto 0px auto;
+  &__topOne,
+  &__topTwo,
+  &__delivery,
+  &__testimonial,
+  &__company {
+    width: 90%;
+    height: auto;
+    margin: 0px auto;
+    padding: 40px 0px;
+  }
+  &__topOneLeft,
+  &__deliveryLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 20px;
+  }
+  &__topOneRight,
+  &__deliveryRight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+  }
+  &__img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 32px;
+  }
+
+  //   Second Section Area Start
+  &__topTwoLeft {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+  }
+  &__topTwoRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+  }
+  &__topTwoFeature:nth-child(2n - 1) {
+    padding: 0px 24px 24px 0px;
+  }
+  &__topTwoFeature:nth-child(5) {
+    padding-bottom: 0px;
+  }
+
+  // Delivery Section Area Start
+  &__deliveryFeature {
+    margin-bottom: 16px;
+  }
+  // Delivery Section Area End
+
+  // For Responsive
+
+  @include downMdScreen {
+    &__topOneLeft {
+      padding-right: 0px;
+    }
+    &__topOneRight {
+      padding-left: 0px;
+    }
+    &__topTwoLeft {
+      padding-right: 0px;
+      order: 2;
+    }
+    &__topTwoRight {
+      padding-left: 0px;
+      order: 1;
+      margin-bottom: 40px;
+    }
+    &__deliveryLeft {
+      padding-right: 0px;
+    }
+    &__deliveryRight {
+      padding-left: 0px;
+      margin-bottom: 40px;
+    }
+  }
+
+  @include downSmScreen {
+    &__topOne,
+    &__topTwo,
+    &__delivery,
+    &__testimonial,
+    &__company {
+      width: 95%;
+    }
+    &__topTwoFeature:nth-child(n) {
+      padding: 0px 0px 24px 0px;
+    }
+    &__topTwoFeature:last-child {
+      padding-bottom: 0px;
+    }
+  }
+}

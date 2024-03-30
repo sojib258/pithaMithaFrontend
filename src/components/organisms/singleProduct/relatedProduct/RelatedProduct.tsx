@@ -5,6 +5,7 @@ import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import { useSelector } from "react-redux";
 import styles from "./relatedProduct.module.scss";
 
@@ -29,31 +30,33 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
   );
 
   const responsive = {
-    xl: {
+    xxl: {
       // the naming can be any, depends on you.
       breakpoint: { max: 6000, min: 3000 },
       items: 6,
     },
-    lg: {
+    xl: {
+      // the naming can be any, depends on you.
       breakpoint: { max: 2999, min: 1200 },
       items: 5,
     },
-    md: {
+    lg: {
       breakpoint: { max: 1199, min: 900 },
       items: 4,
     },
-    sm: {
+    md: {
       breakpoint: { max: 899, min: 600 },
       items: 3,
     },
-    xs: {
-      breakpoint: { max: 599, min: 0 },
+    sm: {
+      breakpoint: { max: 599, min: 400 },
       items: 2,
     },
+    xs: {
+      breakpoint: { max: 399, min: 0 },
+      items: 1,
+    },
   };
-
-  const lists = [1, 2, 3, 4, 5, 6, 7];
-
   return (
     <Box
       className={`relatedProduct ${styles.relatedProduct} ${
@@ -61,14 +64,13 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
       }`}
     >
       <Typography className={styles.relatedProduct__headText}>
-        Related Products
+        Related Product
       </Typography>
       <Carousel responsive={responsive} ssr={true}>
         {relatedProducts.map((item) => (
           <ProductCart
             key={item.id}
             id={item.id}
-            ratingValue={item.attributes.ratingValue}
             price={item.attributes.price}
             title={item.attributes.name}
             category={item.attributes.category.name}

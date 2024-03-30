@@ -1,0 +1,61 @@
+@import "@/styles/style.scss";
+.contact {
+  width: 100%;
+  height: auto;
+
+  &__input {
+    width: 100%;
+    height: auto;
+    padding: 12px 10px;
+    border: 2px solid $gray-200;
+    outline: none;
+    border-radius: 4px;
+    margin-top: 16px;
+    color: $gray-1000;
+    @extend %body-sm-400;
+
+    &:focus {
+      border: 2px solid $primary;
+    }
+  }
+  &__firstTwoField {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  &__inputGroup {
+    width: 49%;
+  }
+  &__btn {
+    padding: 8px 20px;
+    border-radius: 25px;
+    background-color: $primary;
+    color: $white;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: $poppins;
+    cursor: pointer;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    margin-top: 16px;
+    &:hover {
+      background-color: $hardPrimary;
+    }
+  }
+  &__errorMsg {
+    @extend %body-xs-400;
+    color: $danger;
+  }
+
+  //   For Responsive
+  @include downSmScreen {
+    &__firstTwoField {
+      flex-direction: column;
+    }
+    &__inputGroup {
+      width: 100%;
+    }
+  }
+}

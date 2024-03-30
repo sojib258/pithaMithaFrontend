@@ -1,0 +1,45 @@
+@import "@/styles/style.scss";
+.navigation {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+  transition: 0.3s;
+  border-left: 5px solid transparent;
+  cursor: pointer;
+  &.active {
+    background-color: $greenGray1;
+    border-left: 5px solid $primary;
+    .navigation__icon {
+      svg {
+        color: $gray-1000;
+      }
+    }
+    .navigation__text {
+      color: $gray-1000;
+    }
+  }
+  &:hover {
+    background-color: $greenGray1;
+    // border-left: 5px solid $greenGray1;
+  }
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    svg {
+      width: 18px;
+      height: 18px;
+      color: #b3b3b3;
+    }
+  }
+
+  &__text {
+    @extend %body-md-400;
+    color: $gray-700;
+  }
+}

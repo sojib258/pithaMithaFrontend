@@ -1,5 +1,4 @@
 "use client";
-import FilterAccordion from "@/components/molecules/filterAccordion/FilterAccordion";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
@@ -15,7 +14,7 @@ const PriceRange: React.FC<PriceFilterProps> = ({ price, setPrice }) => {
   };
 
   return (
-    <FilterAccordion title="Price">
+    <>
       <Box className={styles.priceRange}>
         <Slider
           getAriaLabel={() => "price range"}
@@ -23,7 +22,7 @@ const PriceRange: React.FC<PriceFilterProps> = ({ price, setPrice }) => {
           onChange={handleChange}
           valueLabelDisplay="auto"
           min={0} // Set the minimum value of the range
-          max={2000} // Set the maximum value of the range
+          max={12000} // Set the maximum value of the range
           step={1} // Set the step value for the slider
         />
       </Box>
@@ -36,7 +35,7 @@ const PriceRange: React.FC<PriceFilterProps> = ({ price, setPrice }) => {
           {price[0]} - {price[1]}
         </Typography>
       </Typography>
-    </FilterAccordion>
+    </>
   );
 };
 

@@ -1,10 +1,11 @@
 @import "@/styles/style.scss";
 .tagBtn {
+  padding: 6px 20px;
   @extend %body-sm-400;
   background-color: $gray-200;
   color: $gray-1000;
   border-radius: 25px;
-  margin: 0px 10px 10px 0px;
+  // margin: 0px 10px 10px 0px;
   box-shadow: none;
   text-transform: capitalize;
   &:hover {
@@ -14,5 +15,10 @@
   &.tagBtnActive {
     background-color: $primary;
     color: $white;
+  }
+
+  // For Responsive
+  @include downMdScreen {
+    font-size: 0.75rem;
   }
 }

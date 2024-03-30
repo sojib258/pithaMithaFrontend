@@ -1,0 +1,122 @@
+@import "@/styles/style.scss";
+.myCart {
+  @extend %heading-05-600;
+  color: $gray-1000;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.cart {
+  width: 100%;
+  height: auto;
+  padding-bottom: 32px;
+  &__table {
+    border: 1px solid $gray-200;
+    box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+  }
+  &__tableCell {
+    border-bottom: none;
+    padding: 16px 0px;
+  }
+  &__tableRow {
+    border-bottom: 1px solid $gray-200;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  &__head {
+    color: $gray-1000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: 0.42px;
+    text-transform: uppercase;
+    border-bottom: none !important;
+    padding: 16px 0px;
+    &:first-child {
+      padding: 16px;
+    }
+  }
+  &__productName {
+    color: $gray-1000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    padding-right: 20px;
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+  &__productImages {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__productImage {
+    width: 90px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    user-select: none;
+  }
+  &__price {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-1000;
+    @extend %body-md-400;
+  }
+  &__subTotal {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+
+  &__nothing {
+    @extend %body-md-400;
+    color: $gray-1000;
+    margin-bottom: 25px;
+  }
+
+  @include downLgScreen {
+    &__discountPrice {
+      font-size: 12px;
+    }
+    &__priceCondition {
+      font-size: 12px;
+    }
+    &__price {
+      font-size: 12px;
+    }
+    &__currencyIcon {
+      width: 14px;
+      height: 14px;
+      margin-top: -2px;
+    }
+  }
+}

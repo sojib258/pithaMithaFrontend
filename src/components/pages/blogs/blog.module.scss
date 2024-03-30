@@ -1,0 +1,19 @@
+@import "@/styles/style.scss";
+.blog {
+  width: 100%;
+  height: auto;
+
+  &__contentWrapper {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__leftContent {
+    width: 320px;
+    margin-right: 24px;
+  }
+  &__rightContent {
+    width: 100%;
+    height: auto;
+  }
+}

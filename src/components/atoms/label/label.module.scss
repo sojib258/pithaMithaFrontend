@@ -1,0 +1,9 @@
+@import "@/styles/style.scss";
+.label {
+  @extend %body-xs-500;
+  text-transform: uppercase;
+  color: $deepPrimary;
+  background: rgba(32, 181, 38, 0.2);
+  border-radius: 4px;
+  padding: 4px 8px;
+}

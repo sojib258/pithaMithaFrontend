@@ -1,0 +1,30 @@
+@import "@/styles/style.scss";
+.cart {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  &__addressText {
+    @extend %body-xs-400;
+    color: $gray-1000;
+    margin-bottom: 6px;
+  }
+  &__areaText {
+    @extend %body-xs-600;
+    color: $gray-1000;
+    margin-bottom: 6px;
+  }
+  &__number {
+    @extend %body-xs-400;
+    color: $gray-1000;
+    margin-bottom: 6px;
+    margin-left: 5px;
+  }
+  &__selected {
+    background-color: #c9f6ca;
+    border: 1px solid $primary;
+  }
+}

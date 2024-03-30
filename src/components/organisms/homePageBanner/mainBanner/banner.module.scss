@@ -1,8 +1,9 @@
 @import "@/styles/style.scss";
 .banner {
+  width: 90%;
   height: 100%;
-  background-color: $gray-100;
-  padding: 30px 45px 130px 45px;
+  padding: 30px 0px 130px 0px;
+  margin: 0px auto;
   &__Img {
     width: 100%;
     height: auto;
@@ -36,7 +37,7 @@
     margin-bottom: 8px;
   }
   &__title {
-    @extend %display-01-600;
+    @extend %display-02-600;
     padding-right: 20px;
     margin-bottom: 28px;
     color: $gray-1000;

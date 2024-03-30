@@ -1,15 +1,16 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
+import useResponsive from "@/hooks/useResponsive";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styles from "./hotDeals.module.scss";
 
 const HotDeals = () => {
-  const dispatch = useDispatch();
+  const { downSmScreen } = useResponsive();
   const { loading, items } = useSelector((state: RootState) => state.products);
 
   const hotDealsProducts = items.filter((item) => item.attributes.isHotDeals);
@@ -37,10 +38,23 @@ const HotDeals = () => {
           <Typography>Loading...</Typography>
         ) : (
           hotDealsProducts.map((item, index) => (
-            <Grid flexGrow={1} key={index} xs={6} sm={4} md={3} lg={2.4} item>
+            <Grid
+              flexGrow={1}
+              key={item.id}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2.4}
+              item
+              sx={
+                downSmScreen
+                  ? { display: "flex", justifyContent: "center" }
+                  : undefined
+              }
+            >
               <ProductCart
                 id={item.id}
-                ratingValue={item.attributes.ratingValue}
                 price={item.attributes.price}
                 title={item.attributes.name}
                 category={item.attributes.category.name}

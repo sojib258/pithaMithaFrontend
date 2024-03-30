@@ -18,6 +18,20 @@
   letter-spacing: 0;
 }
 
+%display-02-400 {
+  font-size: $h2;
+  line-height: 120%;
+  font-weight: $fw-regular;
+  letter-spacing: 0;
+}
+
+%display-02-600 {
+  font-size: $h2;
+  line-height: 120%;
+  font-weight: $fw-semibold;
+  letter-spacing: 0;
+}
+
 /**
  *
  * Heading

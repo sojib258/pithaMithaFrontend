@@ -179,28 +179,16 @@
   }
 
   // For Small Screen;
-  &__mdScreen {
-    .productCart__title {
-      font-size: 10px;
-    }
-    .productCart__amount {
-      font-size: 10px;
-    }
-    .productCart__footer {
+  @include downMdScreen {
+    &__footer {
       padding: 0px 10px 22px 10px;
     }
-    .productCart__price {
-      font-size: 12px;
-    }
-    .productCart__discountPrice {
-      font-size: 12px;
-    }
-    .productCart__priceCondition {
-      font-size: 12px;
-    }
-    .productCart__currencyIcon {
+    &__currencyIcon {
       font-size: 14px;
       margin-right: 2px;
     }
+  }
+  @include downSmScreen {
+    width: 350px;
   }
 }

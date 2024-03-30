@@ -1,9 +1,22 @@
 @import "@/styles/style.scss";
 .radioAtom {
-  color: $gray-1000;
+  margin-right: 0px;
+  &__label {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+
   &__count {
     color: $gray-600;
     margin-left: 5px;
     @extend %body-sm-400;
+  }
+  @include downMdScreen {
+    &__label {
+      font-size: 0.75rem;
+    }
+    &__count {
+      font-size: 0.75rem;
+    }
   }
 }

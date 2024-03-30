@@ -1,0 +1,19 @@
+@import "@/styles/style.scss";
+.listItem {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  &__img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  &__text {
+    font-size: 14px;
+    line-height: 140%;
+    color: $gray-700;
+    font-weight: regular;
+  }
+}

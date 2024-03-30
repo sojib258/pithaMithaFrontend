@@ -1,0 +1,36 @@
+@import "@/styles/style.scss";
+.cart {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  cursor: pointer;
+  &__leftContent {
+    margin-right: 5px;
+  }
+  &__img {
+    width: 90px;
+    height: auto;
+    border-radius: 6px;
+  }
+  &__title {
+    @extend %body-xs-500;
+    color: $gray-1000;
+  }
+  &__dateDetail {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__iconImg {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+  }
+  &__date {
+    @extend %body-xs-400;
+    color: $gray-700;
+  }
+}

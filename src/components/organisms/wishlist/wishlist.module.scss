@@ -2,16 +2,24 @@
 .wishList {
   width: 100%;
   height: auto;
+  &__tableCell {
+    border-bottom: none;
+  }
+  &__tableRow {
+    border-bottom: 1px solid $gray-200;
+  }
   &__head {
-    color: $gray5;
+    color: $gray-1000;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%;
     letter-spacing: 0.42px;
+    text-transform: uppercase;
+    border-bottom: none !important;
   }
   &__productName {
-    color: $gray5;
+    color: $gray-1000;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -24,6 +32,11 @@
       color: $primary;
     }
   }
+  &__productImages {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
   &__productImage {
     width: 90px;
     height: auto;
@@ -35,6 +48,7 @@
     width: 18px;
     height: 18px;
     margin-top: -3px;
+    user-select: none;
   }
   &__discountPrice {
     display: -webkit-box;
@@ -46,7 +60,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    color: $gray5;
+    color: $gray-1000;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -63,36 +77,42 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    color: $gray5;
+    color: $gray-1000;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 150%;
   }
   &__priceCondition {
-    color: $gray2;
+    color: $gray-400;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 150%;
     text-decoration: line-through;
   }
-
+  &__shareText {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    margin-right: 10px;
+  }
   // For Responsive
-  &__largeScreen {
-    .wishList__productName {
-      font-size: 10px;
-    }
-    .wishList__discountPrice {
+  @include downMdScreen {
+    &__productName {
       font-size: 12px;
     }
-    .wishList__priceCondition {
-      font-size: 10px;
-    }
-    .wishList__price {
+  }
+  @include downLgScreen {
+    &__discountPrice {
       font-size: 12px;
     }
-    .wishList__currencyIcon {
+    &__priceCondition {
+      font-size: 12px;
+    }
+    &__price {
+      font-size: 12px;
+    }
+    &__currencyIcon {
       width: 14px;
       height: 14px;
       margin-top: -2px;

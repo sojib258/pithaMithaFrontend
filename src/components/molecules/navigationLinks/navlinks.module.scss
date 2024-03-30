@@ -1,0 +1,45 @@
+@import "@/styles/style.scss";
+.navbar {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+  }
+  &__li {
+    list-style-type: none;
+    margin-right: 25px;
+  }
+  &__link {
+    @extend %body-sm-500;
+    color: $gray-300;
+  }
+  &__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  &__infoGmail {
+    @extend %body-sm-500;
+    color: $gray-300;
+    margin-left: 4px;
+  }
+
+  // For Responsive
+
+  @include downSmScreen {
+    &__info {
+      display: none;
+    }
+    &__ul {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

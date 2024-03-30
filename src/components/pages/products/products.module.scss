@@ -1,0 +1,50 @@
+@import "@/styles/style.scss";
+.shop {
+  width: 100%;
+  height: auto;
+
+  &__contentWrapper {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__leftContent {
+    width: 320px;
+    margin-right: 24px;
+  }
+  &__priceFilterSection {
+    margin-top: 20px;
+  }
+  &__ratingFilterSection {
+    margin-top: 20px;
+  }
+  &__tagsFilterSection {
+    margin-top: 20px;
+  }
+  &__rightContent {
+    width: 100%;
+    height: auto;
+  }
+
+  &__sortByText {
+    @extend %body-sm-400;
+    color: $gray-600;
+    margin-right: 10px;
+  }
+  &__resultFoundText {
+    @extend %body-md-400;
+    color: $gray-700;
+  }
+  &__resultFoundCount {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+
+  // For Responsive
+
+  @include downMdScreen {
+    &__leftContent {
+      max-width: 190px;
+    }
+  }
+}

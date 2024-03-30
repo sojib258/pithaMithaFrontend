@@ -1,0 +1,19 @@
+@import "@/styles/style.scss";
+.coupon {
+  width: 100%;
+  height: auto;
+  input {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+  &__btnCancel {
+    @extend %body-md-400;
+    background-color: $warning;
+    color: $white;
+  }
+  &__btnApply {
+    @extend %body-md-400;
+    background-color: $primary;
+    color: $white;
+  }
+}

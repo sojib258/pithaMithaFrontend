@@ -9,14 +9,14 @@ interface ratinProps {
   value?: number;
   readOnly?: boolean;
   customStyle?: object;
-  reviewText?: boolean;
+  reviewText?: string;
   fontSize?: string;
 }
 
 const Rating: React.FC<ratinProps> = ({
   readOnly = false,
   customStyle,
-  reviewText = false,
+  reviewText,
   value,
   fontSize,
 }) => {
@@ -39,7 +39,7 @@ const Rating: React.FC<ratinProps> = ({
 
       {reviewText && (
         <Typography className={styles.rating__reviewText}>
-          (4 Review)
+          ({reviewText})
         </Typography>
       )}
     </Box>

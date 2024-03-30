@@ -30,7 +30,10 @@ const RadioAtom: React.FC<RadioAtomProps> = ({
         control={<Radio size="small" />}
         label={
           <>
-            {label}
+            <Typography className={styles.radioAtom__label} component={"span"}>
+              {/* Label means CategoryName */}
+              {label}
+            </Typography>
             {count !== undefined && (
               <Typography
                 className={styles.radioAtom__count}

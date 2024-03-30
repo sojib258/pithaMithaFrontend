@@ -10,7 +10,7 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 1px solid $gray-200;
+  border: 1px solid $gray-300;
   width: 148px;
   height: auto;
   padding: 4px 8px;
@@ -19,7 +19,8 @@
     background-color: $gray-200;
     color: $gray-1000;
     &:hover {
-      background-color: $gray-400;
+      background-color: $primary;
+      color: $white;
     }
   }
   &__value {
@@ -29,6 +30,7 @@
     font-weight: 400;
     line-height: 150%;
     width: 50px;
+    user-select: none;
   }
   &__mediumScreen {
     .quantity__value {

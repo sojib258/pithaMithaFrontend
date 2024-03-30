@@ -7,6 +7,7 @@
     font-weight: 400;
     letter-spacing: 0;
     color: $gray-500;
+    opacity: 1;
   }
   input::-moz-placeholder {
     line-height: 130%;
@@ -14,6 +15,7 @@
     font-weight: 400;
     letter-spacing: 0;
     color: $gray-500;
+    opacity: 1;
   }
   input:-ms-input-placeholder {
     line-height: 130%;
@@ -21,6 +23,7 @@
     font-weight: 400;
     letter-spacing: 0;
     color: $gray-500;
+    opacity: 1;
   }
   input::-ms-input-placeholder {
     line-height: 130%;
@@ -28,6 +31,7 @@
     font-weight: 400;
     letter-spacing: 0;
     color: $gray-500;
+    opacity: 1;
   }
   input::placeholder {
     line-height: 130%;
@@ -35,6 +39,7 @@
     font-weight: 400;
     letter-spacing: 0;
     color: $gray-500;
+    opacity: 1;
   }
   input {
     @extend %body-sm-500;

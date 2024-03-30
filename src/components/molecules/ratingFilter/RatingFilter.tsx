@@ -1,9 +1,9 @@
 "use client";
 import CheckboxAtom from "@/components/atoms/checkbox/Checkbox";
 import Rating from "@/components/atoms/ratings/Rating";
+import useResponsive from "@/hooks/useResponsive";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import FilterAccordion from "../filterAccordion/FilterAccordion";
 
 interface RatingFilterProps {
   selectedRatings: number[];
@@ -15,6 +15,7 @@ const RatingFilter: React.FC<RatingFilterProps> = ({
   setSelectedRatings,
 }) => {
   const value = [5, 4, 3, 2, 1];
+  const { downMdScreen } = useResponsive();
 
   const handleRatingChange = (rating: number) => {
     if (selectedRatings.includes(rating)) {
@@ -25,7 +26,7 @@ const RatingFilter: React.FC<RatingFilterProps> = ({
   };
 
   return (
-    <FilterAccordion title="Rating">
+    <>
       {value.map((rating) => (
         <FormGroup key={rating} className={"filterByRating"}>
           <FormControlLabel
@@ -35,11 +36,17 @@ const RatingFilter: React.FC<RatingFilterProps> = ({
                 checked={selectedRatings.includes(rating)}
               />
             }
-            label={<Rating readOnly value={rating} />}
+            label={
+              <Rating
+                fontSize={downMdScreen ? "15px!important" : "20px!important"}
+                readOnly
+                value={rating}
+              />
+            }
           />
         </FormGroup>
       ))}
-    </FilterAccordion>
+    </>
   );
 };
 

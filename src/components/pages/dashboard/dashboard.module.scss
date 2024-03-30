@@ -1,0 +1,97 @@
+@import "@/styles/style.scss";
+.content {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+
+  // Profile Area
+  &__profile {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+  }
+  &__userImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  &__userName {
+    @extend %body-xl-500;
+    color: $gray-1000;
+  }
+  &__userPosition {
+    @extend %body-sm-400;
+    color: $gray-600;
+  }
+  &__userEditBtn {
+    @extend %body-md-500;
+    color: $primary;
+    background-color: transparent;
+    text-transform: capitalize;
+    padding: 5px 15px;
+  }
+  // Address Area
+
+  &__address {
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    padding: 20px;
+    box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+  }
+  &__billingText {
+    font-size: 14px;
+    letter-spacing: 3%;
+    color: $gray-500;
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 100%;
+    margin-bottom: 18px;
+  }
+  &__addressUserName {
+    @extend %body-lg-500;
+    color: $gray-1000;
+    margin-bottom: 8px;
+  }
+  &__addressDescription {
+    @extend %body-sm-400;
+    color: $gray-700;
+    margin-bottom: 8px;
+  }
+  &__addressEmail {
+    @extend %body-md-400;
+    color: $gray-1000;
+    margin-bottom: 6px;
+  }
+  &__addressNumber {
+    @extend %body-md-400;
+    color: $gray-1000;
+    margin-bottom: 18px;
+  }
+  &__addressEditBtn {
+    @extend %body-md-500;
+    color: $primary;
+    background-color: transparent;
+    text-transform: capitalize;
+    padding: 0px;
+  }
+
+  // For Responsive
+
+  @include downMdScreen {
+    &__gridItem {
+      margin-bottom: 20px;
+    }
+    &__profile {
+      width: 100%;
+    }
+  }
+}
