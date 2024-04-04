@@ -8,10 +8,13 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import styles from "./page.module.scss";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
+
   const navigations = [
     {
       id: 1,
@@ -23,7 +26,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       id: 2,
       icon: <CachedIcon />,
       text: "Order History",
-      link: "/dashboard/orders",
+      link: "/dashboard/order-history",
     },
     {
       id: 3,
@@ -51,7 +54,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  const [activeLink, setActiveLink] = useState("/dashboard");
+  const [activeLink, setActiveLink] = useState(pathname);
+
+  console.log("ActiveLink", activeLink);
 
   const handleLinkClick = (link: string) => {
     setActiveLink(link);
@@ -70,7 +75,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 text={item.text}
                 link={item.link}
                 icon={item.icon}
-                isActive={item.link === activeLink}
+                isActive={
+                  pathname === item.link || activeLink.endsWith("order-details")
+                }
                 handleLinkClick={handleLinkClick}
               />
             ))}

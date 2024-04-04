@@ -476,7 +476,22 @@
 =============================================*/
 .addressDialog .MuiPaper-root {
   max-width: 800px;
-  /* max-height: calc(100% - 50px); */
 }
 
 /*=====  End of Address Dialog  ======*/
+
+/*=============================================
+=            Pagination Area Styling Start          =
+=============================================*/
+.pagination .MuiPaginationItem-root.Mui-selected {
+  background-color: #00b207;
+  color: #fff;
+}
+.pagination .MuiPaginationItem-root.Mui-selected:hover {
+  background-color: #00b207;
+}
+.pagination .MuiPaginationItem-root:hover {
+  background-color: #cccccc;
+}
+
+/*=====  End of Pagination Area Styling End  ======*/

@@ -2,6 +2,13 @@
 .wishList {
   width: 100%;
   height: auto;
+  &__container {
+    width: 100%;
+    height: auto;
+    box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.25);
+    border: 1px solid $gray-300;
+    border-radius: 8px;
+  }
   &__tableCell {
     border-bottom: none;
   }
@@ -17,25 +24,21 @@
     letter-spacing: 0.42px;
     text-transform: uppercase;
     border-bottom: none !important;
+    background-color: $gray-300;
   }
   &__productName {
+    @extend %body-sm-400;
     color: $gray-1000;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;
-    cursor: pointer;
-    &:hover {
-      color: $primary;
-    }
   }
   &__productImages {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    &:hover {
+      .wishList__productName {
+        color: $primary;
+      }
+    }
   }
   &__productImage {
     width: 90px;
@@ -51,6 +54,8 @@
     user-select: none;
   }
   &__discountPrice {
+    @extend %body-sm-400;
+    color: $gray-1000;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -60,14 +65,11 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    color: $gray-1000;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%;
     margin-right: 5px;
   }
   &__price {
+    @extend %body-sm-400;
+    color: $gray-1000;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -77,11 +79,6 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    color: $gray-1000;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%;
   }
   &__priceCondition {
     color: $gray-400;
@@ -96,26 +93,9 @@
     color: $gray-1000;
     margin-right: 10px;
   }
-  // For Responsive
-  @include downMdScreen {
-    &__productName {
-      font-size: 12px;
-    }
-  }
-  @include downLgScreen {
-    &__discountPrice {
-      font-size: 12px;
-    }
-    &__priceCondition {
-      font-size: 12px;
-    }
-    &__price {
-      font-size: 12px;
-    }
-    &__currencyIcon {
-      width: 14px;
-      height: 14px;
-      margin-top: -2px;
-    }
+  &__nothing {
+    @extend %body-md-400;
+    color: $gray-1000;
+    margin-bottom: 25px;
   }
 }

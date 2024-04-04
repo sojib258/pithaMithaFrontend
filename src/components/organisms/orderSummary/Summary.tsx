@@ -6,24 +6,30 @@ import Link from "next/link";
 import styles from "./summary.module.scss";
 
 interface SummaryProps {
+  title?: string;
   cartItems: number;
   subTotal: number;
   shippingCost: number;
   grandTotal: number;
-  btnLink: string;
-  btnText: string;
+  btnLink?: string;
+  btnText?: string;
+  sx?: object;
 }
 const Summary: React.FC<SummaryProps> = ({
+  title,
   cartItems,
   subTotal,
   shippingCost,
   grandTotal,
   btnText,
   btnLink,
+  sx,
 }) => {
   return (
-    <Box className={styles.cartTotal}>
-      <Typography className={styles.cartTotal__text}>Cart Total</Typography>
+    <Box sx={sx} className={styles.cartTotal}>
+      {title && (
+        <Typography className={styles.cartTotal__text}>{title}</Typography>
+      )}
       <Box className={styles.cartTotal__info}>
         <Typography className={styles.cartTotal__items}>
           Items {cartItems}:
@@ -60,15 +66,17 @@ const Summary: React.FC<SummaryProps> = ({
           {grandTotal}
         </Typography>
       </Box>
-      <Box className={styles.cartTotal__btn}>
-        <Link href={btnLink}>
-          <Button
-            disabled={cartItems === 0}
-            sx={{ width: "100%" }}
-            text={btnText}
-          />
-        </Link>
-      </Box>
+      {btnText && (
+        <Box className={styles.cartTotal__btn}>
+          <Link href={btnLink ? btnLink : "/404"}>
+            <Button
+              disabled={cartItems === 0}
+              sx={{ width: "100%" }}
+              text={btnText}
+            />
+          </Link>
+        </Box>
+      )}
     </Box>
   );
 };

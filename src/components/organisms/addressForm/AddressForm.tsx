@@ -9,10 +9,6 @@ import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./addressForm.module.scss";
 
-interface AddressFormProps {
-  onCreate: () => void;
-}
-
 type Areas = {
   [key: string]: string[];
 };
@@ -28,7 +24,7 @@ type formFields = {
   deliveryOption: string;
 };
 
-const AddressForm: React.FC<AddressFormProps> = ({ onCreate }) => {
+const AddressForm = () => {
   const {
     register,
     handleSubmit,
@@ -42,8 +38,6 @@ const AddressForm: React.FC<AddressFormProps> = ({ onCreate }) => {
     console.log("Da", data);
     // onCreate();
   };
-
-  console.log("Errors", errors);
 
   const divisions = [
     {

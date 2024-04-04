@@ -17,6 +17,7 @@ interface WishlistRowsProps {
   price: number;
   discountPrice?: string | number;
   stock: boolean;
+  handleDeleteWishlist: (id: number | string) => void;
 }
 
 const WishlistRows: React.FC<WishlistRowsProps> = ({
@@ -26,6 +27,7 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
   discountPrice,
   stock,
   id,
+  handleDeleteWishlist,
 }) => {
   return (
     <TableRow className={styles.wishList__tableRow}>
@@ -37,8 +39,8 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
           sx={{ paddingRight: "0px", borderBottom: "none" }}
         >
           <Image
-            width={40}
-            height={40}
+            width={100}
+            height={100}
             src={imgSrc}
             alt="wishlist image"
             className={styles.wishList__productImage}
@@ -83,26 +85,20 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
         )}
       </TableCell>
       <TableCell className={styles.wishList__tableCell}>
-        <Stock
-          sx={{
-            fontSize: { xs: "10px!important", lg: "14px!important" },
-          }}
-          inStock={stock}
-        />
+        <Stock inStock={stock} />
       </TableCell>
       <TableCell className={styles.wishList__tableCell}>
         <Button
           sx={{
-            padding: { xs: "4px 15px", lg: "8px 15px!important" },
-            marginRight: "20px",
-            fontSize: { xs: "10px!important", lg: "14px!important" },
+            padding: "6px 12px!important",
+            fontSize: "12px!important",
           }}
           text="Add to Cart"
           disabled={!stock}
         />
       </TableCell>
       <TableCell className={styles.wishList__tableCell}>
-        <IconButton>
+        <IconButton onClick={() => handleDeleteWishlist(id)}>
           <DeleteForeverSharpIcon />
         </IconButton>
       </TableCell>

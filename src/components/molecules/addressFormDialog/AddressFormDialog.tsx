@@ -35,7 +35,7 @@ const AddressDialog: React.FC<AddressDialogProps> = ({
         <Typography className={styles.dialog__text}>Add New Address</Typography>
         <CloseIcon className={styles.dialog__closeIcon} onClick={handleClose} />
       </DialogActions>
-      <AddressForm onCreate={onCreate} />
+      <AddressForm />
     </Dialog>
   );
 };

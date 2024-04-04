@@ -87,143 +87,149 @@ const ShoppingCart = () => {
   const grandTotal = subTotal + shippingCost;
 
   return (
-    <Box>
-      <Typography className={styles.myCart}>My Shopping Cart</Typography>
+    <Box className={styles.shoppingCart}>
+      <Typography className={styles.shoppingCart__title}>
+        My Shopping Cart
+      </Typography>
       <Grid container>
         <Grid item xs={12} lg={8}>
-          {cartItems > 0 ? (
-            <Box className={styles.cart}>
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{
-                    minWidth: 860,
-                    overflowX: { xs: "scroll", md: "hidden" },
-                  }}
-                  className={styles.cart__table}
-                  aria-label="simple table"
-                >
-                  <TableHead>
-                    <TableRow sx={{ border: "1px solid #e6e6e6;" }}>
-                      <TableCell className={styles.cart__head}>
-                        Product
-                      </TableCell>
-                      <TableCell
-                        sx={{ width: "100px" }}
-                        className={styles.cart__head}
-                      >
-                        Price
-                      </TableCell>
-                      <TableCell
-                        sx={{ width: "180px" }}
-                        className={styles.cart__head}
-                      >
-                        Quantity
-                      </TableCell>
-                      <TableCell
-                        sx={{ width: "100px" }}
-                        className={styles.cart__head}
-                      >
-                        Total
-                      </TableCell>
-                      <TableCell
-                        sx={{ width: "70px" }}
-                        className={styles.cart__head}
-                      >
-                        Action
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {carts.map((item) => (
-                      <ShoppingCartRows
-                        key={item.id}
-                        id={item.id}
-                        imgSrc={item.imgSrc}
-                        price={item.price}
-                        productName={item.productName}
-                        discountPrice={item.discountPrice}
-                        quantity={item.quantity}
-                        updateQuantity={updateQuantity}
-                        calculateTotalPrice={calculateTotalPrice}
-                        handleDeleteCart={handleDeleteCart}
-                      />
-                    ))}
-                    <TableRow>
-                      <TableCell
-                        sx={{ marginLeft: "auto" }}
-                        className={styles.cart__totalPrice}
-                        colSpan={3}
-                      >
-                        <Typography
-                          sx={{ justifyContent: "flex-end!important" }}
-                          className={styles.cart__price}
+          <Box className={styles.shoppingCart__productsTable}>
+            {cartItems > 0 ? (
+              <Box className={styles.shoppingCart__tableWrapper}>
+                <TableContainer component={Paper}>
+                  <Table
+                    sx={{
+                      minWidth: 960,
+                    }}
+                    className={styles.shoppingCart__table}
+                    aria-label="simple table"
+                  >
+                    <TableHead>
+                      <TableRow sx={{ border: "1px solid #e6e6e6;" }}>
+                        <TableCell className={styles.shoppingCart__tableHead}>
+                          Product
+                        </TableCell>
+                        <TableCell
+                          sx={{ width: "100px" }}
+                          className={styles.shoppingCart__tableHead}
                         >
-                          Total:
-                        </Typography>
-                      </TableCell>
-                      <TableCell className={styles.cart__tableCell}>
-                        <Typography className={styles.cart__subTotal}>
-                          <Image
-                            width={40}
-                            height={40}
-                            src={"/icons/taka.png"}
-                            alt="Taka Logo"
-                            className={styles.cart__currencyIcon}
-                          />
-                          {subTotal}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <Stack
-                flexDirection={"row"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                sx={{ margin: "32px 0px" }}
-              >
+                          Price
+                        </TableCell>
+                        <TableCell
+                          sx={{ width: "180px" }}
+                          className={styles.shoppingCart__tableHead}
+                        >
+                          Quantity
+                        </TableCell>
+                        <TableCell
+                          sx={{ width: "100px" }}
+                          className={styles.shoppingCart__tableHead}
+                        >
+                          Total
+                        </TableCell>
+                        <TableCell
+                          sx={{ width: "70px" }}
+                          className={styles.shoppingCart__tableHead}
+                        >
+                          Action
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {carts.map((item) => (
+                        <ShoppingCartRows
+                          key={item.id}
+                          id={item.id}
+                          imgSrc={item.imgSrc}
+                          price={item.price}
+                          productName={item.productName}
+                          discountPrice={item.discountPrice}
+                          quantity={item.quantity}
+                          updateQuantity={updateQuantity}
+                          calculateTotalPrice={calculateTotalPrice}
+                          handleDeleteCart={handleDeleteCart}
+                        />
+                      ))}
+                      <TableRow>
+                        <TableCell
+                          sx={{ marginLeft: "auto" }}
+                          className={styles.shoppingCart__totalPrice}
+                          colSpan={3}
+                        >
+                          <Typography
+                            sx={{ justifyContent: "flex-end!important" }}
+                            className={styles.shoppingCart__price}
+                          >
+                            Total:
+                          </Typography>
+                        </TableCell>
+                        <TableCell className={styles.shoppingCart__tableCell}>
+                          <Typography className={styles.shoppingCart__subTotal}>
+                            <Image
+                              width={40}
+                              height={40}
+                              src={"/icons/taka.png"}
+                              alt="Taka Logo"
+                              className={styles.shoppingCart__currencyIcon}
+                            />
+                            {subTotal}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <Stack
+                  flexDirection={"row"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                  sx={{ margin: "32px 0px" }}
+                >
+                  <Link href={"/products"}>
+                    <Button text="Continue shopping" arrowIcon />
+                  </Link>
+                  <Button
+                    onClick={handleCouponOpen}
+                    sx={{
+                      backgroundColor: "transparent!important",
+                      color: "#00b207!important",
+                      boxShadow: "none",
+                      padding: "5px!important",
+                      fontSize: ".8rem!important",
+
+                      "&:hover": {
+                        boxShadow: "none",
+                        textDecoration: "underline",
+                      },
+                    }}
+                    text="Coupon Code +"
+                  />
+                </Stack>
+              </Box>
+            ) : (
+              <Box mb={5}>
+                <Typography className={styles.shoppingCart__nothing}>
+                  You don&apos;t have any cart items right now.😊😊
+                </Typography>
                 <Link href={"/products"}>
                   <Button text="Continue shopping" arrowIcon />
                 </Link>
-                <Button
-                  onClick={handleCouponOpen}
-                  sx={{
-                    backgroundColor: "transparent!important",
-                    color: "#00b207!important",
-                    boxShadow: "none",
-                    padding: "5px!important",
-                    fontSize: ".8rem!important",
-
-                    "&:hover": {
-                      boxShadow: "none",
-                      textDecoration: "underline",
-                    },
-                  }}
-                  text="Coupon Code +"
-                />
-              </Stack>
-            </Box>
-          ) : (
-            <Box mb={5}>
-              <Typography className={styles.cart__nothing}>
-                You don&apos;t have any cart items right now.😊😊
-              </Typography>
-              <Link href={"/products"}>
-                <Button text="Continue shopping" arrowIcon />
-              </Link>
-            </Box>
-          )}
+              </Box>
+            )}
+          </Box>
         </Grid>
         <Grid item xs={12} lg={4}>
-          <Summary
-            cartItems={cartItems}
-            grandTotal={grandTotal}
-            shippingCost={shippingCost}
-            subTotal={subTotal}
-            btnText="Proceed to Checkout"
-            btnLink="/shopping-cart/checkout"
-          />
+          <Box className={styles.shoppingCart__summarySection}>
+            <Summary
+              title="Cart Total"
+              cartItems={cartItems}
+              grandTotal={grandTotal}
+              shippingCost={shippingCost}
+              subTotal={subTotal}
+              btnText="Proceed to Checkout"
+              btnLink="/dashboard/shopping-cart/checkout"
+            />
+          </Box>
         </Grid>
       </Grid>
       {couponOpen && (

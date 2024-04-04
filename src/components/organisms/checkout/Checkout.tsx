@@ -1,5 +1,5 @@
 import AddressInfo from "@/components/molecules/addressInfo/AddressInfo";
-import OrderItems from "@/components/molecules/orderItems/OrderItems";
+import OrderItems from "@/components/molecules/cartItems/CartItems";
 import Summary from "@/components/organisms/orderSummary/Summary";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -25,6 +25,33 @@ const Checkout = () => {
     },
   ];
 
+  const dataFromBackend = [
+    {
+      id: 1,
+      name: "Sajib Hasan",
+      number: "01720046642",
+      address:
+        "House 83/3, Madartek Road, Madartek Kachabazar, Madartek Chowrasta",
+      area: "Barguna Amtoli",
+      city: "Barguna",
+      division: "Barishal",
+      deliveryOption: "home",
+      landmark: "Beside big jame masjid",
+    },
+    {
+      id: 2,
+      name: "Sajib Hasan",
+      number: "01720046642",
+      address:
+        "House 83/3, Madartek Road, Madartek Kachabazar, Madartek Chowrasta",
+      area: "Barguna Amtoli",
+      city: "Barguna",
+      division: "Barishal",
+      deliveryOption: "office",
+      landmark: "Beside big jame masjid",
+    },
+  ];
+
   const cartItems = orderItems.length;
 
   const subTotal = orderItems.reduce((acc, cur) => {
@@ -42,29 +69,15 @@ const Checkout = () => {
   return (
     <Box className={styles.checkout}>
       <Grid container>
-        <Grid item xs={12} md={8}>
+        <Grid order={{ xs: 2, lg: 1 }} item xs={12} lg={8}>
           <Box className={styles.checkout__leftItem}>
-            <Box mb={2}>
-              <AddressInfo />
-            </Box>
-            <Box className={styles.checkout__orderItems}>
-              {orderItems.map((item) => (
-                <OrderItems
-                  imgSrc={item.imgSrc}
-                  price={item.price}
-                  discountPrice={item.discountPrice}
-                  quantity={item.quantity}
-                  title={item.title}
-                  key={item.id}
-                  sx={{ borderBottom: "1px solid #e6e6e6;" }}
-                />
-              ))}
-            </Box>
+            <AddressInfo addressData={dataFromBackend} />
           </Box>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid order={{ xs: 1, lg: 2 }} item xs={12} lg={4}>
           <Box className={styles.checkout__rightItem}>
             <Summary
+              title="Order Summery"
               cartItems={cartItems}
               grandTotal={grandTotal}
               shippingCost={shippingCost}
@@ -75,6 +88,19 @@ const Checkout = () => {
           </Box>
         </Grid>
       </Grid>
+      <Box className={styles.checkout__orderItems}>
+        {orderItems.map((item) => (
+          <OrderItems
+            imgSrc={item.imgSrc}
+            price={item.price}
+            discountPrice={item.discountPrice}
+            quantity={item.quantity}
+            title={item.title}
+            key={item.id}
+            sx={{ borderBottom: "1px solid #e6e6e6;" }}
+          />
+        ))}
+      </Box>
     </Box>
   );
 };

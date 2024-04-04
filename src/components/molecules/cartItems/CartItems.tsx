@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import styles from "./orderItems.module.scss";
+import styles from "./cartItems.module.scss";
 
-interface OrderItemsProps {
+interface CartItemsProps {
   imgSrc: string;
   altText?: string;
   title: string;
@@ -12,7 +12,7 @@ interface OrderItemsProps {
   discountPrice?: number;
   sx?: object;
 }
-const OrderItems: React.FC<OrderItemsProps> = ({
+const CartItems: React.FC<CartItemsProps> = ({
   imgSrc,
   title,
   quantity,
@@ -50,4 +50,4 @@ const OrderItems: React.FC<OrderItemsProps> = ({
   );
 };
 
-export default OrderItems;
+export default CartItems;

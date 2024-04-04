@@ -1,0 +1,26 @@
+@import "@/styles/style.scss";
+.profile {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__userImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 6px;
+  }
+  &__userName {
+    @extend %body-xl-500;
+    color: $gray-1000;
+    margin-bottom: 6px;
+  }
+  &__userPosition {
+    @extend %body-sm-400;
+    color: $gray-600;
+    margin-bottom: 6px;
+  }
+}

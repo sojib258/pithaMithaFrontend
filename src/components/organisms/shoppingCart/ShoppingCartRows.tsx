@@ -36,53 +36,53 @@ const ShoppingCartRows: React.FC<ShoppingCartRowsProps> = ({
   );
 
   return (
-    <TableRow className={styles.cart__tableRow}>
+    <TableRow className={styles.shoppingCart__tableRow}>
       <Link href={`/products/${id}`}>
         <TableCell
-          className={styles.cart__productImages}
+          className={styles.shoppingCart__productImages}
           component="th"
           scope="row"
           sx={{ paddingRight: "0px", borderBottom: "none" }}
         >
           <Image
-            width={80}
-            height={80}
+            width={100}
+            height={100}
             src={imgSrc}
             alt="cart image"
-            className={styles.cart__productImage}
+            className={styles.shoppingCart__productImage}
           />
-          <Typography className={styles.cart__productName}>
+          <Typography className={styles.shoppingCart__productName}>
             {productName}
           </Typography>
         </TableCell>
       </Link>
 
-      <TableCell className={styles.cart__tableCell}>
+      <TableCell className={styles.shoppingCart__tableCell}>
         {discountPrice ? (
-          <Typography className={styles.cart__price}>
+          <Typography className={styles.shoppingCart__price}>
             <Image
               width={40}
               height={40}
               src={"/icons/taka.png"}
               alt="Taka Logo"
-              className={styles.cart__currencyIcon}
+              className={styles.shoppingCart__currencyIcon}
             />
             {discountPrice}
           </Typography>
         ) : (
-          <Typography className={styles.cart__price}>
+          <Typography className={styles.shoppingCart__price}>
             <Image
               width={40}
               height={40}
               src={"/icons/taka.png"}
               alt="Taka Logo"
-              className={styles.cart__currencyIcon}
+              className={styles.shoppingCart__currencyIcon}
             />
             {price}
           </Typography>
         )}
       </TableCell>
-      <TableCell className={styles.cart__tableCell}>
+      <TableCell className={styles.shoppingCart__tableCell}>
         <Box>
           <Quantity
             id={id}
@@ -93,19 +93,19 @@ const ShoppingCartRows: React.FC<ShoppingCartRowsProps> = ({
           />
         </Box>
       </TableCell>
-      <TableCell className={styles.cart__tableCell}>
-        <Typography className={styles.cart__price}>
+      <TableCell className={styles.shoppingCart__tableCell}>
+        <Typography className={styles.shoppingCart__price}>
           <Image
             width={40}
             height={40}
             src={"/icons/taka.png"}
             alt="Taka Logo"
-            className={styles.cart__currencyIcon}
+            className={styles.shoppingCart__currencyIcon}
           />
           {totalPrice}
         </Typography>
       </TableCell>
-      <TableCell className={styles.cart__tableCell}>
+      <TableCell className={styles.shoppingCart__tableCell}>
         <IconButton onClick={() => handleDeleteCart(id)}>
           <DeleteForeverSharpIcon />
         </IconButton>

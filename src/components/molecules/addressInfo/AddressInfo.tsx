@@ -7,7 +7,23 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import styles from "./addressInfo.module.scss";
-const AddressInfo = () => {
+
+type Data = {
+  id: string | number;
+  name: string;
+  number: string;
+  address: string;
+  area: string;
+  city: string;
+  division: string;
+  deliveryOption: string;
+  landmark: string;
+};
+interface AddressInfoProps {
+  addressData: Data[];
+}
+
+const AddressInfo: React.FC<AddressInfoProps> = ({ addressData }) => {
   const [open, setOpen] = useState(false);
   const [chosenAddressId, setChosenAddressId] = useState(null);
   const handleOpen = () => {
@@ -17,33 +33,6 @@ const AddressInfo = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const dataFromBackend = [
-    {
-      id: 1,
-      name: "Sajib Hasan",
-      number: "01720046642",
-      address:
-        "House 83/3, Madartek Road, Madartek Kachabazar, Madartek Chowrasta",
-      area: "Barguna Amtoli",
-      city: "Barguna",
-      division: "Barishal",
-      deliveryOption: "home",
-      landmark: "Beside big jame masjid",
-    },
-    {
-      id: 2,
-      name: "Sajib Hasan",
-      number: "01720046642",
-      address:
-        "House 83/3, Madartek Road, Madartek Kachabazar, Madartek Chowrasta",
-      area: "Barguna Amtoli",
-      city: "Barguna",
-      division: "Barishal",
-      deliveryOption: "office",
-      landmark: "Beside big jame masjid",
-    },
-  ];
 
   const handleAddressId = (addressId: any) => {
     setChosenAddressId(addressId);
@@ -89,7 +78,7 @@ const AddressInfo = () => {
         />
       </Box>
       <Box className={styles.cart__body}>
-        {dataFromBackend.map((item, index) => (
+        {addressData.map((item, index) => (
           <Box className={styles.cart__addressItem} key={index}>
             <AddressCart
               selected={item.id === chosenAddressId}

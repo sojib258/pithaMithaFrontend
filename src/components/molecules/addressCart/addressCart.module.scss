@@ -7,21 +7,33 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  &__deliverTo {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    margin-bottom: 6px;
+  }
+  &__deliverName {
+    @extend %body-sm-600;
+  }
   &__addressText {
     @extend %body-xs-400;
     color: $gray-1000;
     margin-bottom: 6px;
   }
-  &__areaText {
-    @extend %body-xs-600;
+  &__addressAreaText {
+    @extend %body-xs-500;
     color: $gray-1000;
     margin-bottom: 6px;
   }
-  &__number {
+  &__addressNumber {
     @extend %body-xs-400;
     color: $gray-1000;
     margin-bottom: 6px;
-    margin-left: 5px;
+  }
+  &__addressLandmark {
+    @extend %body-xs-400;
+    color: $gray-1000;
+    margin-left: 6px;
   }
   &__selected {
     background-color: #c9f6ca;

@@ -19,8 +19,7 @@ const Shop = () => {
   const [price, setPrice] = useState<number[]>([0, 20000]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState("latest");
-  console.log("SelectValue", selectValue);
+  const [selectValue, setSelectValue] = useState("Latest");
 
   products = products.filter((item) => {
     if (selectedCategory === "All") return item;
