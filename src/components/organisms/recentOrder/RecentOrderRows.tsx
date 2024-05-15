@@ -1,5 +1,7 @@
 import Button from "@/components/atoms/button/Button";
 import Label from "@/components/atoms/label/Label";
+import OrderTableSkeleton from "@/components/molecules/skeleton/orderTable/OrderTable";
+import dateFormat from "@/utils/dateFormat";
 import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -10,70 +12,133 @@ import styles from "./recentOrder.module.scss";
 interface OrderItemsProps {
   orderId: string | number;
   date: string;
-  total: number | string;
+  totalPrice: number | string;
+  totalProduct: number | string;
   status: string;
+  loading: boolean;
+  paid: boolean;
+  imgSrc: string;
+  altText?: string;
   head?: boolean;
 }
 const OrderItems: React.FC<OrderItemsProps> = ({
   orderId,
   date,
-  total,
+  totalPrice,
+  totalProduct,
   status,
+  imgSrc,
+  altText,
+  loading,
+  paid,
   head = false,
 }) => {
+  console.log("Date", date);
+  const { date: tarikh } = dateFormat(date);
   return (
-    <TableRow className={styles.recent__tableRow}>
-      <TableCell
-        className={styles.recent__productImages}
-        component="th"
-        scope="row"
-      >
-        {orderId}
-      </TableCell>
-
-      <TableCell className={styles.recent__tableCell}>{date}</TableCell>
-      <TableCell className={styles.recent__tableCell}>
-        <Box className={styles.recent__priceCell}>
-          <Image
-            width={40}
-            height={40}
-            src={"/icons/taka.png"}
-            alt="Taka Logo"
-            className={styles.recent__currencyIcon}
-          />
-
-          <Typography className={styles.recent__totalPrice} component={"span"}>
-            {total}
-          </Typography>
-          <Typography
-            className={styles.recent__productItems}
-            component={"span"}
+    <>
+      {loading ? (
+        <OrderTableSkeleton />
+      ) : (
+        <TableRow className={styles.recent__tableRow}>
+          <TableCell
+            className={styles.recent__tableCell}
+            component="td"
+            scope="row"
           >
-            {"(4 Products)"}
-          </Typography>
-        </Box>
-      </TableCell>
-      <TableCell className={styles.recent__tableCell}>
-        <Label sx={{ minWidth: "100px" }} text={status} />
-      </TableCell>
-      <TableCell className={styles.recent__tableCell}>
-        <Link href={`/dashboard/order-history/order-details/${orderId}`}>
-          <Button
-            sx={{
-              backgroundColor: "transparent!important",
-              boxShadow: "none",
-              color: "#00b207!important",
-              padding: "2px 8px!important",
-              "&:hover": {
-                textDecoration: "underline",
-                boxShadow: "none!important",
-              },
-            }}
-            text="View All"
-          />
-        </Link>
-      </TableCell>
-    </TableRow>
+            <Typography className={styles.recent__orderId}>
+              {orderId}
+            </Typography>
+          </TableCell>
+          <TableCell
+            className={styles.recent__tableCell}
+            component="td"
+            scope="row"
+          >
+            <Image
+              width={200}
+              height={200}
+              src={imgSrc}
+              className={styles.recent__productImg}
+              alt={altText ? altText : "Product Image"}
+            />
+          </TableCell>
+
+          <TableCell
+            component="td"
+            scope="row"
+            className={styles.recent__tableCell}
+          >
+            <Typography className={styles.recent__date}>{tarikh}</Typography>
+          </TableCell>
+          <TableCell
+            component="td"
+            scope="row"
+            className={styles.recent__tableCell}
+          >
+            <Box className={styles.recent__priceCell}>
+              <Image
+                width={40}
+                height={40}
+                src={"/icons/taka.png"}
+                alt="Taka Logo"
+                className={styles.recent__currencyIcon}
+              />
+
+              <Typography
+                className={styles.recent__totalPrice}
+                component={"span"}
+              >
+                {totalPrice}
+              </Typography>
+              <Typography
+                className={styles.recent__productItems}
+                component={"span"}
+              >
+                {`(${totalProduct} Products)`}
+              </Typography>
+            </Box>
+          </TableCell>
+          <TableCell
+            component="td"
+            scope="row"
+            className={styles.recent__tableCell}
+          >
+            <Label sx={{ minWidth: "100px" }} text={status} />
+          </TableCell>
+          <TableCell
+            component="td"
+            scope="row"
+            className={styles.recent__tableCell}
+          >
+            <Typography className={styles.recent__paidStatus}>
+              {paid ? "Paid" : "Not Paid"}
+            </Typography>
+          </TableCell>
+          <TableCell
+            component="td"
+            scope="row"
+            className={styles.recent__tableCell}
+          >
+            <Link href={`/order-history/order-details/${orderId}`}>
+              <Button
+                sx={{
+                  backgroundColor: "transparent!important",
+                  boxShadow: "none",
+                  color: "#00b207!important",
+                  padding: "2px 8px!important",
+                  "&:hover": {
+                    textDecoration: "underline",
+                    boxShadow: "none!important",
+                  },
+                }}
+                text="View Details"
+              />
+            </Link>
+          </TableCell>
+        </TableRow>
+      )}
+    </>
   );
 };
 

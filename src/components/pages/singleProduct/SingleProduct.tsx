@@ -18,6 +18,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
   const handleBtnClick = (value: string) => {
     setActiveBtn(value);
   };
+
   return (
     <>
       {/* Product Slider Area*/}

@@ -9,19 +9,20 @@ import TableRow from "@mui/material/TableRow";
 import styles from "./product.module.scss";
 
 type Data = {
-  id: number | string;
-  imgSrc: string;
+  productId: number | string;
   title: string;
   price: number;
-  discountPrice?: number;
-  quantity: number;
+  discountPrice: number;
+  imgSrc: string;
   altText?: string;
+  quantity: number;
 };
 
 interface ProductProps {
   productData: Data[];
+  status: string;
 }
-const Product: React.FC<ProductProps> = ({ productData }) => {
+const Product: React.FC<ProductProps> = ({ productData, status }) => {
   return (
     <TableContainer
       className={styles.product__tableContainer}
@@ -54,6 +55,14 @@ const Product: React.FC<ProductProps> = ({ productData }) => {
             >
               Subtotal
             </TableCell>
+
+            <TableCell
+              component="th"
+              className={styles.product__tableHead}
+              sx={{ width: "100px" }}
+            >
+              Review
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -65,7 +74,8 @@ const Product: React.FC<ProductProps> = ({ productData }) => {
               quantity={item.quantity}
               title={item.title}
               altText={item.altText}
-              key={item.id}
+              key={item.productId}
+              status={status}
             />
           ))}
         </TableBody>

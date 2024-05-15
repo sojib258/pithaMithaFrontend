@@ -1,0 +1,62 @@
+@import "@/styles/style.scss";
+.cart {
+  &__header {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+  }
+  &__title {
+    @extend %body-xl-600;
+    color: $gray-1000;
+  }
+  &__description {
+    @extend %body-sm-400;
+    color: $gray-700;
+  }
+  &__crossIcon {
+    svg {
+      font-size: 30px;
+      color: $gray-1000;
+    }
+  }
+  &__body {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px;
+  }
+
+  &__paymentOptions {
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    border-bottom: 1px solid $gray-300;
+  }
+  &__optionBtn {
+    @extend %body-xs-600;
+    color: $gray-1000;
+    &.active {
+      color: $primary;
+      border-bottom: 1px solid $primary;
+    }
+  }
+  &__paymentList {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px;
+    border-bottom: 1px solid $gray-300;
+  }
+  &__paymentLogoImg {
+    width: 80px;
+    height: auto;
+    margin: 10px;
+  }
+
+  &__action {
+    width: 100%;
+    height: auto;
+    padding: 20px 24px;
+  }
+}

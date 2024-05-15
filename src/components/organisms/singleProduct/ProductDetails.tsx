@@ -13,12 +13,20 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
   }
 
   // Extract product details
-  const { price, name, description, category, discountPrice, images } =
-    product.attributes;
+  const {
+    price,
+    name,
+    description,
+    category,
+    discountPrice,
+    images,
+    isServiceAvailable,
+  } = product.attributes;
 
   return (
     <>
       <Product
+        id={productId}
         price={price}
         productTitle={name}
         description={description}
@@ -26,6 +34,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
         discountPrice={discountPrice}
         images={images}
         customStyle={{ width: "100%", padding: "0px" }}
+        isServiceAvailable={isServiceAvailable}
       />
     </>
   );

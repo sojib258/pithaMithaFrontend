@@ -1,12 +1,21 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
+import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
 import QuickViewDialog from "@/components/organisms/quickView/QuickViewDialog";
 import useResponsive from "@/hooks/useResponsive";
+import {
+  addToCart,
+  handleAlreadyExistInCart,
+} from "@/store/feature/cart/CartSlice";
+import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import Rating from "../../atoms/ratings/Rating";
 import ProductIcon from "../productCartIcons/ProductIcons";
 import styles from "./productCart.module.scss";
@@ -28,7 +37,10 @@ interface productProps {
   ratingValue?: number;
   description?: string;
   category?: string;
+  isServiceAvailable: boolean;
 }
+
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 const ProductCart: React.FC<productProps> = ({
   id,
@@ -39,15 +51,68 @@ const ProductCart: React.FC<productProps> = ({
   ratingValue,
   description,
   category,
+  isServiceAvailable,
 }) => {
   const { downMdScreen, downSmScreen } = useResponsive();
+  const { cart, auth } = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const handleOpen = () => {
     setOpen(!open);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const isAuthenticated = auth.isAuthenticated;
+  const carts = cart.items;
+
+  const handleAddToCart = () => {
+    if (isAuthenticated) {
+      const toastId = toast.loading("Adding to Cart...");
+      setLoading(true);
+      const checkProductAlreadyExist = carts.findIndex(
+        (item: any) => item.productId === id
+      );
+
+      if (checkProductAlreadyExist === -1) {
+        dispatch(
+          addToCart({
+            productId: id,
+            title: title,
+            imgSrc: images[0].url,
+            altText: images[0].alternativeText,
+            quantity: 1,
+            price: price,
+            isServiceAvailable: isServiceAvailable,
+            discountPrice: discountPrice,
+          })
+        );
+        toast.success("Added to Cart", {
+          id: toastId,
+        });
+        setLoading(false);
+      } else {
+        dispatch(
+          handleAlreadyExistInCart({
+            productId: id,
+            quantity: 1,
+          })
+        );
+        toast.success("Added to Cart", {
+          id: toastId,
+        });
+        setLoading(false);
+      }
+    } else {
+      toast.error("You have to login first for adding to cart");
+      router.push("/login");
+      return;
+    }
   };
 
   return (
@@ -69,7 +134,16 @@ const ProductCart: React.FC<productProps> = ({
           {/* For Hover Overlay */}
           <Box className={styles.productCart__overlay}>
             <Box className={styles.productCart__hoverIcon}>
-              <ProductIcon handleOpen={handleOpen} />
+              <ProductIcon
+                id={id}
+                title={title}
+                imgSrc={images[0].url}
+                price={price}
+                discountPrice={discountPrice}
+                isServiceAvailable={isServiceAvailable}
+                altText={images[0].alternativeText}
+                handleOpen={handleOpen}
+              />
             </Box>
           </Box>
         </Box>
@@ -131,11 +205,13 @@ const ProductCart: React.FC<productProps> = ({
             }}
             plusIcon
             text="Add"
+            onClick={handleAddToCart}
           />
         </Box>
       </Box>
       {open && (
         <QuickViewDialog
+          id={id}
           description={description}
           price={price}
           discountPrice={discountPrice}
@@ -145,8 +221,10 @@ const ProductCart: React.FC<productProps> = ({
           handleClose={handleClose}
           open={open}
           images={images}
+          isServiceAvailable={isServiceAvailable}
         />
       )}
+      <ToasterMsg />
     </>
   );
 };

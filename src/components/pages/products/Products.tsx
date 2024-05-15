@@ -114,6 +114,7 @@ const Shop = () => {
                   description={item.attributes.description}
                   discountPrice={item.attributes.discountPrice}
                   images={item.attributes.images}
+                  isServiceAvailable={item.attributes.isServiceAvailable}
                 />
               </Grid>
             ))}

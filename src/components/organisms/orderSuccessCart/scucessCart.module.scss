@@ -1,0 +1,118 @@
+@import "@/styles/style.scss";
+.cart {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  &__wrapper {
+    width: 500px;
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px #6efbc0;
+    padding: 40px;
+  }
+  &__header {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  &__checkIcon {
+    width: 150px;
+    height: auto;
+  }
+  &__successTitle {
+    @extend %body-xl-500;
+    color: #02fe97;
+  }
+  &__body {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px;
+  }
+  &__list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $gray-100;
+    padding: 10px 0px;
+  }
+  &__listKey {
+    @extend %body-sm-400;
+    color: $gray-600;
+    min-width: 140px;
+  }
+  &__listValue {
+    @extend %body-sm-400;
+    color: $gray-600;
+    text-align: right;
+  }
+  &__amountList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+  }
+  &__amountKey {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+  &__amountValue {
+    @extend %body-md-600;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-1000;
+  }
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    user-select: none;
+  }
+  &__footer {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px;
+  }
+}
+
+@include downSmScreen {
+  .cart {
+    &__successTitle {
+      font-size: 1rem;
+    }
+    &__listKey {
+      font-size: 0.75rem;
+    }
+    &__listValue {
+      font-size: 0.75rem;
+    }
+    &__amountKey {
+      font-size: 0.875rem;
+    }
+    &__amountValue {
+      font-size: 0.875rem;
+    }
+    &__currencyIcon {
+      width: 16px;
+      height: 16px;
+      margin-top: -3px;
+      user-select: none;
+    }
+  }
+}

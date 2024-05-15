@@ -16,6 +16,7 @@ interface Image {
 }
 
 interface quickViewProps {
+  id: string | number;
   discountPrice?: number;
   open: boolean;
   handleClose: () => void;
@@ -25,9 +26,11 @@ interface quickViewProps {
   ratingValue?: number;
   category?: string;
   images: Image[];
+  isServiceAvailable: boolean;
 }
 
 const QuickViewDialog: React.FC<quickViewProps> = ({
+  id,
   price,
   productTitle,
   description,
@@ -36,6 +39,7 @@ const QuickViewDialog: React.FC<quickViewProps> = ({
   discountPrice,
   open,
   images,
+  isServiceAvailable,
   handleClose,
 }) => {
   return (
@@ -51,6 +55,7 @@ const QuickViewDialog: React.FC<quickViewProps> = ({
         <DialogContent dividers>
           <Box>
             <ProductDetails
+              id={id}
               price={price}
               productTitle={productTitle}
               description={description}
@@ -58,6 +63,7 @@ const QuickViewDialog: React.FC<quickViewProps> = ({
               category={category}
               discountPrice={discountPrice}
               images={images}
+              isServiceAvailable={isServiceAvailable}
             />
           </Box>
         </DialogContent>

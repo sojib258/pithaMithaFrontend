@@ -34,12 +34,12 @@
     letter-spacing: 0.42px;
     text-transform: uppercase;
     border-bottom: none !important;
-    padding: 16px 0px;
     &:first-child {
       padding: 16px;
     }
   }
   &__price {
+    @extend %body-md-400;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -50,10 +50,10 @@
     -ms-flex-align: center;
     align-items: center;
     color: $gray-1000;
-    @extend %body-md-400;
   }
 
   &__subTotal {
+    @extend %body-md-600;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -63,7 +63,6 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    @extend %body-md-600;
     color: $gray-1000;
   }
   &__currencyIcon {

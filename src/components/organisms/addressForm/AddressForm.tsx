@@ -2,11 +2,14 @@
 import Button from "@/components/atoms/button/Button";
 import SelectBox from "@/components/atoms/selectBox/Select";
 import TagButton from "@/components/atoms/tagButton/TagButton";
+import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
+import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import styles from "./addressForm.module.scss";
 
 type Areas = {
@@ -14,8 +17,8 @@ type Areas = {
 };
 
 type formFields = {
-  name: string;
-  number: number;
+  fullName: string;
+  phone: number;
   division: string;
   city: string;
   area: string;
@@ -24,7 +27,16 @@ type formFields = {
   deliveryOption: string;
 };
 
-const AddressForm = () => {
+interface AddressFormProps {
+  handleClose: () => void;
+  handleUpdateComponent: () => void;
+  handleAction: (data: formFields) => void;
+}
+const AddressForm: React.FC<AddressFormProps> = ({
+  handleClose,
+  handleUpdateComponent,
+  handleAction,
+}) => {
   const {
     register,
     handleSubmit,
@@ -33,10 +45,14 @@ const AddressForm = () => {
     getValues,
     watch,
   } = useForm<formFields>();
+  const { token, userId } = useSelector((state: RootState) => state.auth);
 
-  const handleAddressData: SubmitHandler<formFields> = (data: object) => {
-    console.log("Da", data);
-    // onCreate();
+  const [loading, setLoading] = useState(false);
+
+  const handleAddressData: SubmitHandler<formFields> = async (
+    data: formFields
+  ) => {
+    handleAction(data);
   };
 
   const divisions = [
@@ -648,14 +664,14 @@ const AddressForm = () => {
                 type="text"
                 placeholder="Input full name"
                 className={styles.address__input}
-                {...register("name", { required: "Your name is required" })}
+                {...register("fullName", { required: "Your name is required" })}
               />
-              {errors.name && (
+              {errors.fullName && (
                 <Typography
                   component={"span"}
                   className={styles.address__errorMsg}
                 >
-                  {errors.name.message}
+                  {errors.fullName.message}
                 </Typography>
               )}
             </Box>
@@ -669,7 +685,7 @@ const AddressForm = () => {
                 type="number"
                 placeholder="Input mobile number"
                 className={styles.address__input}
-                {...register("number", {
+                {...register("phone", {
                   required: "Please provide a valid phone number",
                   minLength: {
                     value: 11,
@@ -677,12 +693,12 @@ const AddressForm = () => {
                   },
                 })}
               />
-              {errors.number && (
+              {errors.phone && (
                 <Typography
                   component={"span"}
                   className={styles.address__errorMsg}
                 >
-                  {errors.number.message}
+                  {errors.phone.message}
                 </Typography>
               )}
             </Box>
@@ -876,7 +892,7 @@ const AddressForm = () => {
         }}
         onClick={handleSubmit(handleAddressData)}
       />
-      {/* </Box> */}
+      <ToasterMsg />
     </Box>
   );
 };

@@ -123,21 +123,6 @@
   color: #4d4d4d;
 }
 
-.loginDialog .MuiDialog-paper,
-.registerDialog .MuiDialog-paper {
-  border-radius: 20px;
-  width: 600px;
-  align-items: center;
-}
-
-/* This styles for background overlay color when open login/registration form */
-.loginDialog .MuiModal-backdrop {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-.registerDialog .MuiModal-backdrop {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
 /* This style will apply on label inside checkbox in login and register component */
 .login .MuiFormGroup-root .MuiFormControlLabel-label,
 .register .MuiFormGroup-root .MuiFormControlLabel-label {
@@ -472,6 +457,25 @@
 /*=====  End of Shopping Cart Page Coupon Dialog  ======*/
 
 /*=============================================
+=            Avatar Upload Dialog Styling Start            =
+=============================================*/
+.avatarUploadDialog .MuiPaper-root {
+  width: 100%;
+  max-width: 380px;
+}
+.avatarUploadDialog .MuiInputLabel-root {
+  color: #1a1a1a;
+}
+.avatarUploadDialog .MuiInputLabel-root.Mui-focused {
+  color: #2b572e;
+}
+.avatarUploadDialog .MuiInputBase-root::after {
+  border-bottom: 2px solid #2b572e;
+}
+
+/*=====  End of Avatar Upload Dialog Styling End  ======*/
+
+/*=============================================
 =            Address Dialog            =
 =============================================*/
 .addressDialog .MuiPaper-root {
@@ -495,3 +499,67 @@
 }
 
 /*=====  End of Pagination Area Styling End  ======*/
+
+/*=============================================
+=            Avatar Styles in Header Section Login Component            =
+=============================================*/
+
+.dashboardLinks .MuiList-root {
+  width: 200px;
+}
+
+/*=====  End of Avatar Styles in Header Login Component  ======*/
+
+/*=============================================
+=            ProgressBar Styling            =
+=============================================*/
+.linearProgess .MuiLinearProgress-bar {
+  background-color: #00b207;
+}
+.linearProgess .MuiLinearProgress-root {
+  background-color: #ddd;
+}
+
+/*=====  End of ProgressBar Styling  ======*/
+
+/*=============================================
+=            Delete Alert Dialog Start            =
+=============================================*/
+.deleteAlert .MuiPaper-root {
+  min-width: 450px;
+}
+/*=====  End of Delete Alert Dialog End  ======*/
+
+/*=============================================
+=            Shopping Carts Dialog Start            =
+=============================================*/
+.shoppingCart .MuiPaper-root {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  height: 100%;
+  max-height: 100%;
+  max-width: 400px;
+  width: 400px;
+  margin: 0px;
+}
+/*=====  End of Shopping Carts Dialog End  ======*/
+
+/*=============================================
+=            Payment option dialog in checkout component            =
+=============================================*/
+.paymentOption .MuiPaper-root {
+  width: 450px;
+}
+
+/*=====  End of Payment option dialog in checkout component  ======*/
+
+/*=============================================
+=            SslPayment Option Dialog in Checkout component Start            =
+=============================================*/
+.sslPaymentOption .MuiPaper-root {
+  width: 550px;
+}
+
+/*=====  End of SslPayment Option Dialog in Checkout component End  ======*/

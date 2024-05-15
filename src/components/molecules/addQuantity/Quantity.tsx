@@ -7,29 +7,36 @@ import Typography from "@mui/material/Typography";
 import styles from "./quantity.module.scss";
 
 interface quantityProps {
-  id: string | number;
   mediumScreen?: boolean;
   smallScreen?: boolean;
   quantityValue: number;
-  updateQuantity: (id: string | number, quantity: number) => void;
+  productId?: number | string;
+  updateQuantity: (
+    quantity: number,
+    type?: string,
+    productId?: number | string,
+    price?: number
+  ) => void;
   sx?: object;
   iconSx?: object;
 }
 
 const Quantity: React.FC<quantityProps> = ({
-  id,
   mediumScreen,
   smallScreen,
   quantityValue,
   updateQuantity,
+  productId,
   sx,
   iconSx,
 }) => {
   const handleIncrementValue = () => {
-    updateQuantity(id, quantityValue + 1);
+    // productId and price need to update from carts
+    updateQuantity(quantityValue + 1, "increment", productId);
   };
   const handleDecrementValue = () => {
-    updateQuantity(id, quantityValue - 1);
+    // productId and price need to update from carts
+    updateQuantity(quantityValue - 1, "decrement", productId);
   };
 
   return (
@@ -44,7 +51,7 @@ const Quantity: React.FC<quantityProps> = ({
         <IconButton
           className={styles.quantity__btn}
           onClick={handleDecrementValue}
-          disabled={quantityValue <= 0}
+          disabled={quantityValue <= 1}
           sx={iconSx}
         >
           <RemoveIcon className={styles.quantity__icon} />

@@ -1,3 +1,4 @@
+import Button from "@/components/atoms/button/Button";
 import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -12,6 +13,7 @@ interface ProductRowsProps {
   discountPrice?: number;
   quantity: number;
   altText?: string;
+  status: string;
 }
 const ProductRows: React.FC<ProductRowsProps> = ({
   imgSrc,
@@ -20,8 +22,9 @@ const ProductRows: React.FC<ProductRowsProps> = ({
   quantity,
   title,
   altText,
+  status,
 }) => {
-  const subTotal = discountPrice ? discountPrice : price * quantity;
+  const subTotal = (discountPrice ? discountPrice : price) * quantity;
   return (
     <TableRow className={styles.product__tableRow}>
       <TableCell className={styles.product__images}>
@@ -72,6 +75,9 @@ const ProductRows: React.FC<ProductRowsProps> = ({
             {subTotal}
           </Typography>
         </Box>
+      </TableCell>
+      <TableCell className={styles.product__tableCell}>
+        {status === "Delivered" && <Button text="Review" />}
       </TableCell>
     </TableRow>
   );

@@ -7,12 +7,32 @@
     border: 1px solid $gray-300;
   }
   &__table {
-    min-width: 670px;
+    min-width: 900px;
   }
   &__tableHead {
+    background-color: $gray-200;
+  }
+  &__tableCell {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+  &__tableCellTH {
     @extend %body-xs-600;
     text-transform: uppercase;
     background-color: $gray-200;
+  }
+  &__orderId {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+  &__productImg {
+    width: 80px;
+    height: auto;
+    border-radius: 8px;
+  }
+  &__date {
+    @extend %body-sm-400;
+    color: $gray-1000;
   }
   &__tableRow:last-child {
     border-bottom: none;
@@ -29,13 +49,13 @@
     align-items: center;
   }
   &__totalPrice {
-    @extend %body-sm-500;
+    @extend %body-sm-400;
     color: $gray-1000;
     margin-right: 6px;
   }
   &__productItems {
     @extend %body-sm-400;
-    color: $gray-1000;
+    color: $gray-800;
   }
   &__currencyIcon {
     width: 18px;
@@ -43,12 +63,8 @@
     margin-top: -3px;
     user-select: none;
   }
-
-  // For Responsive
-  @include downLgScreen {
-    &__tableContainer {
-      max-width: 670px;
-      overflow-x: scroll;
-    }
+  &__paidStatus {
+    @extend %body-sm-400;
+    color: $gray-1000;
   }
 }

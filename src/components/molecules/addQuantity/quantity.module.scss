@@ -16,6 +16,8 @@
   padding: 4px 8px;
   border-radius: 55px;
   &__btn {
+    width: 25px;
+    height: 25px;
     background-color: $gray-200;
     color: $gray-1000;
     &:hover {
@@ -48,8 +50,8 @@
       width: 30px;
     }
     .quantity__icon {
-      width: 10px;
-      height: 10px;
+      width: 15px;
+      height: 15px;
     }
   }
 }

@@ -1,8 +1,8 @@
 "use client";
 import RadioAtom from "@/components/atoms/radio/Radio";
+import CategoryItem from "@/components/molecules/skeleton/categories/CategoryItem";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
 import { useSelector } from "react-redux";
@@ -46,7 +46,36 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   };
 
   if (categoryLoading) {
-    return <CircularProgress />;
+    const categoryItem = [
+      {
+        width: "100%",
+      },
+      {
+        width: "90%",
+      },
+      {
+        width: "80%",
+      },
+      {
+        width: "70%",
+      },
+      {
+        width: "80%",
+      },
+      {
+        width: "90%",
+      },
+      {
+        width: "100%",
+      },
+    ];
+    return (
+      <>
+        {categoryItem.map((item, index) => (
+          <CategoryItem key={index} width={item.width} />
+        ))}
+      </>
+    );
   }
 
   if (categoryErrorMsg) {

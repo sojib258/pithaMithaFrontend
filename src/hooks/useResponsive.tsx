@@ -16,6 +16,8 @@ const useResponsive = () => {
   const downLgScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const downXlScreen = useMediaQuery(theme.breakpoints.down("xl"));
 
+  const mediumToLarge = useMediaQuery(theme.breakpoints.between("md", "lg"));
+
   return {
     xsScreen,
     smScreen,
@@ -27,6 +29,7 @@ const useResponsive = () => {
     downMdScreen,
     downLgScreen,
     downXlScreen,
+    mediumToLarge,
   };
 };
 

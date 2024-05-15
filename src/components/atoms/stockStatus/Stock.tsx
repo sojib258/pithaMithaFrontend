@@ -1,19 +1,25 @@
 import Typography from "@mui/material/Typography";
 import styles from "./stock.module.scss";
 interface stockProps {
-  inStock?: boolean;
+  isServiceAvailable: boolean;
   customStyle?: object;
   sx?: object;
 }
-const Stock: React.FC<stockProps> = ({ inStock, customStyle, sx }) => {
+const Stock: React.FC<stockProps> = ({
+  isServiceAvailable,
+  customStyle,
+  sx,
+}) => {
   return (
     <Typography
       component={"span"}
       sx={sx}
       style={customStyle}
-      className={`${inStock ? styles.inStock : styles.outStock}`}
+      className={`${
+        isServiceAvailable ? styles.available : styles.unavailable
+      }`}
     >
-      {inStock ? "In Stock" : "Out of Stock"}
+      {isServiceAvailable ? "Available" : "Unavailable"}
     </Typography>
   );
 };

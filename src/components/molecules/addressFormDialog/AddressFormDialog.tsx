@@ -4,15 +4,29 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import styles from "./addressFormDialog.module.scss";
+
+type formFields = {
+  fullName: string;
+  phone: number;
+  division: string;
+  city: string;
+  area: string;
+  address: string;
+  landmark: string;
+  deliveryOption: string;
+};
+
 interface AddressDialogProps {
   open: boolean;
   handleClose: () => void;
-  onCreate: () => void;
+  handleUpdateComponent: () => void;
+  handleAction: (data: formFields) => void;
 }
 const AddressDialog: React.FC<AddressDialogProps> = ({
   open,
   handleClose,
-  onCreate,
+  handleUpdateComponent,
+  handleAction,
 }) => {
   const handleCloseDialog = (
     event: {},
@@ -35,7 +49,11 @@ const AddressDialog: React.FC<AddressDialogProps> = ({
         <Typography className={styles.dialog__text}>Add New Address</Typography>
         <CloseIcon className={styles.dialog__closeIcon} onClick={handleClose} />
       </DialogActions>
-      <AddressForm />
+      <AddressForm
+        handleUpdateComponent={handleUpdateComponent}
+        handleClose={handleClose}
+        handleAction={handleAction}
+      />
     </Dialog>
   );
 };

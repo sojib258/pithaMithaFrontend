@@ -9,7 +9,7 @@ import styles from "./searchBar.module.scss";
 
 interface SearchBarProps {
   label?: string;
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   value?: string | number;

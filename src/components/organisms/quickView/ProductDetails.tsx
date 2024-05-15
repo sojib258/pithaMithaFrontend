@@ -2,19 +2,32 @@
 import Button from "@/components/atoms/button/Button";
 import Rating from "@/components/atoms/ratings/Rating";
 import Stock from "@/components/atoms/stockStatus/Stock";
+import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
+import Quantity from "@/components/molecules/addQuantity/Quantity";
 import SocialIcon from "@/components/molecules/socialIcons/SocialIcon";
 import useResponsive from "@/hooks/useResponsive";
+import {
+  addToCart,
+  handleAlreadyExistInCart,
+} from "@/store/feature/cart/CartSlice";
+import {
+  addToWishList,
+  removeWishlist,
+} from "@/store/feature/wishlist/WishlistSlice";
+import { RootState } from "@/store/store";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import QuickViewSlider from "./QuickViewSlider";
 import styles from "./quickView.module.scss";
 interface Image {
@@ -26,6 +39,7 @@ interface Image {
 }
 
 interface quickViewProps {
+  id: string | number;
   discountPrice?: number;
   price: number;
   productTitle: string;
@@ -34,9 +48,13 @@ interface quickViewProps {
   category?: string;
   images: Image[];
   customStyle?: object;
+  isServiceAvailable: boolean;
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
+
 const QuickView: React.FC<quickViewProps> = ({
+  id: productId,
   price,
   productTitle,
   description,
@@ -45,11 +63,20 @@ const QuickView: React.FC<quickViewProps> = ({
   discountPrice,
   images,
   customStyle,
+  isServiceAvailable,
 }) => {
+  const { auth, cart, wishlist } = useSelector((state: RootState) => state);
   const [imgSrc, setImgSrc] = useState(images[0].url);
-  const theme = useTheme();
-  const mdToLg = useMediaQuery(theme.breakpoints.between("md", "lg"));
-  const { downSmScreen, downMdScreen } = useResponsive();
+  const { downSmScreen, downMdScreen, mediumToLarge } = useResponsive();
+  const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { isAuthenticated, userId, token } = auth;
+  const { items: cartItems } = cart;
+  const { items: wishlistItems } = wishlist;
+  const { alternativeText } = images[0];
 
   const discount = discountPrice
     ? Math.floor(((price - discountPrice) / price) * 100)
@@ -59,13 +86,105 @@ const QuickView: React.FC<quickViewProps> = ({
     setImgSrc(url);
   };
 
+  const handleQuantity = (value: number) => {
+    setQuantity(value);
+  };
+
+  const handleAddToCart = () => {
+    if (isAuthenticated) {
+      const toastId = toast.loading("Adding to Cart...");
+      setLoading(true);
+      const checkProductAlreadyExist = cartItems.findIndex(
+        (item: any) => item.productId === productId
+      );
+
+      if (checkProductAlreadyExist === -1) {
+        dispatch(
+          addToCart({
+            productId: productId,
+            title: productTitle,
+            imgSrc: imgSrc,
+            altText: alternativeText,
+            quantity: quantity,
+            price: price,
+            isServiceAvailable: isServiceAvailable,
+            discountPrice: discountPrice,
+          })
+        );
+        toast.success("Added to Cart", {
+          id: toastId,
+        });
+        setLoading(false);
+      } else {
+        dispatch(
+          handleAlreadyExistInCart({
+            productId: productId,
+            quantity: quantity,
+          })
+        );
+        toast.success("Added to Cart", {
+          id: toastId,
+        });
+
+        setLoading(false);
+      }
+    } else {
+      toast.error("You have to login first for adding to cart");
+      router.push("/login");
+      return;
+    }
+  };
+
+  const existInWishlist = wishlistItems.findIndex(
+    (item: any) => item.productId === productId
+  );
+
+  const handleAddToWishlist = () => {
+    if (isAuthenticated) {
+      const toastId = toast.loading("Adding to Wishlist...");
+      setLoading(true);
+
+      if (existInWishlist === -1) {
+        dispatch(
+          addToWishList({
+            productId: productId,
+            imgSrc: imgSrc,
+            price: price,
+            discountPrice: discountPrice,
+            altText: alternativeText,
+            isServiceAvailable: isServiceAvailable,
+            title: productTitle,
+          })
+        );
+        toast.success("Added to Wishlist", {
+          id: toastId,
+        });
+        setLoading(false);
+      } else {
+        dispatch(
+          removeWishlist({
+            productId: productId,
+          })
+        );
+        toast.success("Remove from Wishlist", {
+          id: toastId,
+        });
+        setLoading(false);
+      }
+    } else {
+      toast.error("You have to login first for adding to cart");
+      router.push("/login");
+      return;
+    }
+  };
+
   return (
     <>
       <Grid
         spacing={2}
         container
         className={`${styles.quickView} ${
-          mdToLg && styles.quickView__mdToLg_screen
+          mediumToLarge && styles.quickView__mdToLg_screen
         } ${downSmScreen && styles.quickView__downSmallScreen}
             ${downMdScreen && styles.quickView__downMediumScreen} quickView`}
         style={customStyle}
@@ -108,7 +227,10 @@ const QuickView: React.FC<quickViewProps> = ({
               reviewText={"Hello"}
               readOnly
             />
-            <Stock customStyle={{ marginLeft: "6px" }} inStock />
+            <Stock
+              customStyle={{ marginLeft: "6px" }}
+              isServiceAvailable={isServiceAvailable}
+            />
           </Stack>
 
           {/* Price Area */}
@@ -153,28 +275,46 @@ const QuickView: React.FC<quickViewProps> = ({
 
           {/* Product Actions Area */}
           <Box className={styles.quickView__cartButtonBox}>
+            <Quantity
+              sx={{ padding: "8px!important" }}
+              quantityValue={quantity}
+              updateQuantity={handleQuantity}
+            />
 
             {/* Product Add Cart Button Action */}
             <Button
-              customStyle={{
+              disabled={loading}
+              sx={{
+                padding: "8px 12px!important",
                 width: "100%",
-                margin: downSmScreen ? "18px 4px" : "18px 12px",
-                padding: downSmScreen ? "4px 4px!important" : "10px",
-                fontSize: downSmScreen ? "8px!important" : "14px",
-                borderRadius: "25px",
+                margin: "0px 10px",
               }}
-              mediumScreen={mdToLg ? true : false}
-              smallScreen={downSmScreen ? true : false}
               text="Add to Cart"
               cartIcon={!downSmScreen ? true : false}
+              onClick={handleAddToCart}
             />
 
             {/* Product Add Wishlist Button Action */}
-            <IconButton className={styles.quickView__wishListIcon}>
-              <Tooltip title="Add Wishlist" arrow>
-                <FavoriteBorderOutlinedIcon />
-              </Tooltip>
-            </IconButton>
+
+            {existInWishlist === -1 ? (
+              <IconButton
+                onClick={handleAddToWishlist}
+                className={styles.quickView__wishListIcon}
+              >
+                <Tooltip title="Add Wishlist" arrow>
+                  <FavoriteBorderOutlinedIcon />
+                </Tooltip>
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={handleAddToWishlist}
+                className={styles.quickView__wishListIcon}
+              >
+                <Tooltip title="Remove Wishlist" arrow>
+                  <FavoriteOutlinedIcon />
+                </Tooltip>
+              </IconButton>
+            )}
           </Box>
 
           {/* Product Category Area */}
@@ -197,6 +337,7 @@ const QuickView: React.FC<quickViewProps> = ({
           </Box>
         </Grid>
       </Grid>
+      <ToasterMsg />
     </>
   );
 };

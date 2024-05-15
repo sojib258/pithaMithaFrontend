@@ -1,0 +1,11 @@
+@import "@/styles/style.scss";
+.tracker {
+  min-width: 600px;
+  @include downSmScreen {
+    svg {
+      width: 20px !important;
+      height: 20px !important;
+      padding: 2px !important;
+    }
+  }
+}

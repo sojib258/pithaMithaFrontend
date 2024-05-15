@@ -2,6 +2,8 @@
 import Button from "@/components/atoms/button/Button";
 import CouponCodeDialog from "@/components/molecules/couponCodeDialog/CouponCode";
 import Summary from "@/components/organisms/orderSummary/Summary";
+import { removeToCart, updateCart } from "@/store/feature/cart/CartSlice";
+import { RootState } from "@/store/store";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -15,35 +17,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartRows from "./ShoppingCartRows";
 import styles from "./shoppingCart.module.scss";
 const ShoppingCart = () => {
-  const [carts, setCarts] = useState([
-    {
-      id: 1,
-      imgSrc: "/img/2.png",
-      productName: "Lorem ipsum dolor sit amet consectetur adipisicing.",
-      price: 2900,
-      discountPrice: 14,
-      quantity: 0,
-    },
-    {
-      id: 2,
-      imgSrc: "/img/7.jpg",
-      productName: "Lorem ipsum dolor sit amet consectetur adipisicing.",
-      price: 2900,
-      discountPrice: 2400,
-      quantity: 0,
-    },
-    {
-      id: 3,
-      imgSrc: "/img/8.jpg",
-      productName: "Lorem ipsum dolor sit amet consectetur adipisicing.",
-      price: 2900,
-      quantity: 0,
-    },
-  ]);
+  const carts = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   // This is for coupon code dialog start
   const [couponCode, setCouponCode] = useState("");
@@ -58,11 +40,13 @@ const ShoppingCart = () => {
 
   const cartItems = carts.length;
 
-  const updateQuantity = (id: any, quantity: number) => {
-    setCarts((prevCarts) =>
-      prevCarts.map((item) =>
-        item.id === id ? { ...item, quantity: quantity } : item
-      )
+  const handleQuantity = (quantityValue: number, type: any, productId: any) => {
+    dispatch(
+      updateCart({
+        quantity: quantityValue,
+        type: type,
+        productId: productId,
+      })
     );
   };
 
@@ -71,7 +55,15 @@ const ShoppingCart = () => {
   };
 
   const handleDeleteCart = (id: any) => {
-    setCarts((prev) => prev.filter((item) => item.id !== id));
+    dispatch(
+      removeToCart({
+        productId: id,
+      })
+    );
+  };
+
+  const handleProceedBtn = () => {
+    router.push("/shopping-cart/checkout");
   };
 
   const subTotal = carts.reduce((acc, cur) => {
@@ -83,7 +75,6 @@ const ShoppingCart = () => {
   }, 0);
 
   const shippingCost = 60;
-
   const grandTotal = subTotal + shippingCost;
 
   return (
@@ -138,16 +129,17 @@ const ShoppingCart = () => {
                     <TableBody>
                       {carts.map((item) => (
                         <ShoppingCartRows
-                          key={item.id}
-                          id={item.id}
+                          key={item.productId}
+                          id={item.productId}
                           imgSrc={item.imgSrc}
                           price={item.price}
-                          productName={item.productName}
                           discountPrice={item.discountPrice}
+                          productName={item.title}
                           quantity={item.quantity}
-                          updateQuantity={updateQuantity}
+                          updateQuantity={handleQuantity}
                           calculateTotalPrice={calculateTotalPrice}
                           handleDeleteCart={handleDeleteCart}
+                          isServiceAvailable={item.isServiceAvailable}
                         />
                       ))}
                       <TableRow>
@@ -227,7 +219,7 @@ const ShoppingCart = () => {
               shippingCost={shippingCost}
               subTotal={subTotal}
               btnText="Proceed to Checkout"
-              btnLink="/dashboard/shopping-cart/checkout"
+              handleBtn={handleProceedBtn}
             />
           </Box>
         </Grid>

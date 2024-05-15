@@ -1,5 +1,6 @@
 "use client";
 import CategoryItem from "@/components/molecules/categoryItem/CategoryItem";
+import CategoriesSkeleton from "@/components/molecules/skeleton/categories/CategoriesSkeleton";
 import useResponsive from "@/hooks/useResponsive";
 import { fetchCategory } from "@/store/feature/category/CategorySlice";
 import { RootState } from "@/store/store";
@@ -47,6 +48,8 @@ const Categories = () => {
     },
   };
 
+  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
+
   return (
     <Box
       className={`categories ${styles.categories} ${
@@ -57,7 +60,15 @@ const Categories = () => {
         Popular Categories
       </Typography>
       {loading ? (
-        <Typography>Loading...</Typography>
+        <Carousel
+          showDots={smScreen && true}
+          responsive={responsive}
+          ssr={true}
+        >
+          {skeletonArray.map((item) => (
+            <CategoriesSkeleton key={item} />
+          ))}
+        </Carousel>
       ) : (
         <Carousel
           showDots={smScreen && true}

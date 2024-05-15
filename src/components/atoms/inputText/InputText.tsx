@@ -2,6 +2,7 @@
 import useResponsive from "@/hooks/useResponsive";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { UseFormRegisterReturn } from "react-hook-form";
 import styles from "./inputText.module.scss";
 interface InputTextProps {
   label?: string;
@@ -9,10 +10,11 @@ interface InputTextProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   value?: string | number;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "number";
   customStyle?: object;
   icon?: boolean;
   placeholder?: string;
+  register?: UseFormRegisterReturn;
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -25,9 +27,14 @@ const InputText: React.FC<InputTextProps> = ({
   onFocus,
   customStyle,
   placeholder,
+  register,
 }) => {
   const { downSmScreen } = useResponsive();
-
+  const handleChange = () => {
+    if (onChange) {
+      onChange;
+    }
+  };
   return (
     <>
       <Box
@@ -39,7 +46,7 @@ const InputText: React.FC<InputTextProps> = ({
         <TextField
           label={label}
           variant="outlined"
-          onChange={(e) => onChange && onChange(e.target.value)}
+          onChange={handleChange}
           onBlur={onBlur}
           onFocus={onFocus}
           value={value}
@@ -47,6 +54,7 @@ const InputText: React.FC<InputTextProps> = ({
           size="small"
           fullWidth={true}
           placeholder={placeholder}
+          {...register}
         />
         {icon && (
           <Box

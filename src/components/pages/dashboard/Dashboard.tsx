@@ -1,83 +1,92 @@
+"use client";
 import Button from "@/components/atoms/button/Button";
 import AddressInfo from "@/components/molecules/addressInfo/AddressInfo";
 import Profile from "@/components/molecules/profile/Profile";
 import RecentOrder from "@/components/organisms/recentOrder/RecentOrder";
+import { fetchUserData } from "@/store/feature/user/UserSlice";
+import { RootState } from "@/store/store";
+import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./dashboard.module.scss";
+
 const Dashboard = () => {
-  const dataFromBackend = [
-    {
-      id: 1,
-      name: "Sajib Hasan",
-      number: "01720046642",
-      address:
-        "House 83/3, Madartek Road, Madartek Kachabazar, Madartek Chowrasta",
-      area: "Barguna Amtoli",
-      city: "Barguna",
-      division: "Barishal",
-      deliveryOption: "home",
-      landmark: "Beside big jame masjid",
-    },
-    {
-      id: 2,
-      name: "Sajib Hasan",
-      number: "01720046642",
-      address:
-        "House 83/3, Madartek Road, Madartek Kachabazar, Madartek Chowrasta",
-      area: "Barguna Amtoli",
-      city: "Barguna",
-      division: "Barishal",
-      deliveryOption: "office",
-      landmark: "Beside big jame masjid",
-    },
-  ];
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { user: userData, auth } = useSelector((state: RootState) => state);
+  const [orderDetails, setOrderDetails] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
-  const orders = [
-    {
-      id: 1,
-      orderId: "443",
-      date: "11 November, 2023",
-      total: 343.34,
-      status: "Processing",
-    },
-    {
-      id: 2,
-      orderId: "990",
-      date: "8 Sep, 2023",
-      total: 343.34,
-      status: "On the Way",
-    },
-    {
-      id: 3,
-      orderId: "990",
-      date: "8 Sep, 2023",
-      total: 343.34,
-      status: "Completed",
-    },
-  ];
+  const { userId, isAuthenticated, token } = auth;
+  useEffect(() => {
+    dispatch(fetchUserData(userId) as any);
+  }, [dispatch, userId]);
 
-  const profileInfo = {
-    name: "Sojib Hasan",
-    imgSrc: "/img/6.jpg",
-    position: "customer",
-  };
-  const { name, imgSrc, position } = profileInfo;
+  if (!isAuthenticated) {
+    router.push("/login");
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_KEY}/orders?filters[users_permissions_user]=${userId}`,
+          { headers }
+        );
+
+        setOrderDetails(
+          response.data.data.map((item: any) => ({
+            id: item.id,
+            status: item.attributes.status,
+            paid: item.attributes.paid,
+            totalPrice: item.attributes.totalPrice,
+            date: item.attributes.createdAt,
+            totalProduct: item.attributes.products.length,
+            imgSrc: item.attributes.products[0].imgSrc,
+            altText: item.attributes.products[0].altText,
+          }))
+        );
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); // Call the async function immediately
+  }, [token, userId]);
+
   return (
     <Box className={styles.content}>
-      <Box className={styles.content__profile}>
-        <Profile name={name} imgSrc={imgSrc} position={position} />
-      </Box>
-      <Box className={styles.content__address}>
-        <AddressInfo addressData={dataFromBackend} />
-      </Box>
+      <Grid container>
+        <Grid item xs={12} lg={8}>
+          <Box className={styles.content__address}>
+            <AddressInfo />
+          </Box>
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Box className={styles.content__profile}>
+            <Profile userData={userData} />
+          </Box>
+        </Grid>
+      </Grid>
+
       <Box className={styles.content__order}>
         <Box className={styles.content__orderHead}>
           <Typography className={styles.content__orderText}>
             Recent Order History
           </Typography>
-          <Link href={"/dashboard/order-history"}>
+          <Link href={"/order-history"}>
             <Button
               sx={{
                 backgroundColor: "transparent!important",
@@ -94,7 +103,7 @@ const Dashboard = () => {
             />
           </Link>
         </Box>
-        <RecentOrder orderData={orders} />
+        <RecentOrder loading={loading} orderDetails={orderDetails} />
       </Box>
     </Box>
   );

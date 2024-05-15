@@ -11,16 +11,22 @@ import styles from "./recentOrder.module.scss";
 
 type Data = {
   id: string | number;
-  date: string;
-  orderId: string;
   status: string;
-  total: number | string;
+  paid: boolean;
+  date: string;
+  totalPrice: number;
+  totalProduct: number;
+  imgSrc: string;
+  altText?: string;
 };
+
 interface RecentOrderProps {
-  orderData: Data[];
+  orderDetails: Data[];
+  loading: boolean;
 }
 
-const RecentOrder: React.FC<RecentOrderProps> = ({ orderData }) => {
+const RecentOrder: React.FC<RecentOrderProps> = ({ orderDetails, loading }) => {
+  console.log("ORderData", orderDetails);
   return (
     <Box className={styles.recent}>
       <TableContainer
@@ -28,25 +34,41 @@ const RecentOrder: React.FC<RecentOrderProps> = ({ orderData }) => {
         component={Paper}
       >
         <Table className={styles.recent__table} aria-label="simple table">
-          <TableHead>
-            <TableRow sx={{ border: "1px solid #e6e6e6;" }}>
-              <TableCell className={styles.recent__tableHead}>
+          <TableHead className={styles.recent__tableHead}>
+            <TableRow
+              className={styles.recent__tableRow}
+              sx={{ border: "1px solid #e6e6e6;" }}
+            >
+              <TableCell className={styles.recent__tableCell}>
                 Order Id
               </TableCell>
-              <TableCell className={styles.recent__tableHead}>Date</TableCell>
-              <TableCell className={styles.recent__tableHead}>Total</TableCell>
-              <TableCell className={styles.recent__tableHead}>Status</TableCell>
-              <TableCell className={styles.recent__tableHead}></TableCell>
+              <TableCell className={styles.recent__tableCellTH}></TableCell>
+              <TableCell className={styles.recent__tableCellTH}>Date</TableCell>
+              <TableCell className={styles.recent__tableCellTH}>
+                Total
+              </TableCell>
+              <TableCell className={styles.recent__tableCellTH}>
+                Status
+              </TableCell>
+              <TableCell className={styles.recent__tableCellTH}>Paid</TableCell>
+              <TableCell className={styles.recent__tableCellTH}>
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {orderData.map((item) => (
+            {orderDetails.map((item) => (
               <OrderItemRows
                 key={item.id}
+                orderId={item.id}
                 date={item.date}
-                orderId={item.orderId}
                 status={item.status}
-                total={item.total}
+                totalPrice={item.totalPrice}
+                totalProduct={item.totalProduct}
+                imgSrc={item.imgSrc}
+                altText={item.altText}
+                loading={loading}
+                paid={item.paid}
               />
             ))}
           </TableBody>

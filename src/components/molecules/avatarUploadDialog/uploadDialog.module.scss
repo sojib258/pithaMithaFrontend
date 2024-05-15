@@ -1,0 +1,34 @@
+@import "@/styles/style.scss";
+.upload {
+  width: 100%;
+  height: auto;
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  &__headText {
+    @extend %body-lg-600;
+    color: $gray-1000;
+  }
+  input {
+    @extend %body-sm-400;
+    width: 100%;
+    color: $gray-1000;
+    border: 1px solid $primary;
+    padding: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  &__btnCancel {
+    @extend %body-md-400;
+    background-color: $warning;
+    color: $white;
+  }
+  &__btnApply {
+    @extend %body-md-400;
+    background-color: $primary;
+    color: $white;
+  }
+}

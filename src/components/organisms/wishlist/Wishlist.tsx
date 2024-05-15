@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
 import SocialIcon from "@/components/molecules/socialIcons/SocialIcon";
+import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -11,43 +12,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import WishlistRows from "./WishlistRows";
 import styles from "./wishlist.module.scss";
 
 const Wishlist = () => {
-  const [wishLists, setWishLists] = useState([
-    {
-      id: 1,
-      imgSrc: "/img/2.png",
-      productName: "Lorem ipsum dolor sit amet consectetur adipisicing.",
-      price: 2900,
-      discountPrice: 2300,
-      stock: true,
-    },
-    {
-      id: 2,
-      imgSrc: "/img/2.png",
-      productName: "Lorem ipsum dolor sit amet consectetur adipisicing.",
-      price: 2900,
-      discountPrice: 2300,
-      stock: false,
-    },
-    {
-      id: 3,
-      imgSrc: "/img/2.png",
-      productName: "Lorem ipsum dolor sit amet consectetur adipisicing.",
-      price: 20900,
-      stock: true,
-    },
-  ]);
+  const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
 
-  const totalItems = wishLists.length;
-
-  const handleDeleteWishlist = (id: number | string) => {
-    console.log("ID", id);
-    setWishLists((prev) => prev.filter((item) => item.id !== id));
-  };
+  const totalItems = wishlistItems.length;
 
   return (
     <Box className={styles.wishList}>
@@ -88,16 +60,16 @@ const Wishlist = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {wishLists.map((item) => (
+              {wishlistItems.map((item) => (
                 <WishlistRows
-                  id={item.id}
+                  id={item.productId}
                   imgSrc={item.imgSrc}
                   price={item.price}
-                  productName={item.productName}
-                  stock={item.stock}
+                  productName={item.title}
+                  isServiceAvailable={item.isServiceAvailable}
                   discountPrice={item.discountPrice}
-                  key={item.id}
-                  handleDeleteWishlist={handleDeleteWishlist}
+                  key={item.productId}
+                  altText={item.altText}
                 />
               ))}
               <TableRow className={styles.wishList__tableRow}>

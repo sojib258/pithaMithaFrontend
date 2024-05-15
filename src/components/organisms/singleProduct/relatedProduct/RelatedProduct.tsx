@@ -77,6 +77,7 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
             description={item.attributes.description}
             discountPrice={item.attributes.discountPrice}
             images={item.attributes.images}
+            isServiceAvailable={item.attributes.isServiceAvailable}
           />
         ))}
       </Carousel>

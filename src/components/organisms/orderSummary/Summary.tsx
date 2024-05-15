@@ -2,7 +2,6 @@ import Button from "@/components/atoms/button/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import Link from "next/link";
 import styles from "./summary.module.scss";
 
 interface SummaryProps {
@@ -11,8 +10,8 @@ interface SummaryProps {
   subTotal: number;
   shippingCost: number;
   grandTotal: number;
-  btnLink?: string;
-  btnText?: string;
+  btnText: string;
+  handleBtn: () => void;
   sx?: object;
 }
 const Summary: React.FC<SummaryProps> = ({
@@ -22,7 +21,7 @@ const Summary: React.FC<SummaryProps> = ({
   shippingCost,
   grandTotal,
   btnText,
-  btnLink,
+  handleBtn,
   sx,
 }) => {
   return (
@@ -66,17 +65,14 @@ const Summary: React.FC<SummaryProps> = ({
           {grandTotal}
         </Typography>
       </Box>
-      {btnText && (
-        <Box className={styles.cartTotal__btn}>
-          <Link href={btnLink ? btnLink : "/404"}>
-            <Button
-              disabled={cartItems === 0}
-              sx={{ width: "100%" }}
-              text={btnText}
-            />
-          </Link>
-        </Box>
-      )}
+      <Box className={styles.cartTotal__btn}>
+        <Button
+          disabled={cartItems <= 0}
+          sx={{ width: "100%" }}
+          text={btnText}
+          onClick={handleBtn}
+        />
+      </Box>
     </Box>
   );
 };

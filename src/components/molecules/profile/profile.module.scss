@@ -10,8 +10,22 @@
   &__userImage {
     width: 120px;
     height: 120px;
+    object-fit: cover;
     border-radius: 50%;
     margin-bottom: 6px;
+    border: 1px solid $primary;
+  }
+  &__userImageNone {
+    @extend %display-01-400;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: $gray-300;
+    border: 1px solid $primary;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__userName {
     @extend %body-xl-500;

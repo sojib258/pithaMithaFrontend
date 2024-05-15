@@ -1,0 +1,97 @@
+@import "@/styles/style.scss";
+.cart {
+  width: 100%;
+  height: auto;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  &__heading {
+    @extend %body-xl-500;
+    color: $gray-1000;
+  }
+  &__body {
+    width: 100%;
+    max-height: calc(100% - 250px);
+    padding: 0px 20px;
+    background-color: #fff;
+    overflow-y: scroll;
+  }
+  &__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px 0px;
+  }
+  &__details {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__img {
+    width: 80px;
+    height: auto;
+    margin-right: 8px;
+    border-radius: 8px;
+  }
+  &__title {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    user-select: none;
+    margin-top: -3px;
+  }
+  &__price {
+    @extend %body-sm-600;
+    color: $gray-1000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  &__quantity {
+    @extend %body-sm-400;
+    color: $gray-600;
+    margin-left: 8px;
+  }
+  &__deleteIcon {
+    margin-left: auto;
+    font-size: 5px;
+    border: 1px solid $gray-1000;
+    svg {
+      font-size: 18px;
+    }
+  }
+  &__action {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+  &__priceSection {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  &__priceTitle {
+    @extend %body-md-400;
+    color: $gray-1000;
+  }
+  &__priceAmount {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+}

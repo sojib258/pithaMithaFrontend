@@ -1,5 +1,12 @@
 import Button from "@/components/atoms/button/Button";
 import Stock from "@/components/atoms/stockStatus/Stock";
+import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
+import {
+  addToCart,
+  handleAlreadyExistInCart,
+} from "@/store/feature/cart/CartSlice";
+import { removeWishlist } from "@/store/feature/wishlist/WishlistSlice";
+import { RootState } from "@/store/store";
 import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
 import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -8,6 +15,8 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./wishlist.module.scss";
 
 interface WishlistRowsProps {
@@ -15,9 +24,9 @@ interface WishlistRowsProps {
   imgSrc: string;
   productName: string;
   price: number;
-  discountPrice?: string | number;
-  stock: boolean;
-  handleDeleteWishlist: (id: number | string) => void;
+  discountPrice?: number;
+  isServiceAvailable: boolean;
+  altText?: string;
 }
 
 const WishlistRows: React.FC<WishlistRowsProps> = ({
@@ -25,10 +34,58 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
   price,
   productName,
   discountPrice,
-  stock,
+  isServiceAvailable,
   id,
-  handleDeleteWishlist,
+  altText,
 }) => {
+  const { cart } = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
+
+  const cartItems = cart.items;
+
+  const handleDeleteWishlist = () => {
+    dispatch(
+      removeWishlist({
+        productId: id,
+      })
+    );
+  };
+
+  const handleAddToCart = () => {
+    const checkProductAlreadyExist = cartItems.findIndex(
+      (item: any) => item.productId === id
+    );
+
+    if (checkProductAlreadyExist === -1) {
+      dispatch(
+        addToCart({
+          productId: id,
+          title: productName,
+          imgSrc: imgSrc,
+          altText: altText,
+          quantity: 1,
+          price: price,
+          discountPrice: discountPrice,
+          isServiceAvailable: isServiceAvailable,
+        })
+      );
+      toast.success("Added to Cart");
+    } else {
+      dispatch(
+        handleAlreadyExistInCart({
+          productId: id,
+          quantity: 1,
+        })
+      );
+      toast.success("Added to Cart");
+    }
+    dispatch(
+      removeWishlist({
+        productId: id,
+      })
+    );
+  };
+
   return (
     <TableRow className={styles.wishList__tableRow}>
       <Link href={`/products/${id}`}>
@@ -85,7 +142,7 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
         )}
       </TableCell>
       <TableCell className={styles.wishList__tableCell}>
-        <Stock inStock={stock} />
+        <Stock isServiceAvailable={isServiceAvailable} />
       </TableCell>
       <TableCell className={styles.wishList__tableCell}>
         <Button
@@ -94,14 +151,16 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
             fontSize: "12px!important",
           }}
           text="Add to Cart"
-          disabled={!stock}
+          disabled={!isServiceAvailable}
+          onClick={handleAddToCart}
         />
       </TableCell>
       <TableCell className={styles.wishList__tableCell}>
-        <IconButton onClick={() => handleDeleteWishlist(id)}>
+        <IconButton onClick={handleDeleteWishlist}>
           <DeleteForeverSharpIcon />
         </IconButton>
       </TableCell>
+      <ToasterMsg />
     </TableRow>
   );
 };

@@ -1,3 +1,4 @@
+import Providers from "@/app/Provider";
 import NavLinks from "@/components/molecules/navigationLinks/NavLinks";
 import BreadCrumb from "@/components/organisms/breadcrumb/BreadCrumb";
 import Footer from "@/components/organisms/footer/Footer";
@@ -14,7 +15,9 @@ interface DefaultTemplateProps {
 const DefaultTemplate: React.FC<DefaultTemplateProps> = ({ children }) => {
   return (
     <>
-      <Header />
+      <Providers>
+        <Header />
+      </Providers>
       {/* Navigation Links */}
       <Box component={"section"} className={styles.navigation}>
         <Box className={styles.navigation__wrapper}>

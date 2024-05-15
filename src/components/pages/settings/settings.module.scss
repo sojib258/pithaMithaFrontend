@@ -48,7 +48,18 @@
     width: 250px;
     height: 250px;
     border-radius: 50%;
+    object-fit: cover;
     margin-bottom: 20px;
+  }
+  &__profileImgNone {
+    @extend %body-xl-400;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    color: $gray-1000;
+    font-size: 8.5rem;
+    border: 1px solid $primary;
   }
   &__inputFile {
     display: none;
