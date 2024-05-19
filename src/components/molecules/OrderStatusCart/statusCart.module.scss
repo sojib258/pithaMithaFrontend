@@ -1,0 +1,42 @@
+@import "@/styles/style.scss";
+.cart {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  border-radius: 8px;
+  &__header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  &__icon {
+    margin-right: 5px;
+  }
+  &__title {
+    @extend %body-xs-600;
+    text-transform: uppercase;
+    color: $gray-1000;
+  }
+  &__body {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__countBox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__currencyIcon {
+    width: 22px;
+    height: 22px;
+    margin-top: -3px;
+    user-select: none;
+  }
+  &__count {
+    @extend %body-xl-600;
+    color: $gray-1000;
+  }
+}

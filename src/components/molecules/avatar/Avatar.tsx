@@ -22,22 +22,13 @@ function ResponsiveAppBar() {
   const { profileImg, firstName } = useSelector(
     (state: RootState) => state.user
   );
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -61,9 +52,14 @@ function ResponsiveAppBar() {
       link: "/shopping-cart",
       text: "Shopping Cart",
     },
+
     {
       link: "/settings",
       text: "Settings",
+    },
+    {
+      link: "/sales-dashboard",
+      text: "Sales Dashboard",
     },
   ];
 

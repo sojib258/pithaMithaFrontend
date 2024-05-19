@@ -3,16 +3,27 @@
   width: 100%;
   height: auto;
   background-color: $white;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px 20px;
+
   transition: 0.3s;
   border-left: 5px solid transparent;
+  margin-bottom: 10px;
+  border-radius: 6px;
   cursor: pointer;
+  &__content {
+    padding: 10px 10px 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__leftPart {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
   &.active {
-    background-color: $greenGray1;
+    background-color: #d1ffd1;
     border-left: 5px solid $primary;
+    border-radius: 6px;
     .navigation__icon {
       svg {
         color: $gray-1000;
@@ -23,8 +34,8 @@
     }
   }
   &:hover {
-    background-color: $greenGray1;
-    // border-left: 5px solid $greenGray1;
+    background-color: #d1ffd1;
+    border-left: 5px solid $primary;
   }
   &__icon {
     display: flex;
@@ -34,12 +45,18 @@
     svg {
       width: 18px;
       height: 18px;
-      color: #b3b3b3;
+      color: $gray-800;
     }
   }
 
   &__text {
     @extend %body-md-400;
+    color: $gray-800;
+  }
+  &__arrowIcon {
     color: $gray-700;
+  }
+  &__arrowIconOpen {
+    transform: rotate(180deg);
   }
 }

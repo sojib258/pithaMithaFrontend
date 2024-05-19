@@ -63,7 +63,7 @@ const AvatarUplaod: React.FC<AvatarUploadProps> = ({
       setErrorMsg("Please upload your picture");
       return;
     }
-    if (!(file[0].type === "image/jpeg" || file[0].type === "image/jpeg")) {
+    if (!(file[0].type === "image/jpeg" || file[0].type === "image/png")) {
       setErrorMsg("Image format must be png or jpg");
       return;
     }

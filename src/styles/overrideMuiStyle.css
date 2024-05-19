@@ -359,10 +359,13 @@
 /*=============================================
 =            Products page filter by category radio button style            =
 =============================================*/
-.categoryFilter .MuiRadio-root {
+.MuiRadio-root {
   color: #00b207;
   padding: 0px;
   padding-right: 5px;
+}
+.MuiRadio-root.Mui-checked {
+  color: #00b207;
 }
 .MuiAccordion-root {
   box-shadow: none;
@@ -563,3 +566,24 @@
 }
 
 /*=====  End of SslPayment Option Dialog in Checkout component End  ======*/
+
+/*=============================================
+=            Submenu or Stepper in Sales Dashboard            =
+=============================================*/
+.salesDashboard .MuiStepButton-vertical {
+  border-radius: 8px;
+}
+.salesDashboard .MuiStepLabel-iconContainer svg {
+  color: #1a1a1a;
+}
+.salesDashboard .MuiStepLabel-iconContainer.Mui-active svg {
+  color: #00b207;
+}
+.salesDashboard .MuiStepLabel-label {
+  color: #1a1a1a;
+}
+.salesDashboard .MuiStepLabel-label.Mui-active {
+  color: #00b207;
+}
+
+/*=====  End of Submenu or Stepper in Sales Dashboard  ======*/

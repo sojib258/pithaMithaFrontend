@@ -1,0 +1,16 @@
+.dashboard {
+  width: 100%;
+  height: auto;
+  &__statusArea {
+    display: flex;
+    flex-wrap: wrap;
+
+    .dashboard__statusCart {
+      padding-right: 20px;
+
+      &.last {
+        padding-right: 0;
+      }
+    }
+  }
+}

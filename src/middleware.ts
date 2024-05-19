@@ -21,5 +21,9 @@ export const config = {
     "/order-success",
     "/order-cancel",
     "/order-failed",
+    "/sales-dashboard",
+    "/sales-dashboard/product",
+    "/sales-dashboard/product/product-details",
+    "/sales-dashboard/product/add-product",
   ],
 };

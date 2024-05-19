@@ -2,6 +2,7 @@
 import useResponsive from "@/hooks/useResponsive";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { ChangeEvent } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import styles from "./inputText.module.scss";
 interface InputTextProps {
@@ -12,9 +13,12 @@ interface InputTextProps {
   value?: string | number;
   type?: "text" | "email" | "password" | "number";
   customStyle?: object;
+  sx?: object;
   icon?: boolean;
   placeholder?: string;
   register?: UseFormRegisterReturn;
+  multiline?: boolean; // Add this prop
+  rows?: number; // Add this prop
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -28,11 +32,14 @@ const InputText: React.FC<InputTextProps> = ({
   customStyle,
   placeholder,
   register,
+  multiline = false, // Default to false
+  rows = 1, // Default to 1
+  sx,
 }) => {
   const { downSmScreen } = useResponsive();
-  const handleChange = () => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
-      onChange;
+      onChange(e.target.value);
     }
   };
   return (
@@ -54,7 +61,10 @@ const InputText: React.FC<InputTextProps> = ({
           size="small"
           fullWidth={true}
           placeholder={placeholder}
+          multiline={multiline} // Use the multiline prop
+          rows={rows} // Use the rows prop
           {...register}
+          sx={sx}
         />
         {icon && (
           <Box

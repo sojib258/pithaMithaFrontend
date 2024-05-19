@@ -39,6 +39,7 @@ interface ProductAttributes {
   isServiceAvailable: boolean;
   ratingValue?: number;
   category: Category;
+  weight: string;
   isPopular: boolean;
   isFeatured: boolean;
   isHotDeals: boolean;
@@ -67,7 +68,6 @@ const initialState: ProductState = {
 export const fetchItems = createAsyncThunk("products/fetchItems", async () => {
   try {
     const response = await fetchData("products?populate=*");
-    console.log("R", response);
     return response?.data.data;
   } catch (error) {
     console.error("Error from productSlice", error);
@@ -93,6 +93,7 @@ const productSlice = createSlice({
             name: item.attributes.name,
             description: item.attributes.description,
             price: item.attributes.price,
+            weight: item.attributes.weight,
             createdAt: item.attributes.createdAt,
             updatedAt: item.attributes.updatedAt,
             publishedAt: item.attributes.publishedAt,
