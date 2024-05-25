@@ -7,7 +7,7 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./style.module.scss";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -15,66 +15,47 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const [activeLinkId, setActiveLinkId] = useState<number | null>(null);
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
 
-  const navigations = [
-    {
-      id: 1,
-      icon: <DashboardIcon />,
-      text: "Dashboard",
-      link: "/sales-dashboard",
-    },
-    {
-      id: 2,
-      icon: <ShoppingCartOutlinedIcon />,
-      text: "Product",
-      link: "/sales-dashboard/product",
-      dropdown: [
-        {
-          id: 21,
-          text: "All Product",
-          link: "/sales-dashboard/product",
-        },
-        {
-          id: 22,
-          text: "Product Details",
-          link: "/sales-dashboard/product/product-details",
-        },
-        {
-          id: 23,
-          text: "Add Product",
-          link: "/sales-dashboard/product/add-product",
-        },
-      ],
-    },
-    {
-      id: 3,
-      icon: <WorkOutlineIcon />,
-      text: "Orders",
-      link: "/sales-dashboard/orders",
-    },
-    {
-      id: 4,
-      icon: <MonetizationOnOutlinedIcon />,
-      text: "Revenue",
-      link: "/sales-dashboard/revenue",
-      dropdown: [
-        {
-          id: 21,
-          text: "All Product",
-          link: "/sales-dashboard/revenue",
-        },
-        {
-          id: 22,
-          text: "Product Details",
-          link: "/sales-dashboard/product-details",
-        },
-        {
-          id: 23,
-          text: "Add Product",
-          link: "/sales-dashboard/add-product",
-        },
-      ],
-    },
-  ];
+  const navigations = useMemo(
+    () => [
+      {
+        id: 1,
+        icon: <DashboardIcon />,
+        text: "Dashboard",
+        link: "/sales-dashboard",
+      },
+      {
+        id: 2,
+        icon: <ShoppingCartOutlinedIcon />,
+        text: "Product",
+        link: "/sales-dashboard/product",
+        dropdown: [
+          {
+            id: 21,
+            text: "All Product",
+            link: "/sales-dashboard/product",
+          },
+          {
+            id: 23,
+            text: "Add Product",
+            link: "/sales-dashboard/product/add-product",
+          },
+        ],
+      },
+      {
+        id: 3,
+        icon: <WorkOutlineIcon />,
+        text: "Orders",
+        link: "/sales-dashboard/orders",
+      },
+      {
+        id: 4,
+        icon: <MonetizationOnOutlinedIcon />,
+        text: "Revenue",
+        link: "/sales-dashboard/revenue",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     const foundNav = navigations.find((nav) => nav.link === pathname);
@@ -95,7 +76,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         }
       }
     }
-  }, [pathname]);
+  }, [pathname, navigations]);
 
   const handleLinkClick = (id: number) => {
     setActiveLinkId(id);

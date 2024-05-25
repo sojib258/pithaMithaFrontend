@@ -21,14 +21,6 @@ const Buttons: React.FC<ButtonProps> = ({ handleBtnClick, activeBtn }) => {
       </Button>
       <Button
         className={`${styles.buttonWrapper__btn} ${
-          activeBtn === "additionalInfo" ? styles.active : ""
-        }`}
-        onClick={() => handleBtnClick("additionalInfo")}
-      >
-        Additional Information
-      </Button>
-      <Button
-        className={`${styles.buttonWrapper__btn} ${
           activeBtn === "customerFeedback" ? styles.active : ""
         }`}
         onClick={() => handleBtnClick("customerFeedback")}

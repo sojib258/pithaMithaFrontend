@@ -1,0 +1,121 @@
+@import "@/styles/style.scss";
+
+.details {
+  width: 100%;
+  height: auto;
+  &__productName {
+    @extend %heading-04-600;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-1000;
+    line-height: 120%;
+    margin-bottom: 12px;
+  }
+  &__prices {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid $gray-100;
+    padding: 20px 0px;
+  }
+  &__priceCondition {
+    color: $gray-400;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    text-decoration: line-through;
+    margin-right: 4px;
+  }
+  &__price {
+    color: $hardPrimary;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    margin-right: 12px;
+  }
+  &__discountPrice {
+    color: $hardPrimary;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    margin-right: 4px;
+  }
+  &__perWeight {
+    @extend %body-sm-600;
+    color: $gray-800;
+  }
+  &__discount {
+    color: $danger;
+    padding: 3px 10px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    border-radius: 4px;
+    background: rgba(234, 75, 72, 0.1);
+    margin-left: 15px;
+  }
+  &__shortDescription {
+    @extend %body-sm-400;
+    color: $gray-600;
+    line-height: 150%;
+    padding-bottom: 20px;
+  }
+  &__actionArea {
+    padding: 20px 0px;
+    border-top: 1px solid $gray-100;
+  }
+  &__categoryTitle,
+  &__tagsTitle {
+    @extend %body-sm-500;
+    color: $gray-1000;
+    margin-bottom: 12px;
+  }
+  &__categoryValue,
+  &__tagsValue {
+    @extend %body-sm-400;
+    color: $gray-800;
+    margin-left: 6px;
+  }
+
+  // Skeleton Styling
+  &__productNameSkeleton {
+    max-width: 400px;
+    margin-bottom: 25px;
+  }
+  &__productRatingSkeleton {
+    max-width: 320px;
+    margin-bottom: 25px;
+  }
+  &__productPriceSkeleton {
+    max-width: 270px;
+    margin-bottom: 25px;
+  }
+  &__productShortDescriptionSkeleton1 {
+    max-width: 100%;
+  }
+  &__productShortDescriptionSkeleton2 {
+    max-width: 50%;
+    margin-bottom: 25px;
+  }
+  &__productCategorySkeleton {
+    width: 115px;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+  &__productTagsSkeleton {
+    width: 115px;
+    display: inline-block;
+  }
+}

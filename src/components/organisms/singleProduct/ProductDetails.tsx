@@ -1,18 +1,10 @@
 import Product from "@/components/organisms/quickView/ProductDetails";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { ProductData } from "@/utils/typesDefine/productSliceTypes";
+
 interface ProductDetailsProps {
-  productId: string | number;
+  productDetails: ProductData;
 }
-const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
-  const { items } = useSelector((item: RootState) => item.products);
-  const product = items.find((item) => item.id === productId);
-
-  if (!product) {
-    return <div>Product not found</div>;
-  }
-
-  // Extract product details
+const ProductDetails: React.FC<ProductDetailsProps> = ({ productDetails }) => {
   const {
     price,
     name,
@@ -21,12 +13,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
     discountPrice,
     images,
     isServiceAvailable,
-  } = product.attributes;
+  } = productDetails.attributes;
+  console.log("PrDetails", productDetails);
 
   return (
     <>
       <Product
-        id={productId}
+        id={productDetails.id}
         price={price}
         productTitle={name}
         description={description}

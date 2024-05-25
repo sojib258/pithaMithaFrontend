@@ -1,12 +1,16 @@
+"use client";
 import StatusCart from "@/components/molecules/OrderStatusCart/StatusCart";
+import { RootState } from "@/store/store";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { useSelector } from "react-redux";
 import styles from "./style.module.scss";
 const SalesDashboard = () => {
-  const statusArr = [
+  const { sellerProduct } = useSelector((state: RootState) => state);
+  let statusArr = [
     {
       id: 1,
       icon: <ShoppingCartOutlinedIcon sx={{ marginRight: "5px" }} />,
@@ -15,7 +19,7 @@ const SalesDashboard = () => {
       style: {
         backgroundColor: "#fff4d0",
       },
-      currencyIcon: true,
+      currencyIcon: false,
     },
     {
       id: 2,
@@ -48,6 +52,8 @@ const SalesDashboard = () => {
       currencyIcon: true,
     },
   ];
+
+  console.log("SellerProducts", sellerProduct);
 
   return (
     <Box className={styles.dashboard}>

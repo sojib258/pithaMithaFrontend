@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./wishlist.module.scss";
 
 interface WishlistRowsProps {
-  id: string | number;
+  id: number;
   imgSrc: string;
   productName: string;
   price: number;

@@ -1,0 +1,56 @@
+@import "@/styles/style.scss";
+.rating {
+  width: 100%;
+  height: auto;
+  &__text {
+    @extend %body-lg-600;
+    color: $gray-1000;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  &__averageText {
+    @extend %heading-04-600;
+    margin-bottom: 8px;
+    color: $gray-1000;
+    text-align: center;
+  }
+  &__icons {
+    width: 100%;
+    height: auto;
+  }
+  &__details {
+    width: 100%;
+    height: auto;
+    padding: 24px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+  }
+  &__countText {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    margin-right: 4px;
+    min-width: 45px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 180px;
+    padding: 4px 0px;
+    margin: 0px 10px;
+  }
+  &__progress {
+    width: 100px;
+    height: 4px;
+    background-color: $gray-400;
+  }
+  &__countValue {
+    @extend %body-sm-600;
+    color: $gray-800;
+    padding-left: 4px;
+  }
+}

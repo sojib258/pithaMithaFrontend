@@ -31,7 +31,7 @@ import { useDispatch, useSelector } from "react-redux";
 import QuickViewSlider from "./QuickViewSlider";
 import styles from "./quickView.module.scss";
 interface Image {
-  id: string | number;
+  id: number;
   width: number;
   height: number;
   url: string;
@@ -39,7 +39,7 @@ interface Image {
 }
 
 interface quickViewProps {
-  id: string | number;
+  id: number;
   discountPrice?: number;
   price: number;
   productTitle: string;
@@ -191,7 +191,7 @@ const QuickView: React.FC<quickViewProps> = ({
       >
         {/* Left Slider Section */}
         <Grid item xs={12} md={6} className={styles.quickView__leftContent}>
-          <QuickViewSlider imageSrc={imgSrc} />
+          <QuickViewSlider loading={loading} imageSrc={imgSrc} />
           <Box className={styles.quickView__imagesWrapper}>
             {images.map((item) => (
               <Image

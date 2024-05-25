@@ -22,6 +22,7 @@ type formFields = {
   category: string;
   isAvailable: string;
   description: string;
+  shortDescription: string;
   images: FileList;
   weights: string;
 };
@@ -93,10 +94,10 @@ const UploadProduct = () => {
   };
 
   const onSubmit: SubmitHandler<formFields> = async (data: formFields) => {
+    console.log("datafrom uploadProduct", data);
     const formData = new FormData();
 
     selectedImages.forEach((item) => {
-      console.log("item", item);
       formData.append("files", item);
     });
 
@@ -127,7 +128,6 @@ const UploadProduct = () => {
       });
 
       const imageUploadResponse = await imageUploadPromise;
-      console.log("ResponseImage", imageUploadResponse);
 
       const imagesId = imageUploadResponse.data.map((img: any) => img.id);
       const category = categories.find((item) => item.name === data.category);
@@ -171,7 +171,6 @@ const UploadProduct = () => {
 
       const productUploadResponse = await productUploadPromise;
 
-      console.log("Product Upload Response", productUploadResponse);
       setLoading(false);
       reset({
         category: "",
@@ -191,9 +190,6 @@ const UploadProduct = () => {
     dispatch(fetchTags() as any);
   }, [dispatch]);
 
-  console.log("Values", getValues());
-  console.log("Errors", errors);
-  console.log("SelectedImages", selectedImages);
   return (
     <Box className={styles.product}>
       <Box className={styles.product__head}>
@@ -262,6 +258,30 @@ const UploadProduct = () => {
                 type="number"
                 label="discount price"
               />
+            </Box>
+            <Box className={styles.product__formField}>
+              <Typography
+                component={"label"}
+                className={styles.product__labelText}
+              >
+                Short Description:
+              </Typography>
+              <InputText
+                register={register("shortDescription", {
+                  required: "short description is required",
+                })}
+                type="text"
+                label="Short description"
+                placeholder="Describe your product shortly 2-3 sentences"
+              />
+              {errors.shortDescription && (
+                <Typography
+                  component={"span"}
+                  className={styles.product__errorMsg}
+                >
+                  {errors.shortDescription.message}
+                </Typography>
+              )}
             </Box>
 
             <Box className={styles.product__formField}>

@@ -1,0 +1,67 @@
+@import "@/styles/style.scss";
+
+.details {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  &__sliderPart {
+    width: 100%;
+    height: auto;
+    padding-right: 20px;
+  }
+  &__imagesWrapper {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 0px;
+    background-color: $gray-100;
+    border-radius: 8px;
+    margin: 10px auto;
+  }
+  &__img {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  &__contentPart {
+    padding-left: 20px;
+  }
+
+  &__actionBtn {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px 40px 0px;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__cusRating {
+    padding: 10px 15px 10px 0px;
+  }
+  &__ratingValues {
+    align-items: center;
+    padding-left: 15px;
+    margin-left: auto;
+  }
+  &__noRatingText {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+  @include downLgScreen {
+    &__imagesWrapper {
+      max-width: 100%;
+    }
+  }
+  @include downSmScreen {
+    &__imagesWrapper {
+      justify-content: space-between;
+    }
+  }
+}

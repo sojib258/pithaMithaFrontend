@@ -189,6 +189,10 @@
 .rating .MuiRating-icon {
   color: #ff8a00;
 }
+/* styles apply in average rating*/
+.rating .MuiLinearProgress-bar {
+  background-color: #00b207 !important;
+}
 
 /* This styles for QuickView Carousel */
 .quickViewDialog .MuiPaper-root {
@@ -587,3 +591,25 @@
 }
 
 /*=====  End of Submenu or Stepper in Sales Dashboard  ======*/
+
+/*=============================================
+=            EditProductDialog Styling Start            =
+=============================================*/
+.editProductDialog .MuiPaper-root {
+  width: 100%;
+  max-width: 800px;
+}
+.editProductDialog .MuiDialogContent-root {
+  padding: 0px 24px;
+}
+
+/*=====  End of EditProductDialog Styling End  ======*/
+
+/*=============================================
+=            Mui Skeleton styling            =
+=============================================*/
+.MuiSkeleton-root {
+  background-color: rgba(0, 0, 0, 0.31);
+}
+
+/*=====  End of Mui Skeleton styling  ======*/

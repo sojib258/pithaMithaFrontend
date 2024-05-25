@@ -218,7 +218,6 @@ const AddressInfo: React.FC<AddressInfoProps> = ({
         )}
       </Box>
       <AddressDialog
-        handleUpdateComponent={handleUpdateComponent}
         open={open}
         handleClose={handleClose}
         handleAction={handleCreateAddress}

@@ -82,14 +82,17 @@ const Products = () => {
               >
                 <ProductCart
                   id={item.id}
-                  ratingValue={item.attributes.ratingValue}
                   isServiceAvailable={item.attributes.isServiceAvailable}
                   price={item.attributes.price}
-                  title={item.attributes.name}
+                  name={item.attributes.name}
                   category={item.attributes.category.name}
                   description={item.attributes.description}
                   discountPrice={item.attributes.discountPrice}
                   images={item.attributes.images}
+                  averageRating={item.attributes.averageRating}
+                  href={`/products/${item.id}`}
+                  shortDescription={item.attributes.shortDescription}
+                  weight={item.attributes.weight}
                 />
               </Grid>
             ))}

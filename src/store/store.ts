@@ -5,6 +5,8 @@ import AuthReducer from "./feature/auth/AuthSlice";
 import CartReducer from "./feature/cart/CartSlice";
 import CategoryReducer from "./feature/category/CategorySlice";
 import ProductReducer from "./feature/product/ProductSlice";
+import RatingSlice from "./feature/rating/RatingSlice";
+import SellerProductSlice from "./feature/sellerProduct/SellerProductSlice";
 import TagsSlice from "./feature/tags/TagsSlice";
 import UserReducer from "./feature/user/UserSlice";
 import WishlistReducer from "./feature/wishlist/WishlistSlice";
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   cart: CartReducer,
   wishlist: WishlistReducer,
   tags: TagsSlice,
+  sellerProduct: SellerProductSlice,
+  ratings: RatingSlice,
 });
 
 const persistConfig = {

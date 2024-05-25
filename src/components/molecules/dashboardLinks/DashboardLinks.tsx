@@ -34,23 +34,23 @@ const DashboardLinks: React.FC<DashboardLinksProps> = ({
         onClick={handleLinkClick}
         className={`${styles.navigation} ${isActive && styles.active}`}
       >
-        <Link href={link}>
-          <Box className={styles.navigation__content}>
-            <Box className={styles.navigation__leftPart}>
-              <Box className={styles.navigation__icon}>{icon}</Box>
+        <Box className={styles.navigation__content}>
+          <Box className={styles.navigation__leftPart}>
+            <Box className={styles.navigation__icon}>{icon}</Box>
+            <Link href={link}>
               <Typography className={styles.navigation__text}>
                 {text}
               </Typography>
-            </Box>
-            {dropdown && (
-              <KeyboardArrowDownOutlinedIcon
-                className={`${styles.navigation__arrowIcon} ${
-                  isDropdownOpen && styles.navigation__arrowIconOpen
-                }`}
-              />
-            )}
+            </Link>
           </Box>
-        </Link>
+          {dropdown && (
+            <KeyboardArrowDownOutlinedIcon
+              className={`${styles.navigation__arrowIcon} ${
+                isDropdownOpen && styles.navigation__arrowIconOpen
+              }`}
+            />
+          )}
+        </Box>
       </Box>
       {dropdown && (
         <Collapse in={isDropdownOpen} timeout="auto" unmountOnExit>

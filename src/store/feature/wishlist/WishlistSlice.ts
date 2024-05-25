@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface WishlistData {
-  productId: string | number;
+  productId: number;
   title: string;
   price: number;
   discountPrice?: number;

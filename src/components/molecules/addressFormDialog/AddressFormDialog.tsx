@@ -19,13 +19,11 @@ type formFields = {
 interface AddressDialogProps {
   open: boolean;
   handleClose: () => void;
-  handleUpdateComponent: () => void;
   handleAction: (data: formFields) => void;
 }
 const AddressDialog: React.FC<AddressDialogProps> = ({
   open,
   handleClose,
-  handleUpdateComponent,
   handleAction,
 }) => {
   const handleCloseDialog = (
@@ -49,11 +47,7 @@ const AddressDialog: React.FC<AddressDialogProps> = ({
         <Typography className={styles.dialog__text}>Add New Address</Typography>
         <CloseIcon className={styles.dialog__closeIcon} onClick={handleClose} />
       </DialogActions>
-      <AddressForm
-        handleUpdateComponent={handleUpdateComponent}
-        handleClose={handleClose}
-        handleAction={handleAction}
-      />
+      <AddressForm handleAction={handleAction} />
     </Dialog>
   );
 };

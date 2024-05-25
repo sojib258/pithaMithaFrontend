@@ -108,13 +108,17 @@ const Shop = () => {
               >
                 <ProductCart
                   id={item.id}
+                  isServiceAvailable={item.attributes.isServiceAvailable}
                   price={item.attributes.price}
-                  title={item.attributes.name}
+                  name={item.attributes.name}
                   category={item.attributes.category.name}
                   description={item.attributes.description}
                   discountPrice={item.attributes.discountPrice}
                   images={item.attributes.images}
-                  isServiceAvailable={item.attributes.isServiceAvailable}
+                  averageRating={item.attributes.averageRating}
+                  href={`/products/${item.id}`}
+                  shortDescription={item.attributes.shortDescription}
+                  weight={item.attributes.weight}
                 />
               </Grid>
             ))}

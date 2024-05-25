@@ -21,7 +21,7 @@ import ProductIcon from "../productCartIcons/ProductIcons";
 import styles from "./productCart.module.scss";
 
 interface Image {
-  id: string | number;
+  id: number;
   width: number;
   height: number;
   url: string;
@@ -29,15 +29,18 @@ interface Image {
 }
 
 interface productProps {
-  id: string | number;
+  id: number;
   images: Image[];
-  title: string;
+  name: string;
   price: number;
   discountPrice?: number;
-  ratingValue?: number;
-  description?: string;
+  averageRating?: number;
+  description: string;
+  shortDescription: string;
   category?: string;
   isServiceAvailable: boolean;
+  href: string;
+  weight: string;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
@@ -47,11 +50,14 @@ const ProductCart: React.FC<productProps> = ({
   images,
   price,
   discountPrice,
-  title,
-  ratingValue,
+  name,
+  averageRating,
   description,
+  shortDescription,
   category,
   isServiceAvailable,
+  href,
+  weight,
 }) => {
   const { downMdScreen, downSmScreen } = useResponsive();
   const { cart, auth } = useSelector((state: RootState) => state);
@@ -83,7 +89,7 @@ const ProductCart: React.FC<productProps> = ({
         dispatch(
           addToCart({
             productId: id,
-            title: title,
+            title: name,
             imgSrc: images[0].url,
             altText: images[0].alternativeText,
             quantity: 1,
@@ -136,7 +142,7 @@ const ProductCart: React.FC<productProps> = ({
             <Box className={styles.productCart__hoverIcon}>
               <ProductIcon
                 id={id}
-                title={title}
+                title={name}
                 imgSrc={images[0].url}
                 price={price}
                 discountPrice={discountPrice}
@@ -148,15 +154,15 @@ const ProductCart: React.FC<productProps> = ({
           </Box>
         </Box>
 
-        <Link className={styles.productCart__link} href={`/products/${id}`}>
+        <Link className={styles.productCart__link} href={href}>
           <Box className={styles.productCart__content}>
             <Typography className={styles.productCart__title}>
-              {title}
+              {name}
             </Typography>
             <Box mb={1}>
               <Rating
                 fontSize={downSmScreen ? "15px!important" : "18px!important"}
-                value={ratingValue}
+                value={averageRating}
                 readOnly
               />
             </Box>
@@ -212,11 +218,11 @@ const ProductCart: React.FC<productProps> = ({
       {open && (
         <QuickViewDialog
           id={id}
-          description={description}
+          description={shortDescription}
           price={price}
           discountPrice={discountPrice}
-          productTitle={title}
-          ratingValue={ratingValue}
+          productTitle={name}
+          ratingValue={averageRating}
           category={category}
           handleClose={handleClose}
           open={open}

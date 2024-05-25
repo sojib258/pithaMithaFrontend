@@ -28,15 +28,9 @@ type formFields = {
 };
 
 interface AddressFormProps {
-  handleClose: () => void;
-  handleUpdateComponent: () => void;
   handleAction: (data: formFields) => void;
 }
-const AddressForm: React.FC<AddressFormProps> = ({
-  handleClose,
-  handleUpdateComponent,
-  handleAction,
-}) => {
+const AddressForm: React.FC<AddressFormProps> = ({ handleAction }) => {
   const {
     register,
     handleSubmit,
@@ -49,9 +43,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   const [loading, setLoading] = useState(false);
 
-  const handleAddressData: SubmitHandler<formFields> = async (
-    data: formFields
-  ) => {
+  const handleAddressData: SubmitHandler<formFields> = (data: formFields) => {
     handleAction(data);
   };
 

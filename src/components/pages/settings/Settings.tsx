@@ -12,7 +12,6 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -72,7 +71,6 @@ const Settings = () => {
 
   const [isUpadateUser, setIsUpdateUser] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   // This function is for when update the user info then component will be re-render
   const handleUpdateUser = () => {
@@ -132,7 +130,6 @@ const Settings = () => {
         email: "",
         phoneNumber: "",
       });
-      setLoading(false);
     } catch (error: any) {
       setLoading(false);
     }

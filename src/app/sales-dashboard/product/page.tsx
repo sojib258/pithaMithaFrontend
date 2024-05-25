@@ -1,6 +1,6 @@
 import SellerProducts from "@/components/pages/sellerProducts/SellerProducts";
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <SellerProducts />
@@ -8,4 +8,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

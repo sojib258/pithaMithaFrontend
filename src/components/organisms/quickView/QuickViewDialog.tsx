@@ -8,7 +8,7 @@ import Image from "next/image";
 import ProductDetails from "./ProductDetails";
 import styles from "./quickView.module.scss";
 interface Image {
-  id: string | number;
+  id: number;
   width: number;
   height: number;
   url: string;
@@ -16,7 +16,7 @@ interface Image {
 }
 
 interface quickViewProps {
-  id: string | number;
+  id: number;
   discountPrice?: number;
   open: boolean;
   handleClose: () => void;

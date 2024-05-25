@@ -39,10 +39,10 @@
   }
   &__timeText {
     @extend %body-sm-400;
-    color: $gray-500;
+    color: $gray-700;
   }
-  &__description {
+  &__comment {
     @extend %body-sm-400;
-    color: $gray-600;
+    color: $gray-800;
   }
 }

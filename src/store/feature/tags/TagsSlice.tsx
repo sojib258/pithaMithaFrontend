@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 type Data = {
-  id: string | number;
+  id: number;
   name: string;
 };
 
@@ -28,7 +28,6 @@ export const fetchTags = createAsyncThunk("tags/fetchItems", async () => {
       Authorization: `Bearer ${token}`,
     };
     const response = await axios.get(`${API_URL}/tags`, { headers });
-    console.log("ResponseTags", response);
 
     return response?.data.data;
   } catch (error: any) {

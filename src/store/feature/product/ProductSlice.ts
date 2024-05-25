@@ -1,61 +1,10 @@
 import fetchData from "@/utils/api/fetchData";
+import {
+  FormatImage,
+  ProductState,
+} from "@/utils/typesDefine/productSliceTypes";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
-
-// Define interfaces
-interface FormatImage {
-  width: number;
-  height: number;
-  url: string;
-}
-
-interface ImageData {
-  id: number;
-  alternativeText: string;
-  width: number;
-  height: number;
-  url: string;
-  formats: Record<string, FormatImage>;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  description: string | null;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-}
-
-interface ProductAttributes {
-  name: string;
-  description: string;
-  price: number;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  stock: number;
-  discountPrice?: number;
-  isServiceAvailable: boolean;
-  ratingValue?: number;
-  category: Category;
-  weight: string;
-  isPopular: boolean;
-  isFeatured: boolean;
-  isHotDeals: boolean;
-  images: ImageData[];
-}
-
-interface ProductData {
-  id: number;
-  attributes: ProductAttributes;
-}
-
-interface ProductState {
-  items: ProductData[];
-  loading: boolean;
-  errorMsg: string;
-}
 
 // Define initial state
 const initialState: ProductState = {
@@ -68,6 +17,7 @@ const initialState: ProductState = {
 export const fetchItems = createAsyncThunk("products/fetchItems", async () => {
   try {
     const response = await fetchData("products?populate=*");
+    console.log("ProductSlice", response);
     return response?.data.data;
   } catch (error) {
     console.error("Error from productSlice", error);
@@ -91,6 +41,7 @@ const productSlice = createSlice({
           id: item.id,
           attributes: {
             name: item.attributes.name,
+            shortDescription: item.attributes.shortDescription,
             description: item.attributes.description,
             price: item.attributes.price,
             weight: item.attributes.weight,
@@ -100,16 +51,20 @@ const productSlice = createSlice({
             stock: item.attributes.stock,
             discountPrice: item.attributes.discountPrice,
             isServiceAvailable: item.attributes.serviceAvailable,
-            ratingValue: item.attributes.ratingValue,
             isPopular: item.attributes.isPopular,
             isFeatured: item.attributes.isFeatured,
             isHotDeals: item.attributes.isHotDeals,
+            averageRating: item.attributes.averageRating,
             category: {
               id: item.attributes.category.data?.id,
               name: item.attributes.category.data?.attributes?.name,
               description:
                 item.attributes.category.data?.attributes?.description,
             },
+            tags: item.attributes.tags.data.map((tag: any) => ({
+              id: tag.id,
+              name: tag.attributes.name,
+            })),
             images: item.attributes.images.data
               ?.slice(-4)
               .map((image: any) => ({

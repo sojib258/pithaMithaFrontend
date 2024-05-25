@@ -1,0 +1,16 @@
+.product {
+  width: 100%;
+  height: auto;
+  &__iconBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 24px;
+    padding-top: 12px;
+  }
+  &__closeIcon {
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+  }
+}

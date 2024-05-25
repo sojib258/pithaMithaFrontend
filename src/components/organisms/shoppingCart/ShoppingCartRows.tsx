@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import styles from "./shoppingCart.module.scss";
 interface ShoppingCartRowsProps {
-  id: number | string;
+  id: number;
   imgSrc: string;
   productName: string;
   price: number;

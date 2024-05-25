@@ -1,0 +1,39 @@
+@import "@/styles/style.scss";
+.product {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  &__headArea {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__searchBar {
+    width: 350px;
+  }
+  &__content {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px;
+  }
+  &__cart {
+    padding: 10px 4px;
+  }
+  @include downMdScreen {
+    &__searchBar {
+      width: 200px;
+    }
+  }
+  @include downSmScreen {
+    &__cart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__searchBar {
+      width: 250px;
+    }
+  }
+}

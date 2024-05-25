@@ -108,7 +108,6 @@ const AddressCart: React.FC<AddressCartProps> = ({
       const response = await responsePromise;
       handleUpdateComponent();
       handleClose();
-      console.log("Responsetttttttt", response);
     } catch (error) {}
   };
 
@@ -173,7 +172,6 @@ const AddressCart: React.FC<AddressCartProps> = ({
         </Box>
       </Box>
       <AddressDialog
-        handleUpdateComponent={handleUpdateComponent}
         open={open}
         handleClose={handleClose}
         handleAction={handleEditAddress}

@@ -1,0 +1,36 @@
+.skeleton {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 25px;
+  }
+
+  &__title {
+    width: 150px;
+  }
+  &__ratingValue {
+    width: 100px;
+  }
+  &__ratingIcons {
+    width: 120px;
+  }
+  &__body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  &__des {
+    width: 250px;
+  }
+}

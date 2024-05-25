@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface AddressData {
-  id: string | number;
+  id: number;
   fullName: string;
   phone: number;
   division: string;

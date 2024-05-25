@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./productIcons.module.scss";
 
 interface productIconProps {
-  id: string | number;
+  id: number;
   title: string;
   imgSrc: string;
   price: number;
