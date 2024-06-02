@@ -46,6 +46,18 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         icon: <WorkOutlineIcon />,
         text: "Orders",
         link: "/sales-dashboard/orders",
+        dropdown: [
+          {
+            id: 21,
+            text: "Completed Orders",
+            link: "/sales-dashboard/orders/completed-orders",
+          },
+          {
+            id: 23,
+            text: "Pending Orders",
+            link: "/sales-dashboard/orders/pending-orders",
+          },
+        ],
       },
       {
         id: 4,

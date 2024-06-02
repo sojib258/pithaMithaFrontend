@@ -1,0 +1,39 @@
+@import "@/styles/style.scss";
+.status {
+  @extend %body-sm-400;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  color: $gray-1000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  svg {
+    font-size: 8px;
+    margin-right: 4px;
+  }
+}
+
+.orderPlaced {
+  background-color: #ffe7f6;
+  color: #242424;
+}
+
+.processing {
+  background-color: #fff8e6;
+  color: #ff8a00;
+}
+
+.onTheWay {
+  background-color: #e1fff0;
+  color: #242424;
+}
+
+.delivered {
+  background-color: #d1ffd1;
+  color: $deepPrimary;
+}
+
+.cancelled {
+  background-color: #feeaec;
+  color: #f26769;
+}

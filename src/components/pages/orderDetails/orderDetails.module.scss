@@ -77,37 +77,7 @@
     align-items: center;
     color: $gray-1000;
   }
-  &__addressArea {
-    width: 98%;
-    height: auto;
-    padding: 20px;
-    border: 1px solid $gray-300;
-    border-radius: 8px;
-  }
-  &__deliveryText {
-    @extend %body-md-400;
-    color: $gray-800;
-    margin-bottom: 5px;
-  }
-  &__addressName {
-    @extend %body-md-400;
-    color: $gray-1000;
-    margin-bottom: 8px;
-  }
-  &__addressLocation {
-    @extend %body-sm-400;
-    color: $gray-700;
-  }
-  &__addressDivision {
-    @extend %body-sm-500;
-    color: $gray-800;
-    margin-bottom: 8px;
-  }
-  &__addressNumber {
-    @extend %body-sm-400;
-    color: $gray-1000;
-    margin: 0px 0px 8px 4px;
-  }
+
   &__subTotalArea {
     width: 98%;
     margin-left: auto;

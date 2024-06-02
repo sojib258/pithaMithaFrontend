@@ -1,6 +1,6 @@
 import Button from "@/components/atoms/button/Button";
-import Label from "@/components/atoms/label/Label";
-import OrderTableSkeleton from "@/components/molecules/skeleton/orderTable/OrderTable";
+import OrderStatus from "@/components/atoms/orderStatus/OrderStatus";
+import OrderTableSkeleton from "@/components/molecules/skeleton/table/TableSkeleton";
 import dateFormat from "@/utils/dateFormat";
 import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
@@ -33,7 +33,6 @@ const OrderItems: React.FC<OrderItemsProps> = ({
   paid,
   head = false,
 }) => {
-  console.log("Date", date);
   const { date: tarikh } = dateFormat(date);
   return (
     <>
@@ -104,7 +103,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({
             scope="row"
             className={styles.recent__tableCell}
           >
-            <Label sx={{ minWidth: "100px" }} text={status} />
+            <OrderStatus status={status} />
           </TableCell>
           <TableCell
             component="td"

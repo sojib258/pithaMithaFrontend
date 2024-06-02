@@ -34,9 +34,9 @@ const initialState: UserData = {
   errorMsg: "",
 };
 
-export const fetchUserData: any = createAsyncThunk(
+export const fetchUserData = createAsyncThunk(
   "user/fetchUserData",
-  async (userId) => {
+  async () => {
     try {
       const token = Cookies.get("myAppAuthToken");
       const headers = {
@@ -45,7 +45,6 @@ export const fetchUserData: any = createAsyncThunk(
 
       const response = await fetchData(`users/me?populate=image`, headers);
 
-      console.log("Response", response);
       return response?.data;
     } catch (error) {
       return `Error fetching userData ${error}`;

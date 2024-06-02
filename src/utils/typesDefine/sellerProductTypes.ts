@@ -39,6 +39,7 @@ export interface Product {
   category: CategoryData;
   tags: TagData[];
   weight: string;
+  completedDays: string;
   isPopular: boolean;
   isFeatured: boolean;
   isHotDeals: boolean;

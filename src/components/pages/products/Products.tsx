@@ -19,7 +19,7 @@ const Shop = () => {
   const [price, setPrice] = useState<number[]>([0, 20000]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState("Latest");
+  const [selectValue, setSelectValue] = useState<string | number>("Latest");
 
   products = products.filter((item) => {
     if (selectedCategory === "All") return item;
@@ -41,7 +41,7 @@ const Shop = () => {
 
   // Handle SelectBox Value
   const selectBoxValue = ["Latest", "Popular", "Low to High", "High to Low"];
-  const handleSelectValue = (value: string) => {
+  const handleSelectValue = (value: string | number) => {
     setSelectValue(value);
   };
 

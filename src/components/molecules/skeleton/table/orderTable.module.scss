@@ -1,0 +1,8 @@
+.table {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  &__head {
+    background-color: #ddd;
+  }
+}

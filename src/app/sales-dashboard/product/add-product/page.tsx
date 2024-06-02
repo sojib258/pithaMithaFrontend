@@ -18,6 +18,7 @@ type formData = {
   shortDescription: string;
   images: FileList;
   weights: string;
+  completedDays: string;
   selectedTagIds: (string | number)[];
 };
 
@@ -35,7 +36,6 @@ const Page = () => {
   };
 
   const handleSubmit = async (data: formData) => {
-    console.log("Data from Page", data);
     const formData = new FormData();
 
     Array.from(data.images).forEach((item) => {
@@ -87,6 +87,7 @@ const Page = () => {
         price: price,
         discountPrice: discountPrice,
         weight: data.weights,
+        completedDays: data.completedDays,
         category: category?.id ?? null,
         images: imagesId,
         serviceAvailable: isAvailable,

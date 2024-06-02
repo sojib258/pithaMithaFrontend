@@ -34,6 +34,7 @@ type formFields = {
   shortDescription: string;
   images: FileList;
   weights: string;
+  completedDays: string;
   selectedTagIds: (string | number)[];
 };
 
@@ -57,6 +58,7 @@ interface ProductModelProps {
       id: number;
     }[];
     weight: string;
+    completedDays: string;
     tags: {
       id: string | number;
     }[];
@@ -95,7 +97,8 @@ const ProductModel: React.FC<ProductModelProps> = ({
   const categories = category.items;
   const { token, userId } = auth;
   const weights = ["kg", "pcs", "bundle"];
-  watch(["category", "weights"]);
+  const completedDays = ["1 Day", "2 Days", "3 Days", "4 Days", "5 Days"];
+  watch(["category", "weights", "completedDays"]);
 
   const handleRadioChange = (data: string) => {
     setRadiovalue(data);
@@ -163,6 +166,7 @@ const ProductModel: React.FC<ProductModelProps> = ({
         selectedTagIds: tagIds,
         shortDescription: initialData.shortDescription,
         weights: initialData.weight,
+        completedDays: initialData.completedDays,
       });
       setSelectedTagIds(tagIds);
       setRadiovalue(availableValue);
@@ -392,6 +396,32 @@ const ProductModel: React.FC<ProductModelProps> = ({
                   className={styles.product__errorMsg}
                 >
                   {errors.weights.message}
+                </Typography>
+              )}
+            </Box>
+
+            <Box className={styles.product__formField}>
+              <Typography
+                component={"label"}
+                className={styles.product__labelText}
+              >
+                Estimate product completed days
+              </Typography>
+              <SelectBox
+                value={getValues("completedDays")}
+                options={completedDays.map((value) => value)}
+                label="Select estimate completed days"
+                register={register("completedDays", {
+                  required: "Please provide product processing completed days",
+                })}
+                sx={{ width: "100%!important" }}
+              />
+              {errors.completedDays && (
+                <Typography
+                  component={"span"}
+                  className={styles.product__errorMsg}
+                >
+                  {errors.completedDays.message}
                 </Typography>
               )}
             </Box>

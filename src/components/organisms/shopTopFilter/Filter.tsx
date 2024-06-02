@@ -8,8 +8,8 @@ import styles from "./filter.module.scss";
 
 interface FilterProps {
   selectBoxValue: string[];
-  selectValue: string;
-  handleSelectValue: (value: string) => void;
+  selectValue: string | number;
+  handleSelectValue: (value: string | number) => void;
   resultFound: number;
 }
 

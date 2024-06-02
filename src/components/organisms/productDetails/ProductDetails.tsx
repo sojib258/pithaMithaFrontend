@@ -2,13 +2,19 @@
 import Button from "@/components/atoms/button/Button";
 import Rating from "@/components/atoms/ratings/Rating";
 import Stock from "@/components/atoms/stockStatus/Stock";
+import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import EditProductDialog from "../editProduct/EditProductDialog";
 import styles from "./productDetails.module.scss";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
+
 interface ProductDetailsProps {
   product: {
     id: number;
@@ -25,6 +31,9 @@ interface ProductDetailsProps {
       id: number;
       name: string;
     }[];
+    images: {
+      id: number;
+    }[];
     weight: string;
   };
   handleReRender: () => void;
@@ -40,6 +49,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   handleLoading,
   totalRating,
 }) => {
+  const { token } = useSelector((state: RootState) => state.auth);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -60,8 +70,55 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
     discountPrice,
     tags,
     weight,
+    images,
   } = product;
 
+  const imagesId = images.map((img) => img.id);
+
+  const handleDeleteProduct = async () => {
+    try {
+      handleLoading(true);
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      toast("Deleting images...");
+      await Promise.all(
+        imagesId.map((imageId) =>
+          axios.delete(`${API_URL}/upload/files/${imageId}`, { headers })
+        )
+      );
+
+      // Delete the product
+      const productDeletePromise = axios.delete(`${API_URL}/products/${id}`, {
+        headers,
+      });
+
+      toast.promise(productDeletePromise, {
+        loading: "Deleting Product...",
+        success: "Product Delete Completed!",
+        error: (error: any) => {
+          return `${
+            error.response.data.error.message
+              ? error?.response?.data?.error?.message
+              : error.message
+          }`;
+        },
+      });
+
+      const response = await productDeletePromise;
+      console.log("ResponseDelete", response);
+
+      handleReRender();
+      handleLoading(false);
+    } catch (error) {
+      handleLoading(false);
+      console.error("Error from deleting product", error);
+    }
+  };
+
+  console.log("Pro", product);
+  console.log("ImagesId", imagesId);
   const discount = discountPrice
     ? Math.floor(((price - discountPrice) / price) * 100)
     : null;
@@ -152,10 +209,23 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           onClick={handleOpen}
           disabled={loading}
           sx={{
-            width: "100%!important",
+            width: "49%!important",
             borderRadius: "8px!important",
           }}
           text="Edit Product"
+        />
+        <Button
+          onClick={handleDeleteProduct}
+          disabled={loading}
+          sx={{
+            width: "49%!important",
+            borderRadius: "8px!important",
+            backgroundColor: "#ea4b48!important",
+            "&:hover": {
+              backgroundColor: "#c5302e!important",
+            },
+          }}
+          text="Delete Product"
         />
       </Box>
       <Typography className={styles.details__categoryTitle}>

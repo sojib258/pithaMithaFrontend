@@ -26,7 +26,6 @@ interface RecentOrderProps {
 }
 
 const RecentOrder: React.FC<RecentOrderProps> = ({ orderDetails, loading }) => {
-  console.log("ORderData", orderDetails);
   return (
     <Box className={styles.recent}>
       <TableContainer

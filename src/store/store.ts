@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import AuthReducer from "./feature/auth/AuthSlice";
 import CartReducer from "./feature/cart/CartSlice";
 import CategoryReducer from "./feature/category/CategorySlice";
+import OrderSlice from "./feature/order/OrderSlice";
 import ProductReducer from "./feature/product/ProductSlice";
 import RatingSlice from "./feature/rating/RatingSlice";
 import SellerProductSlice from "./feature/sellerProduct/SellerProductSlice";
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   tags: TagsSlice,
   sellerProduct: SellerProductSlice,
   ratings: RatingSlice,
+  orders: OrderSlice,
 });
 
 const persistConfig = {

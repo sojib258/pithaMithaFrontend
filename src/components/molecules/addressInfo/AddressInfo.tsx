@@ -78,14 +78,13 @@ const AddressInfo: React.FC<AddressInfoProps> = ({
       );
       await responsePromise;
       handleUpdateComponent();
-    } catch (error) {
-      console.log("Error from address delete", error);
-    }
+    } catch (error) {}
   };
 
   const handleCreateAddress = async (data: any) => {
     try {
       setLoading(true);
+      handleClose();
       const headers = {
         Authorization: `Bearer ${token}`,
       };
@@ -123,10 +122,8 @@ const AddressInfo: React.FC<AddressInfoProps> = ({
       );
       await responsePromise;
       setLoading(false);
-      handleClose();
       handleUpdateComponent();
     } catch (error) {
-      console.log("Error", error);
       setLoading(false);
     }
   };
@@ -144,7 +141,6 @@ const AddressInfo: React.FC<AddressInfoProps> = ({
           { headers }
         );
 
-        console.log("Response", response);
         setLoading(false);
         setAddress(response.data.addresses);
       } catch (error) {

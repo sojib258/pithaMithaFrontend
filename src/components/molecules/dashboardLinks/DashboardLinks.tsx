@@ -35,21 +35,29 @@ const DashboardLinks: React.FC<DashboardLinksProps> = ({
         className={`${styles.navigation} ${isActive && styles.active}`}
       >
         <Box className={styles.navigation__content}>
-          <Box className={styles.navigation__leftPart}>
-            <Box className={styles.navigation__icon}>{icon}</Box>
-            <Link href={link}>
+          <Link
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+            href={link}
+          >
+            <Box className={styles.navigation__leftPart}>
+              <Box className={styles.navigation__icon}>{icon}</Box>
+
               <Typography className={styles.navigation__text}>
                 {text}
               </Typography>
-            </Link>
-          </Box>
-          {dropdown && (
-            <KeyboardArrowDownOutlinedIcon
-              className={`${styles.navigation__arrowIcon} ${
-                isDropdownOpen && styles.navigation__arrowIconOpen
-              }`}
-            />
-          )}
+            </Box>
+            {dropdown && (
+              <KeyboardArrowDownOutlinedIcon
+                className={`${styles.navigation__arrowIcon} ${
+                  isDropdownOpen && styles.navigation__arrowIconOpen
+                }`}
+              />
+            )}
+          </Link>
         </Box>
       </Box>
       {dropdown && (

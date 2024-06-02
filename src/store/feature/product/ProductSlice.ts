@@ -17,7 +17,6 @@ const initialState: ProductState = {
 export const fetchItems = createAsyncThunk("products/fetchItems", async () => {
   try {
     const response = await fetchData("products?populate=*");
-    console.log("ProductSlice", response);
     return response?.data.data;
   } catch (error) {
     console.error("Error from productSlice", error);

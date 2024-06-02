@@ -1,4 +1,4 @@
-import AddressForm from "@/components/organisms/addressForm/AddressForm";
+import AddressForm from "@/components/organisms/address/addressForm/AddressForm";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

@@ -24,7 +24,7 @@ const Dashboard = () => {
 
   const { userId, isAuthenticated, token } = auth;
   useEffect(() => {
-    dispatch(fetchUserData(userId) as any);
+    dispatch(fetchUserData() as any);
   }, [dispatch, userId]);
 
   if (!isAuthenticated) {

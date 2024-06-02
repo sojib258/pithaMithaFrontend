@@ -93,19 +93,16 @@ const Tracker: React.FC<Tracker> = ({ status }) => {
   let step = 0;
 
   switch (status) {
-    case "orderPlaced":
+    case "order placed":
       step = 1;
       break;
-    case "orderReceived":
-      step = 2;
-      break;
-    case "Processing":
+    case "processing":
       step = 3;
       break;
-    case "onTheWay":
+    case "on the way":
       step = 4;
       break;
-    case "Delivered":
+    case "delivered":
       step = 5;
       break;
     default:

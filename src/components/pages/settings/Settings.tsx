@@ -182,7 +182,7 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchUserData(userId));
+    dispatch(fetchUserData() as any);
   }, [dispatch, isUpadateUser, userId]);
 
   const { width, height, url } = profileImg;

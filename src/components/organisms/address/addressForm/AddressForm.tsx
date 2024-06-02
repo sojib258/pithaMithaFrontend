@@ -3,13 +3,11 @@ import Button from "@/components/atoms/button/Button";
 import SelectBox from "@/components/atoms/selectBox/Select";
 import TagButton from "@/components/atoms/tagButton/TagButton";
 import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
-import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import styles from "./addressForm.module.scss";
 
 type Areas = {
@@ -39,9 +37,6 @@ const AddressForm: React.FC<AddressFormProps> = ({ handleAction }) => {
     getValues,
     watch,
   } = useForm<formFields>();
-  const { token, userId } = useSelector((state: RootState) => state.auth);
-
-  const [loading, setLoading] = useState(false);
 
   const handleAddressData: SubmitHandler<formFields> = (data: formFields) => {
     handleAction(data);
@@ -680,8 +675,8 @@ const AddressForm: React.FC<AddressFormProps> = ({ handleAction }) => {
                 {...register("phone", {
                   required: "Please provide a valid phone number",
                   minLength: {
-                    value: 11,
-                    message: "Phone number must be at least 11 digits long",
+                    value: 10,
+                    message: "Phone number must be at least 10 digits long",
                   },
                 })}
               />

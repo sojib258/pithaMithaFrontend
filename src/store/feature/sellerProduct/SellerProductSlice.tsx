@@ -25,7 +25,6 @@ export const fetchSellerProduct = createAsyncThunk(
         { headers }
       );
 
-      console.log("SellerProductSlice", response);
       return response?.data.products;
     } catch (error: any) {
       console.error("Error from sellerProductSlice", error);
@@ -67,6 +66,7 @@ const sellerProductSlice = createSlice({
               name: tag?.name,
             })),
             weight: item.weight,
+            completedDays: item.completedDays,
             isPopular: item.isPopular,
             isFeatured: item.isFeatured,
             isHotDeals: item.isHotDeals,

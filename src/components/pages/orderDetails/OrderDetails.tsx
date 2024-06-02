@@ -1,13 +1,13 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
-import Label from "@/components/atoms/label/Label";
 import Tracker from "@/components/molecules/tracker/Tracker";
+import AddressCart from "@/components/organisms/address/addressCart/AddressCart";
 import Products from "@/components/organisms/orderDetailProduct/Product";
 import { RootState } from "@/store/store";
 import dateFormat from "@/utils/dateFormat";
-import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,7 +30,7 @@ type Products = {
 };
 
 type Address = {
-  addressId: number | string;
+  id: number;
   fullName: string;
   number: number | string;
   division: string;
@@ -39,10 +39,11 @@ type Address = {
   address: string;
   landmark: string;
   deliveryOption: string;
+  createdAt: string;
 };
 
 type OrderDetails = {
-  orderId: string | number;
+  orderId: number;
   date: string;
   paid: boolean;
   transactionId: number | null;
@@ -52,8 +53,8 @@ type OrderDetails = {
   address: Address;
 };
 
-const initData = {
-  orderId: "",
+const initData: OrderDetails = {
+  orderId: 0,
   date: "",
   paid: false,
   transactionId: null,
@@ -61,7 +62,7 @@ const initData = {
   status: "",
   products: [],
   address: {
-    addressId: "",
+    id: 0,
     fullName: "",
     number: "",
     division: "",
@@ -70,6 +71,7 @@ const initData = {
     address: "",
     landmark: "",
     deliveryOption: "",
+    createdAt: "",
   },
 };
 
@@ -80,11 +82,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
   const [wrongOrderId, setWrongOrderId] = useState(false);
   const router = useRouter();
   // Fetch Product by OrderId
-  const { fullName, number, address, area, city, division, deliveryOption } =
-    orderDetails.address;
-  const orderItems = orderDetails.products;
 
-  const cartItems = orderItems.length;
+  const orderItems = orderDetails.products;
 
   const subTotal = orderItems.reduce((acc, cur) => {
     const priceToUse = cur.discountPrice ? cur.discountPrice : cur.price;
@@ -134,6 +133,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
   }, [token, orderId]);
 
   const orderDate = orderDetails && dateFormat(orderDetails.date);
+  console.log("Or", orderDetails);
 
   return (
     <>
@@ -170,48 +170,10 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
           <Box className={styles.details__body}>
             <Grid container>
               <Grid item xs={12} lg={7}>
-                <Box className={styles.details__addressArea}>
-                  <Typography className={styles.details__deliveryText}>
-                    Delivery Address:
-                  </Typography>
-                  <Typography className={styles.details__addressName}>
-                    {loading ? (
-                      <Skeleton className={styles.skeleton__text} />
-                    ) : (
-                      fullName
-                    )}
-                  </Typography>
-                  <Typography className={styles.details__addressLocation}>
-                    {loading ? (
-                      <Skeleton className={styles.skeleton__text} />
-                    ) : (
-                      address
-                    )}
-                  </Typography>
-                  <Typography className={styles.details__addressDivision}>
-                    {loading ? (
-                      <Skeleton className={styles.skeleton__text} />
-                    ) : (
-                      `${area}, ${city}, ${division}`
-                    )}
-                  </Typography>
-                  {loading ? (
-                    <Skeleton className={styles.skeleton__text} />
-                  ) : (
-                    deliveryOption && <Label text={deliveryOption} />
-                  )}
-
-                  <Typography
-                    component={"span"}
-                    className={styles.details__addressNumber}
-                  >
-                    {loading ? (
-                      <Skeleton className={styles.skeleton__text} />
-                    ) : (
-                      number
-                    )}
-                  </Typography>
-                </Box>
+                <AddressCart
+                  loading={loading}
+                  addressData={orderDetails.address}
+                />
               </Grid>
               <Grid item xs={12} lg={5}>
                 <Box className={styles.details__subTotalArea}>

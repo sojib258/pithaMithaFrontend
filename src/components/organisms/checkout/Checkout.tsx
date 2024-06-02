@@ -41,7 +41,6 @@ const Checkout = () => {
   });
 
   const [addressData, setAddressData] = useState<Data[]>([]);
-  const [updataComponent, setUpdataComponent] = useState(false);
   const [chosenAddressId, setChosenAddressId] = useState(null);
   const [cashOnDelivery, setCashOnDelivery] = useState(false);
   const [openPaymentOption, setOpenPaymentOption] = useState(false);
@@ -49,10 +48,6 @@ const Checkout = () => {
   const router = useRouter();
 
   const { token } = auth;
-
-  const handleCheckoutComponentReRender = () => {
-    setUpdataComponent(!updataComponent);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +62,6 @@ const Checkout = () => {
           { headers }
         );
 
-        console.log("Response", response);
         setLoading(false);
         setAddressData(response.data.addresses);
       } catch (error) {
@@ -99,6 +93,7 @@ const Checkout = () => {
     setChosenAddressId(addressId);
   };
 
+  // This is for open and close payment option
   const handlePaymentOption = () => {
     setOpenPaymentOption(!openPaymentOption);
   };
@@ -123,6 +118,7 @@ const Checkout = () => {
     if (cashOnDelivery) {
       try {
         setLoading(true);
+        handlePaymentOption();
         const headers = {
           Authorization: `Bearer ${auth.token}`,
         };
@@ -132,6 +128,7 @@ const Checkout = () => {
           totalPrice: grandTotal,
           paid: false,
           address: address,
+          status: "order placed",
         };
         const responsePromise = axios.post(
           `${process.env.NEXT_PUBLIC_API_KEY}/orders`,
@@ -159,7 +156,6 @@ const Checkout = () => {
 
         const orderId = response.data.data.id;
         setLoading(false);
-        handlePaymentOption();
         router.push(`/payment/order-success/${orderId}`);
       } catch (error) {
         setLoading(false);
@@ -190,8 +186,6 @@ const Checkout = () => {
         );
         setLoading(false);
         toast.dismiss(toastId);
-
-        console.log("Responsessssssssss", response);
 
         if (response.data.data?.status === "SUCCESS") {
           setPaymentData({

@@ -9,10 +9,11 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px;
+    svg {
+      color: $gray-1000 !important;
+    }
   }
-  &__icon {
-    margin-right: 5px;
-  }
+
   &__title {
     @extend %body-xs-600;
     text-transform: uppercase;

@@ -6,6 +6,7 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./scucessCart.module.scss";
@@ -47,6 +48,11 @@ const SuccessCart: React.FC<SuccessCartProps> = ({ orderId }) => {
   const dispatch = useDispatch();
   const [orderDetails, setOrderDetails] = useState<initialData>(initData);
   dispatch(deleteAllCarts());
+  const router = useRouter();
+
+  const handleTrackOrder = () => {
+    router.push(`/order-history/order-details/${orderId}`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -155,7 +161,11 @@ const SuccessCart: React.FC<SuccessCartProps> = ({ orderId }) => {
           </Box>
         </Box>
         <Box className={styles.cart__footer}>
-          <Button sx={{ width: "100%" }} text="Track Order" />
+          <Button
+            onClick={handleTrackOrder}
+            sx={{ width: "100%" }}
+            text="Track Order"
+          />
         </Box>
       </Box>
     </Box>

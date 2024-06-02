@@ -1,6 +1,8 @@
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined";
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./statusCart.module.scss";
 
 interface StatusCart {
@@ -9,6 +11,7 @@ interface StatusCart {
   icon: React.ReactNode;
   style?: object;
   currencyIcon?: boolean;
+  link: string;
 }
 
 const StatusCart: React.FC<StatusCart> = ({
@@ -17,29 +20,32 @@ const StatusCart: React.FC<StatusCart> = ({
   amount,
   title,
   currencyIcon,
+  link,
 }) => {
   return (
-    <Box sx={style} className={styles.cart}>
-      <Box className={styles.cart__header}>
-        {icon}
-        <Typography className={styles.cart__title}>{title}</Typography>
-      </Box>
-      <Box className={styles.cart__body}>
-        <Box className={styles.cart__countBox}>
-          {currencyIcon && (
-            <Image
-              width={40}
-              height={40}
-              src={"/icons/taka.png"}
-              alt="Taka Logo"
-              className={styles.cart__currencyIcon}
-            />
-          )}
-          <Typography className={styles.cart__count}>{34343}</Typography>
+    <Link href={link}>
+      <Box sx={style} className={styles.cart}>
+        <Box className={styles.cart__header}>
+          {icon}
+          <Typography className={styles.cart__title}>{title}</Typography>
         </Box>
-        <BoltOutlinedIcon />
+        <Box className={styles.cart__body}>
+          <Box className={styles.cart__countBox}>
+            {currencyIcon && (
+              <Image
+                width={40}
+                height={40}
+                src={"/icons/taka.png"}
+                alt="Taka Logo"
+                className={styles.cart__currencyIcon}
+              />
+            )}
+            <Typography className={styles.cart__count}>{amount}</Typography>
+          </Box>
+          <BoltOutlinedIcon sx={{ color: "#1a1a1a" }} />
+        </Box>
       </Box>
-    </Box>
+    </Link>
   );
 };
 

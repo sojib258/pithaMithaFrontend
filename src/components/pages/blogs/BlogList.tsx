@@ -14,7 +14,7 @@ const BlogList = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState("Latest");
+  const [selectValue, setSelectValue] = useState<string | number>("Latest");
   const resultFound = products.length;
   const selectBoxValue = ["Latest", "Popular", "Low to High", "High to Low"];
 
@@ -52,7 +52,7 @@ const BlogList = () => {
     },
   ];
 
-  const handleSelectValue = (value: string) => {
+  const handleSelectValue = (value: string | number) => {
     setSelectValue(value);
   };
 

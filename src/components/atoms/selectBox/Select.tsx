@@ -8,14 +8,15 @@ import { UseFormRegisterReturn } from "react-hook-form";
 import styles from "./selectBox.module.scss";
 
 interface SelectBoxProps {
-  value: string | undefined;
-  handleSelectValue?: (value: string) => void;
-  options: string[];
+  value: string | number | undefined;
+  handleSelectValue?: (value: string | number) => void;
+  options: (string | number)[];
   sx?: object;
   label: string;
   register?: UseFormRegisterReturn;
   disabled?: boolean;
 }
+
 const SelectBox: React.FC<SelectBoxProps> = ({
   value = "",
   handleSelectValue,
@@ -25,9 +26,11 @@ const SelectBox: React.FC<SelectBoxProps> = ({
   register,
   disabled = false,
 }) => {
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChange = (event: SelectChangeEvent<string | number>) => {
+    const { value } = event.target;
+    const parsedValue = isNaN(Number(value)) ? value : Number(value);
     if (handleSelectValue) {
-      handleSelectValue(event.target.value as string);
+      handleSelectValue(parsedValue);
     }
   };
 
