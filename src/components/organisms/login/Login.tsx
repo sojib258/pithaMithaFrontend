@@ -2,7 +2,8 @@
 import InputText from "@/components/atoms/inputText/InputText";
 import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
 import useResponsive from "@/hooks/useResponsive";
-import { setUser } from "@/store/feature/auth/AuthSlice";
+import { setAuth } from "@/store/feature/auth/AuthSlice";
+import { fetchUserData } from "@/store/feature/user/UserSlice";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -71,10 +72,9 @@ const Login = () => {
 
       const response = await responsePromise;
 
-      dispatch(setUser({ user: response.data.user, token: response.data.jwt }));
-
-      //  Logic to be here to set token to cookies
       Cookies.set("myAppAuthToken", response.data.jwt, { expires: 7 });
+      dispatch(setAuth({ user: response.data.user, token: response.data.jwt }));
+      dispatch((await fetchUserData()) as any);
 
       setLoading(false);
       router.push("/dashboard");

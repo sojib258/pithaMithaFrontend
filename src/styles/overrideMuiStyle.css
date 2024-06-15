@@ -492,6 +492,15 @@
 /*=====  End of Address Dialog  ======*/
 
 /*=============================================
+=            Review Dialog            =
+=============================================*/
+.review .MuiPaper-root {
+  max-width: 800px;
+}
+
+/*=====  End of Review Dialog  ======*/
+
+/*=============================================
 =            Pagination Area Styling Start          =
 =============================================*/
 .pagination .MuiPaginationItem-root.Mui-selected {

@@ -1,5 +1,6 @@
 "use client";
 import Pagination from "@/components/molecules/pagination/Pagination";
+import TableSkeleton from "@/components/molecules/skeleton/table/TableSkeleton";
 import RecentOrder from "@/components/organisms/recentOrder/RecentOrder";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
@@ -31,10 +32,17 @@ const OrderHistory = () => {
         setOrderDetails(
           response.data.data.map((item: any) => ({
             id: item.id,
-            status: item.attributes.status,
+            status: item.attributes.rootStatus,
+            paid: item.attributes.paid,
             totalPrice: item.attributes.totalPrice,
             date: item.attributes.createdAt,
-            totalProduct: item.attributes.products.length,
+            images: item.attributes.sellers.reduce((acc: any, seller: any) => {
+              const imgSrc = seller.products.map((product: any) => ({
+                imgSrc: product.imgSrc,
+                altText: product?.altText,
+              }));
+              return acc.concat(imgSrc);
+            }, []),
           }))
         );
         setLoading(false);
@@ -52,7 +60,15 @@ const OrderHistory = () => {
     <Box className={styles.history}>
       <Box className={styles.history__orderTable}>
         <Typography className={styles.history__text}>Order History</Typography>
-        <RecentOrder loading={loading} orderDetails={orderDetails} />
+        {loading ? (
+          <TableSkeleton />
+        ) : orderDetails.length > 0 ? (
+          <RecentOrder loading={loading} orderDetails={orderDetails} />
+        ) : (
+          <Typography className={styles.content__nothing}>
+            You don&apos;t have any orders right now.😊😊
+          </Typography>
+        )}
       </Box>
 
       <Box className={styles.history__orderPagination}>

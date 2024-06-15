@@ -1,6 +1,7 @@
 import Button from "@/components/atoms/button/Button";
 import { removeToCart } from "@/store/feature/cart/CartSlice";
 import { RootState } from "@/store/store";
+import { ProductData } from "@/utils/typesDefine/cartSliceTypes";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -16,6 +17,9 @@ interface ShoppingCartDialogProps {
   open: boolean;
   handleClose: () => void;
 }
+interface ProductWithSeller extends ProductData {
+  sellerId: number;
+}
 
 const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
   open = true,
@@ -25,9 +29,23 @@ const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const cartTotalItem = cartItems.length;
+  const cartsTotal = cartItems.reduce((acc, seller) => {
+    acc += seller.products.length;
+    return acc;
+  }, 0);
 
-  const subTotal = cartItems.reduce((acc, cur) => {
+  const allProducts: ProductWithSeller[] = cartItems.reduce(
+    (acc: ProductWithSeller[], seller) => {
+      const productsWithSeller = seller.products.map((product) => ({
+        ...product,
+        sellerId: seller.userId,
+      }));
+      return acc.concat(productsWithSeller);
+    },
+    []
+  );
+
+  const subTotal = allProducts.reduce((acc, cur) => {
     const priceToUse = cur.discountPrice ? cur.discountPrice : cur.price;
     const totalPrice = priceToUse * cur.quantity;
     acc += totalPrice;
@@ -45,10 +63,11 @@ const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
     router.push("/shopping-cart");
   };
 
-  const handleRemoveCart = (id: string | number) => {
+  const handleRemoveCart = (id: number, sellerId: number) => {
     dispatch(
       removeToCart({
         productId: id,
+        sellerId: sellerId,
       })
     );
   };
@@ -63,14 +82,14 @@ const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
     >
       <Box className={styles.cart__header}>
         <Typography className={styles.cart__heading}>
-          {`Shopping Card (${cartTotalItem})`}
+          {`Shopping Card (${cartsTotal})`}
         </Typography>
         <IconButton aria-label="close" onClick={handleClose}>
           <CloseIcon sx={{ color: "#1a1a1a" }} />
         </IconButton>
       </Box>
       <DialogContent className={styles.cart__body}>
-        {cartItems.map((item) => (
+        {allProducts.map((item) => (
           <Box className={styles.cart__item} key={item.productId}>
             <Box className={styles.cart__details}>
               <Image
@@ -105,7 +124,7 @@ const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
               sx={{ padding: "2px" }}
               className={styles.cart__deleteIcon}
               aria-label="delete"
-              onClick={() => handleRemoveCart(item.productId)}
+              onClick={() => handleRemoveCart(item.productId, item.sellerId)}
             >
               <CloseIcon sx={{ color: "#1a1a1a" }} />
             </IconButton>
@@ -115,7 +134,7 @@ const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
       <DialogActions className={styles.cart__action}>
         <Box className={styles.cart__priceSection}>
           <Typography className={styles.cart__priceTitle}>
-            {cartTotalItem} Products
+            {cartsTotal} Products
           </Typography>
           <Typography className={styles.cart__price}>
             <Image
@@ -131,7 +150,7 @@ const ShoppingCartDialog: React.FC<ShoppingCartDialogProps> = ({
         <Box mb={1} sx={{ width: "100%" }}>
           <Button
             sx={{ width: "100%" }}
-            disabled={cartTotalItem <= 0}
+            disabled={cartsTotal <= 0}
             text="Checkout"
             onClick={handleCheckoutBtn}
           />

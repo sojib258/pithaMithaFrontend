@@ -2,6 +2,7 @@ import Button from "@/components/atoms/button/Button";
 import OrderStatus from "@/components/atoms/orderStatus/OrderStatus";
 import OrderTableSkeleton from "@/components/molecules/skeleton/table/TableSkeleton";
 import dateFormat from "@/utils/dateFormat";
+import { OrderProduct } from "@/utils/typesDefine/orderSliceTypes";
 import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -10,36 +11,20 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./ordersTable.module.scss";
 
-interface OrderProduct {
-  productId: number;
-  title: string;
-  imgSrc: string;
-  altText?: string;
-  quantity: number;
-  price: number;
-  isServiceAvailable: boolean;
-  discountPrice?: number;
-}
-
 interface OrdersTableRowProps {
   orderId: string | number;
   date: string;
   status: string;
-  items: OrderProduct[];
+  products: OrderProduct[];
   loading?: boolean;
-  sellerProductIds: number[];
 }
 const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
   orderId,
   date,
   status,
-  items,
+  products,
   loading,
-  sellerProductIds,
 }) => {
-  const onlySellerProductInOrder = items.filter((product) => {
-    return sellerProductIds.includes(product.productId);
-  });
   const { date: tarikh } = dateFormat(date);
 
   return (
@@ -72,7 +57,7 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
             className={styles.order__tableCell}
           >
             <Box className={styles.order__images}>
-              {onlySellerProductInOrder.map((item, index) => (
+              {products.map((item, index) => (
                 <Image
                   key={index}
                   className={styles.order__productImage}

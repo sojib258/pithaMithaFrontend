@@ -1,4 +1,5 @@
 "use client";
+import { Seller } from "@/utils/typesDefine/productSliceTypes";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -15,6 +16,11 @@ interface Image {
   alternativeText?: string | undefined;
 }
 
+interface Tags {
+  id: number;
+  name: string;
+}
+
 interface quickViewProps {
   id: number;
   discountPrice?: number;
@@ -22,24 +28,30 @@ interface quickViewProps {
   handleClose: () => void;
   price: number;
   productTitle: string;
-  description?: string;
+  shortDescription?: string;
   ratingValue?: number;
   category?: string;
+  tags?: Tags[];
   images: Image[];
   isServiceAvailable: boolean;
+  seller: Seller;
+  weight: string;
 }
 
 const QuickViewDialog: React.FC<quickViewProps> = ({
   id,
   price,
   productTitle,
-  description,
+  shortDescription,
   ratingValue,
   category,
   discountPrice,
   open,
   images,
   isServiceAvailable,
+  seller,
+  weight,
+  tags,
   handleClose,
 }) => {
   return (
@@ -58,12 +70,15 @@ const QuickViewDialog: React.FC<quickViewProps> = ({
               id={id}
               price={price}
               productTitle={productTitle}
-              description={description}
+              shortDescription={shortDescription}
               ratingValue={ratingValue}
               category={category}
+              tags={tags}
               discountPrice={discountPrice}
               images={images}
               isServiceAvailable={isServiceAvailable}
+              weight={weight}
+              seller={seller}
             />
           </Box>
         </DialogContent>

@@ -7,7 +7,7 @@
     border: 1px solid $gray-300;
   }
   &__table {
-    min-width: 900px;
+    min-width: 1120px;
   }
   &__tableHead {
     background-color: $gray-200;
@@ -25,10 +25,12 @@
     @extend %body-sm-400;
     color: $gray-1000;
   }
+
   &__productImg {
-    width: 80px;
+    width: 60px;
     height: auto;
-    border-radius: 8px;
+    border-radius: 4px;
+    margin: 4px;
   }
   &__date {
     @extend %body-sm-400;

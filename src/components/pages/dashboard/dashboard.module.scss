@@ -37,6 +37,10 @@
   &__orderText {
     @extend %body-md-500;
   }
+  &__nothing {
+    @extend %body-md-400;
+    color: $gray-1000;
+  }
 
   // For Responsive
   @include lgScreen {

@@ -65,13 +65,13 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
             <Description description={product?.attributes.description || ""} />
           )}
           {activeBtn === "customerFeedback" &&
-            (ratings.items.length > 1 ? (
+            (ratings.items.length >= 1 ? (
               <Grid container>
                 <Grid item xs={12} md={8}>
                   {ratingItems.map((rating) => (
                     <Box
                       key={rating.ratingId}
-                      className={styles.details__cusRating}
+                      className={styles.productDetails__cusRating}
                     >
                       {loading ? (
                         <ReviewSkeleton />
@@ -81,6 +81,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
                           ratingValue={rating.ratingValue}
                           publishedAt={rating.publishedAt}
                           user={rating.user}
+                          images={rating.images}
                           loading={loading}
                         />
                       )}
@@ -88,7 +89,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
                   ))}
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Box className={styles.details__ratingValues}>
+                  <Box className={styles.productDetails__ratingValues}>
                     {loading ? (
                       <AverageRatingSkeleton />
                     ) : (
@@ -101,7 +102,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
                 </Grid>
               </Grid>
             ) : (
-              <Typography className={styles.details__noRatingText}>
+              <Typography className={styles.productDetails__noRatingText}>
                 There is no ratings in this product.😊😊
               </Typography>
             ))}

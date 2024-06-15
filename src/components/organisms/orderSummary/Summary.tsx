@@ -11,6 +11,7 @@ interface SummaryProps {
   shippingCost: number;
   grandTotal: number;
   btnText: string;
+  loading?: boolean;
   handleBtn: () => void;
   sx?: object;
 }
@@ -21,6 +22,7 @@ const Summary: React.FC<SummaryProps> = ({
   shippingCost,
   grandTotal,
   btnText,
+  loading,
   handleBtn,
   sx,
 }) => {
@@ -67,7 +69,7 @@ const Summary: React.FC<SummaryProps> = ({
       </Box>
       <Box className={styles.cartTotal__btn}>
         <Button
-          disabled={cartItems <= 0}
+          disabled={cartItems <= 0 || loading}
           sx={{ width: "100%" }}
           text={btnText}
           onClick={handleBtn}

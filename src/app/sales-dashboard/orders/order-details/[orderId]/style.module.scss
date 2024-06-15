@@ -5,4 +5,37 @@
   &__topSection {
     margin-bottom: 25px;
   }
+  &__address {
+    width: 98%;
+    height: auto;
+  }
+  &__responseTime {
+    width: 98%;
+    height: 100%;
+    margin-left: auto;
+    border: 1px solid $gray-300;
+    padding: 16px;
+    border-radius: 6px;
+  }
+  &__responseText {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+  &__responseTimeText {
+    @extend %heading-03-400;
+    color: $primary;
+  }
+
+  @include downMdScreen {
+    &__address {
+      width: 100%;
+      margin-bottom: 25px;
+    }
+    &__responseTime {
+      width: 100%;
+    }
+    &__responseTimeText {
+      font-size: 1rem;
+    }
+  }
 }

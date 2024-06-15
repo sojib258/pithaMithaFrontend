@@ -1,5 +1,5 @@
 "use client";
-import { clearUser as clearAuth } from "@/store/feature/auth/AuthSlice";
+import { clearAuth } from "@/store/feature/auth/AuthSlice";
 import { clearUser } from "@/store/feature/user/UserSlice";
 import { RootState } from "@/store/store";
 import Avatar from "@mui/material/Avatar";
@@ -65,10 +65,10 @@ function ResponsiveAppBar() {
 
   const handleLogout = () => {
     handleCloseUserMenu();
+    Cookies.remove("myAppAuthToken");
     dispatch(clearAuth());
     dispatch(clearUser());
-    Cookies.remove("myAppAuthToken");
-    router.push("/");
+    return router.push("/");
   };
 
   return (

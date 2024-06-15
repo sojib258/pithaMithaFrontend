@@ -26,6 +26,8 @@ const OrderStatus: React.FC<OrderStatusProps> = ({
         return styles.delivered;
       case "cancelled":
         return styles.cancelled;
+      case "pending":
+        return styles.pending;
       default:
         return "";
     }

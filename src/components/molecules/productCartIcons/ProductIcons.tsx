@@ -1,11 +1,5 @@
-import {
-  addToCart,
-  handleAlreadyExistInCart,
-} from "@/store/feature/cart/CartSlice";
-import {
-  addToWishList,
-  removeWishlist,
-} from "@/store/feature/wishlist/WishlistSlice";
+import { addToCart } from "@/store/feature/cart/CartSlice";
+import { toggleWishList } from "@/store/feature/wishlist/WishlistSlice";
 import { RootState } from "@/store/store";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -15,10 +9,11 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ProductData } from "@/utils/typesDefine/cartSliceTypes";
+import { Seller } from "@/utils/typesDefine/productSliceTypes";
 import styles from "./productIcons.module.scss";
 
 interface productIconProps {
@@ -29,6 +24,7 @@ interface productIconProps {
   discountPrice?: number;
   altText?: string;
   isServiceAvailable: boolean;
+  seller: Seller;
   handleOpen: () => void;
 }
 
@@ -41,94 +37,77 @@ const ProductIcon: React.FC<productIconProps> = ({
   price,
   discountPrice,
   isServiceAvailable,
+  seller,
 }) => {
-  const { auth, cart, wishlist } = useSelector((state: RootState) => state);
+  const { auth, wishlist } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const isAuthenticated = auth.isAuthenticated;
-  const carts = cart.items;
-  const wishlists = wishlist.items;
 
   const handleAddToCart = () => {
     if (isAuthenticated) {
       const toastId = toast.loading("Adding to Cart...");
-      setLoading(true);
-      const checkProductAlreadyExist = carts.findIndex(
-        (item: any) => item.productId === id
-      );
 
-      if (checkProductAlreadyExist === -1) {
-        dispatch(
-          addToCart({
+      dispatch(
+        addToCart({
+          sellerId: seller.sellerId,
+          sellerImg: seller.sellerImg,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          responseTime: seller.responseTime,
+          averageResponseTime: seller.averageResponseTime,
+          product: {
             productId: id,
-            title: title,
             imgSrc: imgSrc,
-            altText: altText,
-            quantity: 1,
-            price: price,
             isServiceAvailable: isServiceAvailable,
+            price: price,
             discountPrice: discountPrice,
-          })
-        );
-        toast.success("Added Successful", {
-          id: toastId,
-        });
-        setLoading(false);
-      } else {
-        dispatch(
-          handleAlreadyExistInCart({
-            productId: id,
             quantity: 1,
-          })
-        );
-        toast.success("Added Successful", {
-          id: toastId,
-        });
-        setLoading(false);
-      }
+            title: title,
+            altText: altText,
+          },
+        })
+      );
+      toast.success("Added Successful", {
+        id: toastId,
+      });
     } else {
       toast.error("You have to login first for adding to cart");
       router.push("/login");
     }
   };
 
-  const existInWishlist = wishlists.findIndex(
+  const allProducts = wishlist.items.reduce((acc: ProductData[], seller) => {
+    return acc.concat(seller.products);
+  }, []);
+
+  const existInWishlist = allProducts.findIndex(
     (item: any) => item.productId === id
   );
+
   const handleAddToWishlist = () => {
     if (isAuthenticated) {
-      const toastId = toast.loading("Adding to Wishlist...");
-      setLoading(true);
-
-      if (existInWishlist === -1) {
-        dispatch(
-          addToWishList({
+      dispatch(
+        toggleWishList({
+          sellerId: seller.sellerId,
+          sellerImg: seller.sellerImg,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          responseTime: seller.responseTime,
+          averageResponseTime: seller.averageResponseTime,
+          product: {
             productId: id,
             imgSrc: imgSrc,
+            isServiceAvailable: isServiceAvailable,
             price: price,
             discountPrice: discountPrice,
-            altText: altText,
-            isServiceAvailable: isServiceAvailable,
+            quantity: 1,
             title: title,
-          })
-        );
-        toast.success("Added to Wishlist", {
-          id: toastId,
-        });
-        setLoading(false);
-      } else {
-        dispatch(
-          removeWishlist({
-            productId: id,
-          })
-        );
-        toast.success("Remove from Wishlist", {
-          id: toastId,
-        });
-        setLoading(false);
-      }
+            altText: altText,
+          },
+        })
+      );
     } else {
       toast.error("You have to login first for adding to cart");
       router.push("/login");

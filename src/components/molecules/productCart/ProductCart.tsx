@@ -1,13 +1,10 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
-import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
 import QuickViewDialog from "@/components/organisms/quickView/QuickViewDialog";
 import useResponsive from "@/hooks/useResponsive";
-import {
-  addToCart,
-  handleAlreadyExistInCart,
-} from "@/store/feature/cart/CartSlice";
+import { addToCart } from "@/store/feature/cart/CartSlice";
 import { RootState } from "@/store/store";
+import { Seller } from "@/utils/typesDefine/productSliceTypes";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
@@ -27,7 +24,10 @@ interface Image {
   url: string;
   alternativeText?: string | undefined;
 }
-
+interface Tags {
+  id: number;
+  name: string;
+}
 interface productProps {
   id: number;
   images: Image[];
@@ -38,9 +38,11 @@ interface productProps {
   description: string;
   shortDescription: string;
   category?: string;
+  tags: Tags[];
   isServiceAvailable: boolean;
   href: string;
   weight: string;
+  seller: Seller;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
@@ -52,12 +54,13 @@ const ProductCart: React.FC<productProps> = ({
   discountPrice,
   name,
   averageRating,
-  description,
   shortDescription,
   category,
   isServiceAvailable,
   href,
   weight,
+  seller,
+  tags,
 }) => {
   const { downMdScreen, downSmScreen } = useResponsive();
   const { cart, auth } = useSelector((state: RootState) => state);
@@ -74,46 +77,40 @@ const ProductCart: React.FC<productProps> = ({
     setOpen(false);
   };
 
+  console.log("SellerFromCart", seller);
+
   const isAuthenticated = auth.isAuthenticated;
-  const carts = cart.items;
+  console.log("Sllll", seller);
 
   const handleAddToCart = () => {
     if (isAuthenticated) {
       const toastId = toast.loading("Adding to Cart...");
       setLoading(true);
-      const checkProductAlreadyExist = carts.findIndex(
-        (item: any) => item.productId === id
-      );
 
-      if (checkProductAlreadyExist === -1) {
-        dispatch(
-          addToCart({
+      dispatch(
+        addToCart({
+          sellerId: seller.sellerId,
+          sellerImg: seller.sellerImg,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          responseTime: seller.responseTime,
+          averageResponseTime: seller.averageResponseTime,
+          product: {
             productId: id,
-            title: name,
             imgSrc: images[0].url,
-            altText: images[0].alternativeText,
-            quantity: 1,
-            price: price,
             isServiceAvailable: isServiceAvailable,
+            price: price,
             discountPrice: discountPrice,
-          })
-        );
-        toast.success("Added to Cart", {
-          id: toastId,
-        });
-        setLoading(false);
-      } else {
-        dispatch(
-          handleAlreadyExistInCart({
-            productId: id,
             quantity: 1,
-          })
-        );
-        toast.success("Added to Cart", {
-          id: toastId,
-        });
-        setLoading(false);
-      }
+            title: name,
+            altText: images[0].alternativeText,
+          },
+        })
+      );
+      toast.success("Added to Cart", {
+        id: toastId,
+      });
+      setLoading(false);
     } else {
       toast.error("You have to login first for adding to cart");
       router.push("/login");
@@ -149,6 +146,7 @@ const ProductCart: React.FC<productProps> = ({
                 isServiceAvailable={isServiceAvailable}
                 altText={images[0].alternativeText}
                 handleOpen={handleOpen}
+                seller={seller}
               />
             </Box>
           </Box>
@@ -159,15 +157,17 @@ const ProductCart: React.FC<productProps> = ({
             <Typography className={styles.productCart__title}>
               {name}
             </Typography>
-            <Box mb={1}>
-              <Rating
-                fontSize={downSmScreen ? "15px!important" : "18px!important"}
-                value={averageRating}
-                readOnly
-              />
-            </Box>
+            {averageRating && (
+              <Box mb={1}>
+                <Rating
+                  fontSize={downSmScreen ? "15px!important" : "18px!important"}
+                  value={averageRating}
+                  readOnly
+                />
+              </Box>
+            )}
             <Typography className={styles.productCart__amount}>
-              (2 kg)
+              {`(1 ${weight})`}
             </Typography>
           </Box>
         </Link>
@@ -218,19 +218,21 @@ const ProductCart: React.FC<productProps> = ({
       {open && (
         <QuickViewDialog
           id={id}
-          description={shortDescription}
+          shortDescription={shortDescription}
           price={price}
           discountPrice={discountPrice}
           productTitle={name}
           ratingValue={averageRating}
           category={category}
+          tags={tags}
           handleClose={handleClose}
           open={open}
           images={images}
           isServiceAvailable={isServiceAvailable}
+          weight={weight}
+          seller={seller}
         />
       )}
-      <ToasterMsg />
     </>
   );
 };

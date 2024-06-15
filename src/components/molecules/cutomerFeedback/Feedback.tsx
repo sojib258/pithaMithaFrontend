@@ -1,18 +1,25 @@
-import timeFormat from "@/utils/timeFormat";
+import timeAgo from "@/utils/timeAgo";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Rating from "../../atoms/ratings/Rating";
 import styles from "./feedback.module.scss";
+type ImageData = {
+  imageId: number;
+  width: number;
+  height: number;
+  url: string;
+  altText?: string;
+};
 
 type User = {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   userId: string | number;
-  width: number;
-  height: number;
-  imgSrc: string;
+  width?: number;
+  height?: number;
+  imgSrc?: string;
   altText?: string;
 };
 
@@ -21,6 +28,7 @@ interface FeedbackProps {
   comment: string;
   publishedAt: string;
   user: User;
+  images?: ImageData[];
   loading?: boolean;
 }
 const Feedback: React.FC<FeedbackProps> = ({
@@ -28,9 +36,12 @@ const Feedback: React.FC<FeedbackProps> = ({
   ratingValue,
   comment,
   publishedAt,
+  images,
   loading,
 }) => {
-  const timesAgo = timeFormat(publishedAt);
+  const timesAgo = timeAgo(publishedAt);
+
+  console.log("Images", images);
 
   return (
     <>
@@ -70,6 +81,18 @@ const Feedback: React.FC<FeedbackProps> = ({
           <Typography className={styles.feedback__comment}>
             {comment}
           </Typography>
+        </Box>
+        <Box className={styles.feedback__imagesArea}>
+          {images?.map((item, index) => (
+            <Image
+              key={index}
+              width={400}
+              height={400}
+              src={item.url}
+              alt={item.altText ? item.altText : "Review Image"}
+              className={styles.feedback__reviewImg}
+            />
+          ))}
         </Box>
       </Box>
     </>

@@ -1,11 +1,11 @@
 import Button from "@/components/atoms/button/Button";
 import Stock from "@/components/atoms/stockStatus/Stock";
 import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
+import { addToCart } from "@/store/feature/cart/CartSlice";
 import {
-  addToCart,
-  handleAlreadyExistInCart,
-} from "@/store/feature/cart/CartSlice";
-import { removeWishlist } from "@/store/feature/wishlist/WishlistSlice";
+  removeWishlist,
+  toggleWishList,
+} from "@/store/feature/wishlist/WishlistSlice";
 import { RootState } from "@/store/store";
 import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
 import { IconButton } from "@mui/material";
@@ -22,21 +22,33 @@ import styles from "./wishlist.module.scss";
 interface WishlistRowsProps {
   id: number;
   imgSrc: string;
-  productName: string;
+  name: string;
   price: number;
   discountPrice?: number;
   isServiceAvailable: boolean;
   altText?: string;
+  sellerId: number;
+  firstName: string;
+  lastName?: string;
+  sellerImg?: string;
+  responseTime?: number;
+  averageResponseTime?: number;
 }
 
 const WishlistRows: React.FC<WishlistRowsProps> = ({
   imgSrc,
   price,
-  productName,
+  name,
   discountPrice,
   isServiceAvailable,
   id,
   altText,
+  sellerId,
+  firstName,
+  lastName,
+  sellerImg,
+  responseTime,
+  averageResponseTime,
 }) => {
   const { cart } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
@@ -45,43 +57,53 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
 
   const handleDeleteWishlist = () => {
     dispatch(
-      removeWishlist({
-        productId: id,
+      toggleWishList({
+        sellerId: sellerId,
+        sellerImg: sellerImg,
+        firstName: firstName,
+        lastName: lastName,
+        averageResponseTime: averageResponseTime,
+        product: {
+          productId: id,
+          imgSrc: imgSrc,
+          isServiceAvailable: isServiceAvailable,
+          price: price,
+          discountPrice: discountPrice,
+          quantity: 1,
+          title: name,
+          altText: altText,
+        },
       })
     );
   };
 
   const handleAddToCart = () => {
-    const checkProductAlreadyExist = cartItems.findIndex(
-      (item: any) => item.productId === id
-    );
-
-    if (checkProductAlreadyExist === -1) {
-      dispatch(
-        addToCart({
+    dispatch(
+      addToCart({
+        sellerId: sellerId,
+        sellerImg: sellerImg,
+        firstName: firstName,
+        lastName: lastName,
+        responseTime: responseTime,
+        averageResponseTime: averageResponseTime,
+        product: {
           productId: id,
-          title: productName,
           imgSrc: imgSrc,
-          altText: altText,
-          quantity: 1,
+          isServiceAvailable: isServiceAvailable,
           price: price,
           discountPrice: discountPrice,
-          isServiceAvailable: isServiceAvailable,
-        })
-      );
-      toast.success("Added to Cart");
-    } else {
-      dispatch(
-        handleAlreadyExistInCart({
-          productId: id,
           quantity: 1,
-        })
-      );
-      toast.success("Added to Cart");
-    }
+          title: name,
+          altText: altText,
+        },
+      })
+    );
+    toast.success("Added to Cart");
+
     dispatch(
       removeWishlist({
         productId: id,
+        sellerId: sellerId,
       })
     );
   };
@@ -103,7 +125,7 @@ const WishlistRows: React.FC<WishlistRowsProps> = ({
             className={styles.wishList__productImage}
           />
           <Typography className={styles.wishList__productName}>
-            {productName}
+            {name}
           </Typography>
         </TableCell>
       </Link>

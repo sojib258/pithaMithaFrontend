@@ -19,24 +19,14 @@ export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
   const response = await axios.get(`${API_URL}/orders`, { headers });
 
   return response.data.data.map((order: any) => {
-    const products =
-      typeof order.attributes.products === "string"
-        ? JSON.parse(order.attributes.products)
-        : order.attributes.products;
-
-    const address =
-      typeof order.attributes.address === "string"
-        ? JSON.parse(order.attributes.address)
-        : order.attributes.address;
-
     return {
       id: order.id,
-      status: order.attributes.status,
+      rootStatus: order.attributes.rootStatus,
       totalPrice: order.attributes.totalPrice,
       paid: order.attributes.paid,
-      products,
-      address,
       createdAt: order.attributes.createdAt,
+      sellers: order.attributes.sellers,
+      address: order.attributes.address,
     };
   });
 });

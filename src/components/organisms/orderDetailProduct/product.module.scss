@@ -37,6 +37,15 @@
     justify-content: flex-start;
     align-items: center;
   }
+  &__sellerTotalText {
+    @extend %body-sm-600;
+    color: $gray-1000;
+    text-align: right;
+  }
+  &__sellerTotalPrice {
+    @extend %body-sm-600;
+    color: $gray-1000;
+  }
   &__currencyIcon {
     width: 18px;
     height: 18px;

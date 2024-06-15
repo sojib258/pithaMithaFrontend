@@ -29,6 +29,7 @@ export const fetchTags = createAsyncThunk("tags/fetchItems", async () => {
     };
     const response = await axios.get(`${API_URL}/tags`, { headers });
 
+    console.log("ResponseTags", response);
     return response?.data.data;
   } catch (error: any) {
     console.error("Error from tagsSlice", error);

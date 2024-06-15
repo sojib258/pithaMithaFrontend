@@ -6,15 +6,12 @@ import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
 import Quantity from "@/components/molecules/addQuantity/Quantity";
 import SocialIcon from "@/components/molecules/socialIcons/SocialIcon";
 import useResponsive from "@/hooks/useResponsive";
-import {
-  addToCart,
-  handleAlreadyExistInCart,
-} from "@/store/feature/cart/CartSlice";
-import {
-  addToWishList,
-  removeWishlist,
-} from "@/store/feature/wishlist/WishlistSlice";
+import { addToCart } from "@/store/feature/cart/CartSlice";
+import { fetchRatingData } from "@/store/feature/rating/RatingSlice";
+import { toggleWishList } from "@/store/feature/wishlist/WishlistSlice";
 import { RootState } from "@/store/store";
+import { ProductData } from "@/utils/typesDefine/cartSliceTypes";
+import { Seller } from "@/utils/typesDefine/productSliceTypes";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { Stack } from "@mui/material";
@@ -25,7 +22,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import QuickViewSlider from "./QuickViewSlider";
@@ -37,18 +34,24 @@ interface Image {
   url: string;
   alternativeText?: string | undefined;
 }
-
+interface Tags {
+  id: number;
+  name: string;
+}
 interface quickViewProps {
   id: number;
   discountPrice?: number;
   price: number;
   productTitle: string;
-  description?: string;
+  shortDescription?: string;
   ratingValue?: number;
   category?: string;
+  tags?: Tags[];
   images: Image[];
   customStyle?: object;
   isServiceAvailable: boolean;
+  weight: string;
+  seller: Seller;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
@@ -57,26 +60,33 @@ const QuickView: React.FC<quickViewProps> = ({
   id: productId,
   price,
   productTitle,
-  description,
+  shortDescription,
   ratingValue,
   category,
+  tags = [],
   discountPrice,
   images,
   customStyle,
   isServiceAvailable,
+  weight,
+  seller,
 }) => {
-  const { auth, cart, wishlist } = useSelector((state: RootState) => state);
+  const { auth, cart, wishlist, ratings } = useSelector(
+    (state: RootState) => state
+  );
   const [imgSrc, setImgSrc] = useState(images[0].url);
   const { downSmScreen, downMdScreen, mediumToLarge } = useResponsive();
   const [quantity, setQuantity] = useState(1);
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { isAuthenticated, userId, token } = auth;
+  const { isAuthenticated } = auth;
   const { items: cartItems } = cart;
   const { items: wishlistItems } = wishlist;
   const { alternativeText } = images[0];
+  const totalRatings = ratings.items.length;
 
   const discount = discountPrice
     ? Math.floor(((price - discountPrice) / price) * 100)
@@ -94,40 +104,30 @@ const QuickView: React.FC<quickViewProps> = ({
     if (isAuthenticated) {
       const toastId = toast.loading("Adding to Cart...");
       setLoading(true);
-      const checkProductAlreadyExist = cartItems.findIndex(
-        (item: any) => item.productId === productId
-      );
-
-      if (checkProductAlreadyExist === -1) {
-        dispatch(
-          addToCart({
+      dispatch(
+        addToCart({
+          sellerId: seller.sellerId,
+          sellerImg: seller.sellerImg,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          responseTime: seller.responseTime,
+          averageResponseTime: seller.averageResponseTime,
+          product: {
             productId: productId,
-            title: productTitle,
-            imgSrc: imgSrc,
-            altText: alternativeText,
-            quantity: quantity,
-            price: price,
+            imgSrc: images[0].url,
             isServiceAvailable: isServiceAvailable,
+            price: price,
             discountPrice: discountPrice,
-          })
-        );
-        toast.success("Added to Cart", {
-          id: toastId,
-        });
-        setLoading(false);
-      } else {
-        dispatch(
-          handleAlreadyExistInCart({
-            productId: productId,
             quantity: quantity,
-          })
-        );
-        toast.success("Added to Cart", {
-          id: toastId,
-        });
-
-        setLoading(false);
-      }
+            title: productTitle,
+            altText: images[0].alternativeText,
+          },
+        })
+      );
+      toast.success("Added to Cart", {
+        id: toastId,
+      });
+      setLoading(false);
     } else {
       toast.error("You have to login first for adding to cart");
       router.push("/login");
@@ -135,48 +135,47 @@ const QuickView: React.FC<quickViewProps> = ({
     }
   };
 
-  const existInWishlist = wishlistItems.findIndex(
+  const allProducts = wishlist.items.reduce((acc: ProductData[], seller) => {
+    return acc.concat(seller.products);
+  }, []);
+
+  const existInWishlist = allProducts.findIndex(
     (item: any) => item.productId === productId
   );
 
   const handleAddToWishlist = () => {
     if (isAuthenticated) {
-      const toastId = toast.loading("Adding to Wishlist...");
-      setLoading(true);
-
-      if (existInWishlist === -1) {
-        dispatch(
-          addToWishList({
+      dispatch(
+        toggleWishList({
+          sellerId: seller.sellerId,
+          sellerImg: seller.sellerImg,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          averageResponseTime: seller.averageResponseTime,
+          product: {
             productId: productId,
-            imgSrc: imgSrc,
+            imgSrc: images[0].url,
+            isServiceAvailable: isServiceAvailable,
             price: price,
             discountPrice: discountPrice,
-            altText: alternativeText,
-            isServiceAvailable: isServiceAvailable,
+            quantity: 1,
             title: productTitle,
-          })
-        );
-        toast.success("Added to Wishlist", {
-          id: toastId,
-        });
-        setLoading(false);
-      } else {
-        dispatch(
-          removeWishlist({
-            productId: productId,
-          })
-        );
-        toast.success("Remove from Wishlist", {
-          id: toastId,
-        });
-        setLoading(false);
-      }
+            altText: images[0].alternativeText,
+          },
+        })
+      );
     } else {
       toast.error("You have to login first for adding to cart");
       router.push("/login");
       return;
     }
   };
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(fetchRatingData(productId) as any);
+    }
+  }, [dispatch, productId]);
 
   return (
     <>
@@ -224,7 +223,7 @@ const QuickView: React.FC<quickViewProps> = ({
             <Rating
               customStyle={{ maxWidth: "200px" }}
               value={ratingValue}
-              reviewText={"Hello"}
+              reviewText={`${totalRatings} ratings`}
               readOnly
             />
             <Stock
@@ -258,6 +257,12 @@ const QuickView: React.FC<quickViewProps> = ({
                 &#2547; {price}
               </Typography>
             )}
+            <Typography
+              className={styles.quickView__perWeight}
+              component={"span"}
+            >
+              / {weight}
+            </Typography>
             {discountPrice && (
               <Typography
                 className={styles.quickView__discount}
@@ -265,12 +270,12 @@ const QuickView: React.FC<quickViewProps> = ({
               >
                 {discount}% Off
               </Typography>
-            )}
+            )}{" "}
           </Typography>
 
           {/* Product Description Area */}
           <Typography className={styles.quickView__description}>
-            {description}
+            {shortDescription}
           </Typography>
 
           {/* Product Actions Area */}
@@ -327,6 +332,22 @@ const QuickView: React.FC<quickViewProps> = ({
               {category}
             </Typography>
           </Typography>
+
+          {/* Product Tags Area */}
+          {tags.length > 0 && (
+            <Typography className={styles.quickView__tagsTitle}>
+              Category:{" "}
+              {tags?.map((tag) => (
+                <Typography
+                  key={tag.id}
+                  component={"span"}
+                  className={styles.quickView__tagsValue}
+                >
+                  {tag.name}
+                </Typography>
+              ))}
+            </Typography>
+          )}
 
           {/* Product Share Icons */}
           <Box className={styles.quickView__shareItems}>

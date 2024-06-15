@@ -19,11 +19,14 @@ import styles from "./wishlist.module.scss";
 const Wishlist = () => {
   const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
 
-  const totalItems = wishlistItems.length;
+  const wishListTotal = wishlistItems.reduce((acc, seller) => {
+    acc += seller.products.length;
+    return acc;
+  }, 0);
 
   return (
     <Box className={styles.wishList}>
-      {totalItems > 0 ? (
+      {wishListTotal > 0 ? (
         <TableContainer
           className={styles.wishList__container}
           component={Paper}
@@ -60,18 +63,25 @@ const Wishlist = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {wishlistItems.map((item) => (
-                <WishlistRows
-                  id={item.productId}
-                  imgSrc={item.imgSrc}
-                  price={item.price}
-                  productName={item.title}
-                  isServiceAvailable={item.isServiceAvailable}
-                  discountPrice={item.discountPrice}
-                  key={item.productId}
-                  altText={item.altText}
-                />
-              ))}
+              {wishlistItems.map((seller) =>
+                seller.products.map((product) => (
+                  <WishlistRows
+                    id={product.productId}
+                    imgSrc={product.imgSrc}
+                    price={product.price}
+                    name={product.title}
+                    isServiceAvailable={product.isServiceAvailable}
+                    discountPrice={product.discountPrice}
+                    key={product.productId}
+                    altText={product.altText}
+                    sellerId={seller.userId}
+                    firstName={seller.firstName}
+                    lastName={seller.lastName}
+                    averageResponseTime={seller.averageResponseTime}
+                    sellerImg={seller.sellerImg}
+                  />
+                ))
+              )}
               <TableRow className={styles.wishList__tableRow}>
                 <TableCell
                   className={styles.wishList__tableCell}

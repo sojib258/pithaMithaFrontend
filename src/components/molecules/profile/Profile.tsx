@@ -7,7 +7,7 @@ import styles from "./profile.module.scss";
 
 type UserData = {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   profileImg: {
     width: number | null;
     height: number | null;

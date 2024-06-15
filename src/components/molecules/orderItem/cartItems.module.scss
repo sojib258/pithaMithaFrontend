@@ -1,0 +1,72 @@
+@import "@/styles/style.scss";
+
+.order {
+  width: 100%;
+  height: auto;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  box-shadow: 0px 0px 12px -3px #a7b4ab;
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0px 15px 0px;
+  }
+  &__sellerName {
+    @extend %body-sm-400;
+    color: $gray-800;
+    &V {
+      @extend %body-sm-600;
+      color: $gray-1000;
+    }
+  }
+  &__sellerResponseTime {
+    @extend %body-sm-400;
+    color: $gray-800;
+    &V {
+      @extend %body-sm-600;
+      color: $gray-1000;
+    }
+  }
+  &__cart {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid $gray-200;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0px;
+  }
+  &__image {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 12px;
+  }
+  &__title {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    width: 60%;
+  }
+  &__quantity {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    margin: 0px 20px;
+  }
+  &__currencyIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    user-select: none;
+  }
+  &__price {
+    @extend %body-sm-400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $gray-1000;
+    margin-left: auto;
+  }
+}

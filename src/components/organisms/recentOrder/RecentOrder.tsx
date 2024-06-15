@@ -10,19 +10,18 @@ import TableRow from "@mui/material/TableRow";
 import styles from "./recentOrder.module.scss";
 
 type Data = {
-  id: string | number;
+  id: number;
   status: string;
   paid: boolean;
   date: string;
   totalPrice: number;
-  totalProduct: number;
-  imgSrc: string;
+  images: [{ imgSrc: string; altText?: string }];
   altText?: string;
 };
 
 interface RecentOrderProps {
   orderDetails: Data[];
-  loading: boolean;
+  loading?: boolean;
 }
 
 const RecentOrder: React.FC<RecentOrderProps> = ({ orderDetails, loading }) => {
@@ -38,10 +37,15 @@ const RecentOrder: React.FC<RecentOrderProps> = ({ orderDetails, loading }) => {
               className={styles.recent__tableRow}
               sx={{ border: "1px solid #e6e6e6;" }}
             >
-              <TableCell className={styles.recent__tableCell}>
+              <TableCell className={styles.recent__tableCellTH}>
                 Order Id
               </TableCell>
-              <TableCell className={styles.recent__tableCellTH}></TableCell>
+              <TableCell
+                sx={{ width: "34%" }}
+                className={styles.recent__tableCellTH}
+              >
+                Products
+              </TableCell>
               <TableCell className={styles.recent__tableCellTH}>Date</TableCell>
               <TableCell className={styles.recent__tableCellTH}>
                 Total
@@ -63,10 +67,7 @@ const RecentOrder: React.FC<RecentOrderProps> = ({ orderDetails, loading }) => {
                 date={item.date}
                 status={item.status}
                 totalPrice={item.totalPrice}
-                totalProduct={item.totalProduct}
-                imgSrc={item.imgSrc}
-                altText={item.altText}
-                loading={loading}
+                images={item.images}
                 paid={item.paid}
               />
             ))}

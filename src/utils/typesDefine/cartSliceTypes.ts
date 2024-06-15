@@ -11,9 +11,12 @@ export interface ProductData {
 
 export interface CartSliceData {
   userId: number;
-  userName: string;
+  firstName: string;
+  lastName?: string;
+  sellerImg?: string;
   status: string;
-  averageResponseTime: number;
+  responseTime?: number;
+  averageResponseTime?: number;
   products: ProductData[];
 }
 

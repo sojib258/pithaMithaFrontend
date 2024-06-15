@@ -1,11 +1,15 @@
 "use client";
+import ResponseTime from "@/components/molecules/responseTime/ResponseTime";
+import AddressSkeleton from "@/components/molecules/skeleton/address/AddressSkeleton";
+import TableSkeleton from "@/components/molecules/skeleton/table/TableSkeleton";
 import AddressCart from "@/components/organisms/address/addressCart/AddressCart";
 import OrderDetailsTable from "@/components/organisms/orderDetailsTable/OrderDetailsTable";
 import { RootState } from "@/store/store";
+import timeFormat from "@/utils/timeFormat";
 import { Order } from "@/utils/typesDefine/orderSliceTypes";
-import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,12 +20,18 @@ const Page = ({ params }: { params: { orderId: string } }) => {
   const { orderId: orderIdString } = params;
   const orderId = parseInt(orderIdString);
 
-  const { auth, sellerProduct } = useSelector((state: RootState) => state);
+  const { auth } = useSelector((state: RootState) => state);
   const [orderData, setOrderData] = useState<Order>();
   const [loading, setLoading] = useState(true);
   const [render, setRender] = useState(false);
+  const [responseTime, setResponseTime] = useState<number>(0);
 
-  const sellerProductIds = sellerProduct.items.map((product) => product.id);
+  const sellerOrder = orderData?.sellers.find(
+    (seller) => seller.userId === auth.userId
+  );
+
+  const formatedTime =
+    sellerOrder?.responseTime && timeFormat(sellerOrder?.responseTime);
 
   const handleLoading = (value: boolean) => {
     setLoading(value);
@@ -29,6 +39,10 @@ const Page = ({ params }: { params: { orderId: string } }) => {
 
   const handleReRender = () => {
     setRender(!render);
+  };
+
+  const handleElapsedTimeUpdate = (elapsedTime: number) => {
+    setResponseTime(elapsedTime);
   };
 
   const fetchOrderData = useCallback(async () => {
@@ -40,24 +54,16 @@ const Page = ({ params }: { params: { orderId: string } }) => {
       const response = await axios.get(`${API_URL}/orders/${orderId}`, {
         headers,
       });
+
       const responseData = response.data.data;
 
       const order: Order = {
         id: responseData.id,
-        status: responseData.attributes.status,
+        rootStatus: responseData.attributes.rootStatus,
         totalPrice: responseData.attributes.totalPrice,
         paid: responseData.attributes.paid,
         transactionId: responseData.attributes.transactionId,
-        products: responseData.attributes.products.map((product: any) => ({
-          productId: product.productId,
-          title: product.title,
-          imgSrc: product.imgSrc,
-          altText: product.altText,
-          quantity: product.quantity,
-          price: product.price,
-          isServiceAvailable: product.isServiceAvailable,
-          discountPrice: product.discountPrice,
-        })),
+        sellers: responseData.attributes.sellers,
         address: {
           id: responseData.attributes.address.id,
           city: responseData.attributes.address.city,
@@ -90,31 +96,65 @@ const Page = ({ params }: { params: { orderId: string } }) => {
         <Grid container>
           <Grid item xs={12} md={6}>
             <Box className={styles.order__address}>
-              {orderData?.address && (
-                <AddressCart
-                  loading={loading}
-                  addressData={orderData.address}
-                />
+              {loading ? (
+                <AddressSkeleton />
+              ) : (
+                orderData?.address && (
+                  <AddressCart addressData={orderData.address} />
+                )
               )}
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <Box className={styles.order__responseTime}>
-              <Typography>Response Time:</Typography>
+              {sellerOrder?.status === "order placed" ? (
+                orderData?.createdAt && (
+                  <>
+                    <Typography className={styles.order__responseText}>
+                      Response Time:
+                    </Typography>
+                    <Typography className={styles.order__responseTimeText}>
+                      <ResponseTime
+                        onElapsedTimeUpdate={handleElapsedTimeUpdate}
+                        startTime={orderData.createdAt}
+                      />
+                    </Typography>
+                  </>
+                )
+              ) : (
+                <>
+                  <Typography className={styles.order__responseText}>
+                    Response Time:
+                  </Typography>
+                  <Typography className={styles.order__responseTimeText}>
+                    {formatedTime}
+                  </Typography>
+                </>
+              )}
             </Box>
           </Grid>
         </Grid>
       </Box>
       <Box className={styles.order__tableSection}>
-        {orderData && (
-          <OrderDetailsTable
-            sellerProductIds={sellerProductIds}
-            orderData={orderData}
-            token={auth.token}
-            loading={loading}
-            handleLoading={handleLoading}
-            handleRender={handleReRender}
-          />
+        {loading ? (
+          <TableSkeleton />
+        ) : (
+          orderData &&
+          sellerOrder && (
+            <OrderDetailsTable
+              sellerOrder={sellerOrder}
+              orderId={orderData.id}
+              rootStatus={orderData.rootStatus}
+              date={orderData?.createdAt}
+              paid={orderData.paid}
+              token={auth.token}
+              userId={auth.userId}
+              loading={loading}
+              handleLoading={handleLoading}
+              handleRender={handleReRender}
+              elapsedTime={responseTime}
+            />
+          )
         )}
       </Box>
     </Box>

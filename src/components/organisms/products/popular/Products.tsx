@@ -93,6 +93,8 @@ const Products = () => {
                   href={`/products/${item.id}`}
                   shortDescription={item.attributes.shortDescription}
                   weight={item.attributes.weight}
+                  seller={item.attributes.seller}
+                  tags={item.attributes.tags}
                 />
               </Grid>
             ))}

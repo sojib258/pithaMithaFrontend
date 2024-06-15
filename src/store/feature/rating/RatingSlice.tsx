@@ -12,11 +12,11 @@ type Image = {
 
 type User = {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   userId: string | number;
-  width: number;
-  height: number;
-  imgSrc: string;
+  width?: number;
+  height?: number;
+  imgSrc?: string;
   altText?: string;
 };
 
@@ -46,12 +46,12 @@ export const fetchRatingData = createAsyncThunk(
   async (productId: number) => {
     try {
       const response = await axios.get(
-        `${API_URL}/products/${productId}?populate[ratings][populate][users_permissions_user][populate]=image&populate[ratings][populate]=image`
+        `${API_URL}/products/${productId}?populate[ratings][populate][users_permissions_user][populate]=image&populate[ratings][populate]=images`
       );
       console.log("RatingSliceResponse", response);
       return response.data.data;
     } catch (error: any) {
-      console.error("Error from tagsSlice", error);
+      console.error("Error from RatingSlice", error);
       return error?.message;
     }
   }
@@ -64,7 +64,8 @@ const RatingSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRatingData.pending, (state) => {
-        (state.loading = true), (state.errorMsg = "");
+        state.loading = true;
+        state.errorMsg = "";
       })
       .addCase(fetchRatingData.fulfilled, (state, action) => {
         (state.loading = false),
@@ -74,17 +75,17 @@ const RatingSlice = createSlice({
               comment: rating.attributes.comment,
               publishedAt: rating.attributes.publishedAt,
               ratingValue: rating.attributes.ratingValue,
-              images: rating.attributes?.image?.data?.map((image: any) => ({
-                imageId: image.id,
-                width: image.attributes.width,
-                height: image.attributes.height,
-                url: image.attributes.url,
-                altText: image.attributes.alternativeText,
+              images: rating.attributes?.images?.data?.map((image: any) => ({
+                imageId: image?.id,
+                width: image?.attributes?.width,
+                height: image?.attributes?.height,
+                url: image?.attributes?.url,
+                altText: image?.attributes?.alternativeText,
               })),
               user: {
                 userId: rating.attributes?.users_permissions_user?.data?.id,
                 firstName:
-                  rating.attributes?.users_permissions_user?.data?.attributes
+                  rating.attributes?.users_permissions_user.data.attributes
                     ?.firstName,
                 lastName:
                   rating.attributes?.users_permissions_user?.data?.attributes

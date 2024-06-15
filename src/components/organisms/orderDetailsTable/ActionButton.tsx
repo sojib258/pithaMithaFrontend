@@ -2,6 +2,7 @@
 import Button from "@/components/atoms/button/Button";
 
 interface ActionButtonProps {
+  rootStatus: string;
   status: string;
   loading: boolean;
   handleOrderStatus: (value: string) => void;
@@ -16,17 +17,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
     handleOrderStatus(newStatus);
   };
 
-  if (status === "cancelled") {
-    return (
-      <Button
-        disabled
-        sx={{
-          borderRadius: "8px!important",
-        }}
-        text="Cancelled"
-      />
-    );
-  } else if (status === "order placed") {
+  if (status === "order placed") {
     return (
       <Button
         sx={{
@@ -54,8 +45,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({
         sx={{
           borderRadius: "8px!important",
         }}
-        disabled
-        text="Wait for Delivery"
+        disabled={loading}
+        text="Delivered"
+        onClick={() => updateOrderStatus("delivered")}
       />
     );
   } else if (status === "delivered") {
@@ -68,8 +60,19 @@ const ActionButton: React.FC<ActionButtonProps> = ({
         text="Delivered"
       />
     );
+  } else if (status === "cancelled") {
+    return (
+      <Button
+        disabled
+        sx={{
+          borderRadius: "8px!important",
+          color: "#747474!important",
+        }}
+        text="Cancelled"
+      />
+    );
   }
 
-  return <Button text="Action" />;
+  return <Button text="Problem" />;
 };
 export default ActionButton;

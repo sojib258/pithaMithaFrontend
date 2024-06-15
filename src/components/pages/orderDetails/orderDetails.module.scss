@@ -116,6 +116,61 @@
     @extend %body-sm-400;
     color: $gray-1000;
   }
+
+  // Order Cancel Area
+  &__cancelArea {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    margin: 24px 0px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0px 0px 12px -3px #a7b4ab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__cancelHeadText {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+  &__cancelInfoText {
+    @extend %body-sm-400;
+    color: $gray-1000;
+  }
+
+  // Seller Product Area
+  &__seller {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    box-shadow: 0px 0px 12px -3px #a7b4ab;
+  }
+  &__sellerHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__sellerName {
+    @extend %body-sm-400;
+    color: $gray-800;
+    &V {
+      @extend %body-sm-600;
+      color: $gray-1000;
+    }
+  }
+  &__sellerResponseTime {
+    @extend %body-sm-400;
+    color: $gray-800;
+    &V {
+      @extend %body-sm-600;
+      color: $gray-1000;
+    }
+  }
   &__tracker {
     margin: 32px 0px;
     padding: 20px;

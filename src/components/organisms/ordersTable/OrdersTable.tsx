@@ -1,8 +1,6 @@
 "use client";
 import TableSkeleton from "@/components/molecules/skeleton/table/TableSkeleton";
-import { fetchOrders } from "@/store/feature/order/OrderSlice";
-import { fetchSellerProduct } from "@/store/feature/sellerProduct/SellerProductSlice";
-import { RootState } from "@/store/store";
+import { Seller } from "@/utils/typesDefine/orderSliceTypes";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -12,34 +10,23 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import OrdersTableRow from "./OrdersTableRow";
 import styles from "./ordersTable.module.scss";
 
-const OrdersTable = () => {
-  const { sellerProduct, orders } = useSelector((state: RootState) => state);
-  const dispatch = useDispatch();
-
-  const { items: sellterProductItems, loading } = sellerProduct;
-  const sellerProductIds = sellterProductItems.map((product) => product.id);
-
-  const filteredOrders = orders.items.filter((order) =>
-    order.products.some((product) =>
-      sellerProductIds.includes(product.productId)
-    )
-  );
-
-  useEffect(() => {
-    dispatch(fetchSellerProduct() as any);
-    dispatch(fetchOrders() as any);
-  }, [dispatch]);
-
+interface OrdersTableProps {
+  sellerOrders: {
+    orderId: number;
+    date: string;
+    seller?: Seller;
+  }[];
+  loading?: boolean;
+}
+const OrdersTable: React.FC<OrdersTableProps> = ({ sellerOrders, loading }) => {
   return (
     <Box className={styles.order}>
       {loading ? (
         <TableSkeleton />
-      ) : filteredOrders.length > 0 ? (
+      ) : sellerOrders.length > 0 ? (
         <TableContainer
           className={styles.order__tableContainer}
           component={Paper}
@@ -69,14 +56,14 @@ const OrdersTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredOrders.map((item) => (
+              {sellerOrders.map((order) => (
                 <OrdersTableRow
-                  key={item.id}
-                  orderId={item.id}
-                  date={item.createdAt}
-                  status={item.status}
-                  items={item.products}
-                  sellerProductIds={sellerProductIds}
+                  key={order.orderId}
+                  orderId={order.orderId}
+                  date={order.date}
+                  status={order.seller?.status || ""}
+                  products={order.seller?.products || []}
+                  loading={loading}
                 />
               ))}
             </TableBody>

@@ -1,11 +1,12 @@
 "use client";
 import ToasterMsg from "@/components/atoms/toastMsg/Toaster";
 import AddressInfo from "@/components/molecules/addressInfo/AddressInfo";
-import OrderItems from "@/components/molecules/cartItems/CartItems";
+import OrderCart from "@/components/molecules/orderItem/OrderCart";
 import PaymentMethodDialog from "@/components/molecules/paymentMethodDialog/PaymentMethodDialog";
 import SSLPaymentList from "@/components/molecules/sslPaymentList/SSLPaymentList";
 import Summary from "@/components/organisms/orderSummary/Summary";
 import { RootState } from "@/store/store";
+import { CartSliceData } from "@/utils/typesDefine/cartSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
@@ -48,43 +49,22 @@ const Checkout = () => {
   const router = useRouter();
 
   const { token } = auth;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_KEY}/users/me?populate[0]=addresses`,
-          { headers }
-        );
-
-        setLoading(false);
-        setAddressData(response.data.addresses);
-      } catch (error) {
-        setLoading(false);
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
   const shoppingCarts = cart.items;
-  const cartItems = shoppingCarts.length;
 
-  const subTotal = shoppingCarts.reduce((acc, cur) => {
-    const priceToUse = cur.discountPrice ? cur.discountPrice : cur.price;
-    const totalPrice = priceToUse * cur.quantity;
-    acc += totalPrice;
+  const address = addressData.find((item) => item.id === chosenAddressId);
 
+  const cartItems = shoppingCarts.reduce((acc, seller) => {
+    acc += seller.products.length;
     return acc;
   }, 0);
 
-  const address = addressData.find((item) => item.id === chosenAddressId);
+  const subTotal = shoppingCarts.reduce((acc, seller) => {
+    const sellerTotal = seller.products.reduce((sellerAcc, product) => {
+      const price = product.discountPrice ?? product.price;
+      return sellerAcc + price * product.quantity;
+    }, 0);
+    return acc + sellerTotal;
+  }, 0);
 
   const shippingCost = 60;
   const grandTotal = subTotal + shippingCost;
@@ -122,13 +102,18 @@ const Checkout = () => {
         const headers = {
           Authorization: `Bearer ${auth.token}`,
         };
+        const updatedShoppingCarts = shoppingCarts.map((seller) => ({
+          ...seller,
+          status: "order placed",
+          responseTime: null,
+        }));
         const data = {
           users_permissions_user: auth.userId,
-          products: shoppingCarts,
+          sellers: updatedShoppingCarts,
           totalPrice: grandTotal,
           paid: false,
           address: address,
-          status: "order placed",
+          rootStatus: "pending",
         };
         const responsePromise = axios.post(
           `${process.env.NEXT_PUBLIC_API_KEY}/orders`,
@@ -153,10 +138,9 @@ const Checkout = () => {
         );
 
         const response = await responsePromise;
-
         const orderId = response.data.data.id;
-        setLoading(false);
         router.push(`/payment/order-success/${orderId}`);
+        setLoading(false);
       } catch (error) {
         setLoading(false);
       }
@@ -201,10 +185,33 @@ const Checkout = () => {
         }
       }
     } catch (error) {
-      console.log("Error", error);
       toast.error("Something went wrong, Please try again");
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_KEY}/users/me?populate[0]=addresses`,
+          { headers }
+        );
+
+        setLoading(false);
+        setAddressData(response.data.addresses);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [token]);
 
   return (
     <Box className={styles.checkout}>
@@ -216,15 +223,16 @@ const Checkout = () => {
               handleAddressSelect={handleAddressSelect}
             />
             <Box className={styles.checkout__orderItems}>
-              {shoppingCarts.map((item) => (
-                <OrderItems
-                  key={item.productId}
-                  imgSrc={item.imgSrc}
-                  price={item.price}
-                  discountPrice={item.discountPrice}
-                  quantity={item.quantity}
-                  title={item.title}
-                  sx={{ borderBottom: "1px solid #e6e6e6;" }}
+              {shoppingCarts.map((item: CartSliceData) => (
+                <OrderCart
+                  key={item.userId}
+                  firstName={item.firstName}
+                  lastName={item.lastName}
+                  userId={item.userId}
+                  status={item.status}
+                  averageResponseTime={item.averageResponseTime}
+                  sellerImg={item.sellerImg}
+                  products={item.products}
                 />
               ))}
             </Box>
@@ -240,6 +248,7 @@ const Checkout = () => {
               subTotal={subTotal}
               btnText="Place Order"
               handleBtn={handleCheckoutBtn}
+              loading={loading}
             />
           </Box>
         </Grid>

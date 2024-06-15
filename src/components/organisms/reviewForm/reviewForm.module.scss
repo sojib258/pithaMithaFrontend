@@ -1,0 +1,88 @@
+@import "@/styles/style.scss";
+.dialog {
+  width: 100%;
+  height: auto;
+  &__box {
+    width: 800px;
+    height: auto;
+    padding: 0px 0px 40px 0px;
+  }
+  &__contentWrapper {
+    width: 80%;
+    height: auto;
+    padding: 20px;
+    margin: 0px auto;
+    text-align: center;
+  }
+  &__action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 15px 15px 0px 0px;
+  }
+  &__closeIcon {
+    cursor: pointer;
+  }
+  &__ratingText {
+    @extend %body-lg-600;
+    color: $gray-1000;
+    margin-bottom: 5px;
+  }
+  &__ratingInfoText {
+    @extend %body-xs-400;
+    color: $gray-1000;
+  }
+  &__reviewText {
+    @extend %body-lg-600;
+    color: $gray-1000;
+    margin-bottom: 5px;
+  }
+  &__reviewInfoText {
+    @extend %body-xs-400;
+    color: $gray-1000;
+    margin-bottom: 20px;
+    padding: 0px 80px;
+  }
+  &__formFields {
+    width: 100%;
+    height: auto;
+    margin-bottom: 25px;
+  }
+  &__errorMsg {
+    color: $danger;
+    font-size: 0.65rem;
+    margin: 6px;
+  }
+  &__textArea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid $gray-300;
+    color: $gray-1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    &:focus {
+      border: 2px solid $greenGray7;
+      outline: none;
+    }
+  }
+  &__imageText {
+    @extend %body-lg-600;
+    color: $gray-1000;
+    margin-bottom: 5px;
+  }
+  &__buttons {
+    text-align: right;
+    padding-right: 25px;
+  }
+  @include downMdScreen {
+    &__box {
+      width: auto;
+    }
+    &__reviewInfoText {
+      padding: 0px;
+    }
+  }
+}

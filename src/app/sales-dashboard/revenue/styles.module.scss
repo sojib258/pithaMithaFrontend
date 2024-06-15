@@ -1,0 +1,24 @@
+@import "@/styles/style.scss";
+.revenue {
+  width: 100%;
+  height: auto;
+  &__statusArea {
+    display: flex;
+    flex-wrap: wrap;
+    .revenue__statusCart {
+      padding-right: 20px;
+      margin-bottom: 20px;
+      &.last {
+        padding-right: 0;
+      }
+    }
+  }
+
+  @include downLgScreen {
+    &__statusCart {
+      &.last {
+        padding-right: 20px !important;
+      }
+    }
+  }
+}

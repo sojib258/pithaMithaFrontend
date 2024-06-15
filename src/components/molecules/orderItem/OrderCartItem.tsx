@@ -12,7 +12,7 @@ interface CartItemsProps {
   discountPrice?: number;
   sx?: object;
 }
-const CartItems: React.FC<CartItemsProps> = ({
+const OrderCartItem: React.FC<CartItemsProps> = ({
   imgSrc,
   title,
   quantity,
@@ -22,27 +22,27 @@ const CartItems: React.FC<CartItemsProps> = ({
   sx,
 }) => {
   return (
-    <Box sx={sx} className={styles.cart}>
+    <Box sx={sx} className={styles.order__cart}>
       <Image
-        className={styles.cart__image}
+        className={styles.order__image}
         width={100}
         height={100}
         src={imgSrc}
         alt={altText ? altText : "product image"}
       />
-      <Typography component={"span"} className={styles.cart__title}>
+      <Typography component={"span"} className={styles.order__title}>
         {title}
       </Typography>
-      <Typography component={"span"} className={styles.cart__quantity}>
+      <Typography component={"span"} className={styles.order__quantity}>
         QTY: {quantity}
       </Typography>
-      <Typography component={"span"} className={styles.cart__price}>
+      <Typography component={"span"} className={styles.order__price}>
         <Image
           width={40}
           height={40}
           src={"/icons/taka.png"}
           alt="Taka Logo"
-          className={styles.cart__currencyIcon}
+          className={styles.order__currencyIcon}
         />
         {discountPrice ? discountPrice : price}
       </Typography>
@@ -50,4 +50,4 @@ const CartItems: React.FC<CartItemsProps> = ({
   );
 };
 
-export default CartItems;
+export default OrderCartItem;

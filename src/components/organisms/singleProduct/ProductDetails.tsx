@@ -13,8 +13,14 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productDetails }) => {
     discountPrice,
     images,
     isServiceAvailable,
+    shortDescription,
+    weight,
+    seller,
+    averageRating,
+    tags,
   } = productDetails.attributes;
-  console.log("PrDetails", productDetails);
+
+  console.log("Av", averageRating);
 
   return (
     <>
@@ -22,12 +28,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productDetails }) => {
         id={productDetails.id}
         price={price}
         productTitle={name}
-        description={description}
+        shortDescription={shortDescription}
         category={category.name}
         discountPrice={discountPrice}
         images={images}
         customStyle={{ width: "100%", padding: "0px" }}
         isServiceAvailable={isServiceAvailable}
+        weight={weight}
+        seller={seller}
+        ratingValue={averageRating}
+        tags={tags}
       />
     </>
   );

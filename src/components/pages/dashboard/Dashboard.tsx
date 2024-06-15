@@ -2,8 +2,8 @@
 import Button from "@/components/atoms/button/Button";
 import AddressInfo from "@/components/molecules/addressInfo/AddressInfo";
 import Profile from "@/components/molecules/profile/Profile";
+import TableSkeleton from "@/components/molecules/skeleton/table/TableSkeleton";
 import RecentOrder from "@/components/organisms/recentOrder/RecentOrder";
-import { fetchUserData } from "@/store/feature/user/UserSlice";
 import { RootState } from "@/store/store";
 import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -23,13 +23,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
 
   const { userId, isAuthenticated, token } = auth;
-  useEffect(() => {
-    dispatch(fetchUserData() as any);
-  }, [dispatch, userId]);
-
-  if (!isAuthenticated) {
-    router.push("/login");
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,13 +40,17 @@ const Dashboard = () => {
         setOrderDetails(
           response.data.data.map((item: any) => ({
             id: item.id,
-            status: item.attributes.status,
+            status: item.attributes.rootStatus,
             paid: item.attributes.paid,
             totalPrice: item.attributes.totalPrice,
             date: item.attributes.createdAt,
-            totalProduct: item.attributes.products.length,
-            imgSrc: item.attributes.products[0].imgSrc,
-            altText: item.attributes.products[0].altText,
+            images: item.attributes.sellers.reduce((acc: any, seller: any) => {
+              const imgSrc = seller.products.map((product: any) => ({
+                imgSrc: product.imgSrc,
+                altText: product?.altText,
+              }));
+              return acc.concat(imgSrc);
+            }, []),
           }))
         );
         setLoading(false);
@@ -103,7 +100,15 @@ const Dashboard = () => {
             />
           </Link>
         </Box>
-        <RecentOrder loading={loading} orderDetails={orderDetails} />
+        {loading ? (
+          <TableSkeleton />
+        ) : orderDetails.length > 0 ? (
+          <RecentOrder loading={loading} orderDetails={orderDetails} />
+        ) : (
+          <Typography className={styles.content__nothing}>
+            You don&apos;t have any recent orders right now.😊😊
+          </Typography>
+        )}
       </Box>
     </Box>
   );

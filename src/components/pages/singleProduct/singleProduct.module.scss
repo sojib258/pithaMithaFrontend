@@ -48,6 +48,12 @@
     width: 95%;
     margin: 0px auto;
   }
+  &__cusRating {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px;
+    border-bottom: 1px solid $gray-200;
+  }
 
   // For Responsive
   @include smScreen {

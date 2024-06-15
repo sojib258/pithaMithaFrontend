@@ -11,6 +11,7 @@ interface ratinProps {
   customStyle?: object;
   reviewText?: string;
   fontSize?: string;
+  onChange?: (event: React.ChangeEvent<{}>, value: number | null) => void;
 }
 
 const Rating: React.FC<ratinProps> = ({
@@ -19,6 +20,7 @@ const Rating: React.FC<ratinProps> = ({
   reviewText,
   value,
   fontSize,
+  onChange,
 }) => {
   const { downSmScreen } = useResponsive();
 
@@ -35,6 +37,7 @@ const Rating: React.FC<ratinProps> = ({
         value={value}
         readOnly={readOnly}
         sx={{ fontSize: fontSize }}
+        onChange={onChange}
       />
 
       {reviewText && (

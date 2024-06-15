@@ -18,7 +18,33 @@
   &__tableWrapper {
     width: 100%;
     height: auto;
-    padding-bottom: 32px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0px 0px 12px -3px #a7b4ab;
+  }
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0px 15px 0px;
+  }
+  &__sellerName {
+    @extend %body-sm-400;
+    color: $gray-800;
+    &V {
+      @extend %body-sm-600;
+      color: $gray-1000;
+    }
+  }
+  &__sellerResponseTime {
+    @extend %body-sm-400;
+    color: $gray-800;
+    &V {
+      @extend %body-sm-600;
+      color: $gray-1000;
+    }
   }
   &__table {
     border: 1px solid $gray-200;
@@ -27,7 +53,7 @@
   }
   &__tableHead {
     color: $gray-1000;
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%;
@@ -38,22 +64,50 @@
       padding: 16px;
     }
   }
-  &__price {
-    @extend %body-md-400;
+  &__discountPrice {
+    @extend %body-sm-400;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-1000;
+    margin-right: 4px;
+  }
+  &__price {
+    @extend %body-sm-400;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
     color: $gray-1000;
   }
+  &__priceCondition {
+    @extend %body-sm-400;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-500;
+    text-decoration: line-through;
+  }
 
   &__subTotal {
-    @extend %body-md-600;
+    @extend %body-sm-600;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -95,7 +149,7 @@
   }
   &__productName {
     color: $gray-1000;
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 500;
     line-height: 150%;

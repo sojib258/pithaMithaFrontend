@@ -13,6 +13,15 @@ export interface ImageData {
   formats: Record<string, FormatImage>;
 }
 
+export interface Seller {
+  sellerId: number;
+  firstName: string;
+  lastName?: string;
+  sellerImg?: string;
+  responseTime?: number;
+  averageResponseTime?: number;
+}
+
 export interface Category {
   id: number;
   name: string;
@@ -46,6 +55,7 @@ export interface ProductAttributes {
   isFeatured: boolean;
   isHotDeals: boolean;
   images: ImageData[];
+  seller: Seller;
 }
 
 export interface ProductData {

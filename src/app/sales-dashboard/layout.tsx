@@ -57,6 +57,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             text: "Pending Orders",
             link: "/sales-dashboard/orders/pending-orders",
           },
+          {
+            id: 23,
+            text: "Cancelled Orders",
+            link: "/sales-dashboard/orders/cancelled-orders",
+          },
         ],
       },
       {

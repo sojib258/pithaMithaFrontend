@@ -1,7 +1,7 @@
 import Quantity from "@/components/molecules/addQuantity/Quantity";
 import DeleteAlert from "@/components/molecules/deleteAlert/DeleteAlert";
 import { removeToCart } from "@/store/feature/cart/CartSlice";
-import { addToWishList } from "@/store/feature/wishlist/WishlistSlice";
+import { addToWishlist } from "@/store/feature/wishlist/WishlistSlice";
 import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { IconButton, Tooltip } from "@mui/material";
@@ -18,12 +18,19 @@ import styles from "./shoppingCart.module.scss";
 interface ShoppingCartRowsProps {
   id: number;
   imgSrc: string;
-  productName: string;
+  title: string;
   price: number;
   discountPrice?: number;
   quantity: number;
   isServiceAvailable: boolean;
   altText?: string;
+  sellerId: number;
+  firstName: string;
+  lastName?: string;
+  sellerImg?: string;
+  status: string;
+  responseTime?: number;
+  averageResponseTime?: number;
   updateQuantity: (
     quantity: number,
     type?: string,
@@ -34,14 +41,20 @@ interface ShoppingCartRowsProps {
   handleDeleteCart: (id: number | string) => void;
 }
 const ShoppingCartRows: React.FC<ShoppingCartRowsProps> = ({
-  imgSrc,
-  productName,
-  price,
   id,
+  sellerId,
+  imgSrc,
+  title,
+  price,
   quantity,
   isServiceAvailable,
   altText,
   discountPrice,
+  firstName,
+  lastName,
+  sellerImg,
+  responseTime,
+  averageResponseTime,
   updateQuantity,
   calculateTotalPrice,
   handleDeleteCart,
@@ -50,28 +63,39 @@ const ShoppingCartRows: React.FC<ShoppingCartRowsProps> = ({
     discountPrice ? discountPrice : price,
     quantity
   );
+
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const productPrice = discountPrice ? discountPrice : price;
-  console.log("DIs", discountPrice);
-  console.log("Price", price);
-  console.log("ProductPrice", productPrice);
 
   const handleRemoveWishlist = () => {
     dispatch(
-      addToWishList({
-        productId: id,
-        imgSrc: imgSrc,
-        isServiceAvailable: isServiceAvailable,
-        price: price,
-        discountPrice: discountPrice,
-        title: productName,
-        altText: altText,
-      })
+      dispatch(
+        addToWishlist({
+          sellerId: sellerId,
+          sellerImg: sellerImg,
+          firstName: firstName,
+          lastName: lastName,
+          responseTime: responseTime,
+          averageResponseTime: averageResponseTime,
+          product: {
+            productId: id,
+            imgSrc: imgSrc,
+            isServiceAvailable: isServiceAvailable,
+            price: price,
+            discountPrice: discountPrice,
+            quantity: 1,
+            title: title,
+            altText: altText,
+          },
+        })
+      )
     );
+
     dispatch(
       removeToCart({
         productId: id,
+        sellerId: sellerId,
       })
     );
     toast.success("Move to Wishlist");
@@ -98,13 +122,55 @@ const ShoppingCartRows: React.FC<ShoppingCartRowsProps> = ({
             className={styles.shoppingCart__productImage}
           />
           <Typography className={styles.shoppingCart__productName}>
-            {productName}
+            {title}
           </Typography>
         </TableCell>
       </Link>
 
       <TableCell className={styles.shoppingCart__tableCell}>
-        <Typography className={styles.shoppingCart__price}>
+        {discountPrice ? (
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            <Typography className={styles.shoppingCart__discountPrice}>
+              <Image
+                width={40}
+                height={40}
+                src={"/icons/taka.png"}
+                alt="Taka Logo"
+                className={styles.shoppingCart__currencyIcon}
+              />
+              {discountPrice}
+            </Typography>
+            <Typography
+              component={"span"}
+              className={styles.shoppingCart__priceCondition}
+            >
+              {price}
+            </Typography>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            <Typography className={styles.shoppingCart__price}>
+              <Image
+                width={40}
+                height={40}
+                src={"/icons/taka.png"}
+                alt="Taka Logo"
+                className={styles.shoppingCart__currencyIcon}
+              />
+              {price}
+            </Typography>
+          </Box>
+        )}
+
+        {/* <Typography className={styles.shoppingCart__price}>
           <Image
             width={40}
             height={40}
@@ -113,7 +179,7 @@ const ShoppingCartRows: React.FC<ShoppingCartRowsProps> = ({
             className={styles.shoppingCart__currencyIcon}
           />
           {productPrice}
-        </Typography>
+        </Typography> */}
       </TableCell>
       <TableCell className={styles.shoppingCart__tableCell}>
         <Box>

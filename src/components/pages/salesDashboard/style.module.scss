@@ -1,15 +1,23 @@
+@import "@/styles/style.scss";
 .dashboard {
   width: 100%;
   height: auto;
   &__statusArea {
     display: flex;
     flex-wrap: wrap;
-
     .dashboard__statusCart {
       padding-right: 20px;
-
+      margin-bottom: 20px;
       &.last {
         padding-right: 0;
+      }
+    }
+  }
+
+  @include downLgScreen {
+    &__statusCart {
+      &.last {
+        padding-right: 20px !important;
       }
     }
   }

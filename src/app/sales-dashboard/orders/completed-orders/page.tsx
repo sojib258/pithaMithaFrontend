@@ -18,20 +18,29 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Page = () => {
-  const { sellerProduct, orders } = useSelector((state: RootState) => state);
+  const { orders, auth } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
-  const { items: sellterProductItems, loading } = sellerProduct;
-  const sellerProductIds = sellterProductItems.map((product) => product.id);
+  const { items: orderItems, loading } = orders;
 
-  const filteredOrders = orders.items.filter((order) =>
-    order.products.some((product) =>
-      sellerProductIds.includes(product.productId)
+  const sellerOrders = orderItems
+    .filter((order) =>
+      order.sellers.some((seller) => seller.userId === auth.userId)
     )
-  );
+    .map((order) => {
+      const sellerInfo = order.sellers.find(
+        (seller) => seller.userId === auth.userId
+      );
+      return {
+        orderId: order.id,
+        date: order.createdAt,
+        seller: sellerInfo,
+      };
+    });
 
-  const completedOrders = filteredOrders.filter(
-    (order) => order.status === "delivered"
+  // Calculate pending orders for the specific seller
+  const completedOrders = sellerOrders.filter(
+    (order) => order.seller?.status === "delivered"
   );
 
   useEffect(() => {
@@ -43,7 +52,7 @@ const Page = () => {
     <Box className={styles.order}>
       {loading ? (
         <TableSkeleton />
-      ) : filteredOrders.length > 0 ? (
+      ) : completedOrders.length > 0 ? (
         <TableContainer
           className={styles.order__tableContainer}
           component={Paper}
@@ -73,14 +82,14 @@ const Page = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {completedOrders.map((item) => (
+              {completedOrders.map((order) => (
                 <OrdersTableRow
-                  key={item.id}
-                  orderId={item.id}
-                  date={item.createdAt}
-                  status={item.status}
-                  items={item.products}
-                  sellerProductIds={sellerProductIds}
+                  key={order.orderId}
+                  orderId={order.orderId}
+                  date={order.date}
+                  status={order.seller?.status || ""}
+                  products={order.seller?.products || []}
+                  loading={loading}
                 />
               ))}
             </TableBody>

@@ -1,66 +1,41 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
+import DeleteAlert from "@/components/molecules/deleteAlert/DeleteAlert";
 import Tracker from "@/components/molecules/tracker/Tracker";
 import AddressCart from "@/components/organisms/address/addressCart/AddressCart";
 import Products from "@/components/organisms/orderDetailProduct/Product";
 import { RootState } from "@/store/store";
 import dateFormat from "@/utils/dateFormat";
+import timeFormat from "@/utils/timeFormat";
+import {
+  Order,
+  OrderProduct,
+  Seller,
+} from "@/utils/typesDefine/orderSliceTypes";
+import { Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import styles from "./orderDetails.module.scss";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 interface OrderDetailsProps {
-  orderId: string | number;
+  orderId: number;
 }
 
-type Products = {
-  productId: number | string;
-  title: string;
-  price: number;
-  discountPrice: number;
-  imgSrc: string;
-  altText?: string;
-  quantity: number;
-};
-
-type Address = {
-  id: number;
-  fullName: string;
-  number: number | string;
-  division: string;
-  city: string;
-  area: string;
-  address: string;
-  landmark: string;
-  deliveryOption: string;
-  createdAt: string;
-};
-
-type OrderDetails = {
-  orderId: number;
-  date: string;
-  paid: boolean;
-  transactionId: number | null;
-  totalPrice: number | null;
-  status: string;
-  products: Products[];
-  address: Address;
-};
-
-const initData: OrderDetails = {
-  orderId: 0,
-  date: "",
+const initData: Order = {
+  id: 0,
+  createdAt: "",
   paid: false,
   transactionId: null,
   totalPrice: null,
-  status: "",
-  products: [],
+  rootStatus: "",
+  sellers: [],
   address: {
     id: 0,
     fullName: "",
@@ -76,24 +51,122 @@ const initData: OrderDetails = {
 };
 
 const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
-  const { token } = useSelector((state: RootState) => state.auth);
-  const [orderDetails, setOrderDetails] = useState<OrderDetails>(initData);
+  const { token, userId } = useSelector((state: RootState) => state.auth);
+  const [orderDetails, setOrderDetails] = useState<Order>(initData);
   const [loading, setLoading] = useState(false);
   const [wrongOrderId, setWrongOrderId] = useState(false);
-  const router = useRouter();
-  // Fetch Product by OrderId
+  const [reRender, setReRender] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
-  const orderItems = orderDetails.products;
+  const subTotal = orderDetails.sellers.reduce((acc: number, seller) => {
+    const sellerTotal = seller.products.reduce(
+      (sellerAcc: number, product: OrderProduct) => {
+        const priceToUse = product.discountPrice
+          ? product.discountPrice
+          : product.price;
+        const totalPrice = priceToUse * product.quantity;
+        sellerAcc += totalPrice;
 
-  const subTotal = orderItems.reduce((acc, cur) => {
-    const priceToUse = cur.discountPrice ? cur.discountPrice : cur.price;
-    const totalPrice = priceToUse * cur.quantity;
-    acc += totalPrice;
-
+        return sellerAcc;
+      },
+      0
+    );
+    acc += sellerTotal;
     return acc;
   }, 0);
 
-  const shippingCost = 60;
+  const shipping = 60;
+  const grandTotal = subTotal + shipping;
+
+  const totalProduct = orderDetails.sellers.reduce((acc, seller) => {
+    acc += seller.products.length;
+    return acc;
+  }, 0);
+
+  const orderDate = orderDetails && dateFormat(orderDetails.createdAt);
+
+  // Check order is cancelled or not
+  const orderCancelled = orderDetails.rootStatus === "cancelled";
+
+  const handleOpenAlert = () => {
+    setOpenAlert(!openAlert);
+  };
+
+  const handleReRender = () => {
+    setReRender(!reRender);
+  };
+
+  const handleCancelOrder = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      setLoading(true);
+      handleOpenAlert();
+
+      // Fetch the current order data
+      const response = await axios.get(`${API_URL}/orders/${orderId}`, {
+        headers,
+      });
+      const orderData = response.data.data;
+      const sellers = orderData.attributes.sellers;
+
+      // handle any of the seller received the order then customer can't cancel order
+      const sellerNotReceiveOrder = sellers.every((seller: Seller) => {
+        if (seller.status === "order placed") {
+          return true;
+        }
+        return false;
+      });
+
+      if (!sellerNotReceiveOrder) {
+        setLoading(false);
+        alert("Seller received your order. You don't cancel this order");
+        handleReRender();
+        return;
+      }
+
+      const updatedSellers = sellers.map((seller: Seller) => ({
+        ...seller,
+        status: "cancelled",
+      }));
+
+      // Update the order with the new rootStatus and updated sellers
+      const cancelPromise = axios.put(
+        `${API_URL}/orders/${orderId}`,
+        {
+          data: {
+            rootStatus: "cancelled",
+            sellers: updatedSellers,
+          },
+        },
+        { headers }
+      );
+
+      toast.promise(
+        cancelPromise,
+        {
+          loading: "Order Cancellation...",
+          success: "Order Cancelled",
+          error: (error: any) => {
+            return `${error?.response?.data?.error?.message}`;
+          },
+        },
+        {
+          error: {
+            duration: 5000,
+          },
+        }
+      );
+
+      const cancelResponse = await cancelPromise;
+      setLoading(false);
+      handleReRender();
+    } catch (error) {
+      console.error("Error from order cancellation", error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,20 +177,19 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
           Authorization: `Bearer ${token}`,
         };
 
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_KEY}/orders/${orderId}`,
-          { headers }
-        );
+        const response = await axios.get(`${API_URL}/orders/${orderId}`, {
+          headers,
+        });
         const data = response.data.data;
         setOrderDetails({
-          orderId: data.id,
-          date: data.attributes.createdAt,
+          id: data.id,
+          createdAt: data.attributes.createdAt,
           paid: data.attributes.paid,
-          status: data.attributes.status,
+          rootStatus: data.attributes.rootStatus,
           totalPrice: data.attributes.totalPrice,
           transactionId: data.attributes.transactionId,
           address: data.attributes.address,
-          products: data.attributes.products,
+          sellers: data.attributes.sellers,
         });
         setLoading(false);
       } catch (error: any) {
@@ -129,11 +201,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
       }
     };
 
-    fetchData(); // Call the async function immediately
-  }, [token, orderId]);
-
-  const orderDate = orderDetails && dateFormat(orderDetails.date);
-  console.log("Or", orderDetails);
+    fetchData(); // Call the async function
+  }, [token, orderId, reRender]);
 
   return (
     <>
@@ -146,9 +215,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
               <Typography className={styles.details__headText}>
                 Order Details
               </Typography>
-              <Typography className={styles.details__headDate}>
-                {`Placed on ${orderDate?.date}, ${orderDate?.time} (${orderItems.length} Products)`}
-              </Typography>
+              {loading ? (
+                <Skeleton sx={{ width: "200px" }} />
+              ) : (
+                <Typography className={styles.details__headDate}>
+                  {`Placed on ${orderDate?.date}, ${orderDate?.time} (${totalProduct} Products)`}
+                </Typography>
+              )}
             </Box>
             <Link href={"/order-history"}>
               <Button
@@ -156,7 +229,6 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
                   backgroundColor: "transparent!important",
                   boxShadow: "none",
                   color: "#00b207!important",
-                  padding: "0px!important",
                   fontSize: "1rem!important",
                   "&:hover": {
                     textDecoration: "underline",
@@ -168,7 +240,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
             </Link>
           </Box>
           <Box className={styles.details__body}>
-            <Grid container>
+            {/* Order Address and Price Area Section */}
+            <Grid container mb={4}>
               <Grid item xs={12} lg={7}>
                 <AddressCart
                   loading={loading}
@@ -185,7 +258,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
                         Order Id
                       </Typography>
                       <Typography className={styles.details__subTotalOrderId}>
-                        {orderId}
+                        #{orderId}
                       </Typography>
                     </Box>
                     <Box className={styles.details__subTotalRight}>
@@ -204,7 +277,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
                   <Box className={styles.details__subBody}>
                     <Box className={styles.details__subBox}>
                       <Typography className={styles.details__boxKey}>
-                        Items ({orderItems.length})
+                        Items ({totalProduct})
                       </Typography>
                       <Typography className={styles.details__price}>
                         <Image
@@ -237,22 +310,114 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
                           alt="Taka Logo"
                           className={styles.details__currencyIcon}
                         />
-                        {orderDetails?.totalPrice}
+                        {grandTotal}
                       </Typography>
                     </Box>
                   </Box>
                 </Box>
               </Grid>
             </Grid>
-            <Box className={styles.details__tracker}>
-              <Typography className={styles.details__trackHead}>
-                Order Track:
-              </Typography>
-              <Tracker status={orderDetails?.status} />
+
+            {/* Order Cancellation Area */}
+            <Box className={styles.details__cancelArea}>
+              <Box className={styles.details__cancelInfo}>
+                <Typography className={styles.details__cancelHeadText}>
+                  Order Cancellation:
+                </Typography>
+                <Typography className={styles.details__cancelInfoText}>
+                  You can&apos;t cancel order if seller received this order.
+                </Typography>
+              </Box>
+
+              {/* Handle Button for Cancel Order */}
+              <Box className={styles.details__cancelBtn}>
+                {orderCancelled ? (
+                  <Button
+                    disabled={true}
+                    sx={{
+                      boxShadow: "none",
+                      color: "#808080 !important",
+                      padding: "4px 12px!important",
+                      fontSize: ".875rem!important",
+                      "&:hover": {
+                        textDecoration: "underline",
+                        boxShadow: "none!important",
+                      },
+                    }}
+                    text="Order Cancelled"
+                  />
+                ) : (
+                  <Button
+                    disabled={loading}
+                    sx={{
+                      backgroundColor: loading ? " " : "transparent!important",
+                      boxShadow: "none",
+                      color: loading
+                        ? "#808080 !important"
+                        : "#00b207!important",
+                      padding: "4px 12px!important",
+                      fontSize: ".875rem!important",
+                      "&:hover": {
+                        textDecoration: "underline",
+                        boxShadow: "none!important",
+                      },
+                    }}
+                    text="Cancel Order"
+                    onClick={handleOpenAlert}
+                  />
+                )}
+              </Box>
+              <DeleteAlert
+                handleAction={handleCancelOrder}
+                message={"Do you want to cancel this order?"}
+                btnTextClose="No"
+                btnTextAction="Yes"
+                open={openAlert}
+                handleClose={handleOpenAlert}
+              />
             </Box>
-            <Box className={styles.details__orderProducts}>
-              <Products status={orderDetails.status} productData={orderItems} />
-            </Box>
+            {/* Products Information Area */}
+            {orderDetails.sellers.map((seller) => (
+              <Box key={seller.userId} className={styles.details__seller}>
+                <Box className={styles.details__sellerHead}>
+                  <Typography className={styles.details__sellerName}>
+                    Seller Name:{" "}
+                    <Typography
+                      className={styles.details__sellerNameV}
+                      component={"span"}
+                    >
+                      {`${seller.firstName} `}
+                      {seller.lastName && seller.lastName}
+                    </Typography>
+                  </Typography>
+                  {seller.averageResponseTime && (
+                    <Typography className={styles.details__sellerResponseTime}>
+                      Average Response Time:{" "}
+                      <Typography
+                        className={styles.details__sellerNameV}
+                        component={"span"}
+                      >
+                        {timeFormat(seller.averageResponseTime)}
+                      </Typography>
+                    </Typography>
+                  )}
+                </Box>
+
+                <Box className={styles.details__orderProducts}>
+                  <Products
+                    status={seller.status}
+                    productData={seller.products}
+                    userId={userId}
+                  />
+                </Box>
+                <Box className={styles.details__tracker}>
+                  <Typography className={styles.details__trackHead}>
+                    Order Track:
+                  </Typography>
+                  <Tracker status={seller.status} />
+                </Box>
+              </Box>
+            ))}
           </Box>
         </Box>
       )}

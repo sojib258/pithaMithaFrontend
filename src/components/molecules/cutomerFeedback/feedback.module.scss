@@ -2,8 +2,6 @@
 .feedback {
   width: 100%;
   height: auto;
-  padding-bottom: 20px;
-  border-bottom: 1px solid $gray-200;
   &__topSection {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -44,5 +42,17 @@
   &__comment {
     @extend %body-sm-400;
     color: $gray-800;
+  }
+  &__imagesArea {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 15px 0px;
+  }
+  &__reviewImg {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+    margin-right: 10px;
   }
 }

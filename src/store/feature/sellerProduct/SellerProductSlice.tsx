@@ -25,7 +25,8 @@ export const fetchSellerProduct = createAsyncThunk(
         { headers }
       );
 
-      return response?.data.products;
+      console.log("SSSSSSSSS", response);
+      return response?.data;
     } catch (error: any) {
       console.error("Error from sellerProductSlice", error);
       return error?.message;
@@ -43,7 +44,7 @@ const sellerProductSlice = createSlice({
       })
       .addCase(fetchSellerProduct.fulfilled, (state, action) => {
         (state.loading = false),
-          (state.items = action.payload.map((item: any) => ({
+          (state.items = action.payload.products.map((item: any) => ({
             id: item.id,
             name: item.name,
             description: item.description,
@@ -65,6 +66,13 @@ const sellerProductSlice = createSlice({
               id: tag?.id,
               name: tag?.name,
             })),
+            seller: {
+              sellerId: action.payload.id,
+              firstName: action.payload.firstName,
+              lastName: action.payload?.lastName,
+              sellerImg: action.payload?.sellerImg,
+              averageResponseTime: action.payload?.averageResponsetime,
+            },
             weight: item.weight,
             completedDays: item.completedDays,
             isPopular: item.isPopular,

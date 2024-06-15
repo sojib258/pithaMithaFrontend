@@ -1,5 +1,6 @@
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined";
 import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,11 +8,12 @@ import styles from "./statusCart.module.scss";
 
 interface StatusCart {
   title: string;
-  amount: number | null;
+  amount: number | string;
   icon: React.ReactNode;
   style?: object;
   currencyIcon?: boolean;
   link: string;
+  loading?: boolean;
 }
 
 const StatusCart: React.FC<StatusCart> = ({
@@ -21,6 +23,7 @@ const StatusCart: React.FC<StatusCart> = ({
   title,
   currencyIcon,
   link,
+  loading,
 }) => {
   return (
     <Link href={link}>
@@ -40,7 +43,11 @@ const StatusCart: React.FC<StatusCart> = ({
                 className={styles.cart__currencyIcon}
               />
             )}
-            <Typography className={styles.cart__count}>{amount}</Typography>
+            {loading ? (
+              <Skeleton sx={{ width: "50px" }} />
+            ) : (
+              <Typography className={styles.cart__count}>{amount}</Typography>
+            )}
           </Box>
           <BoltOutlinedIcon sx={{ color: "#1a1a1a" }} />
         </Box>

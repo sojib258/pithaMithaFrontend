@@ -22,15 +22,26 @@ export interface OrderProduct {
   discountPrice?: number;
 }
 
+export interface Seller {
+  userId: number;
+  firstName: string;
+  responseTime?: number;
+  averageResponseTime?: number;
+  lastName?: string;
+  sellerImg?: string;
+  status: string;
+  products: OrderProduct[];
+}
+
 export interface Order {
   id: number;
-  status: string;
-  totalPrice: number;
+  rootStatus: string;
+  totalPrice: number | null;
   paid: boolean;
-  products: OrderProduct[];
-  address: Address;
   createdAt: string;
-  transactionId: string;
+  transactionId: number | null;
+  address: Address;
+  sellers: Seller[];
 }
 
 export interface OrderState {

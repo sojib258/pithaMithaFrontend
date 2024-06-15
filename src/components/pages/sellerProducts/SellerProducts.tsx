@@ -65,6 +65,8 @@ const SellerProducts = () => {
                     href={`/sales-dashboard/product/product-details/${item.id}`}
                     weight={item.weight}
                     averageRating={item.averageRating}
+                    tags={item.tags}
+                    seller={item.seller}
                   />
                 </Box>
               </Grid>

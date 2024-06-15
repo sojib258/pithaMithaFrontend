@@ -27,7 +27,7 @@
   }
   &__images {
     width: auto;
-    height: 80px;
+    height: 60px;
     margin: 5px 5px 5px 0px;
     cursor: pointer;
     border-radius: 4px;
@@ -76,6 +76,10 @@
     font-weight: 500;
     line-height: 150%;
     margin-right: 12px;
+  }
+  &__perWeight {
+    @extend %body-sm-400;
+    color: $gray-1000;
   }
   &__discountPrice {
     color: $hardPrimary;
@@ -130,12 +134,14 @@
     -webkit-box-shadow: 0px 1px 0px 0px #e5e5e5, 0px -1px 0px 0px #e5e5e5;
     box-shadow: 0px 1px 0px 0px #e5e5e5, 0px -1px 0px 0px #e5e5e5;
   }
-  &__categoryTitle {
+  &__categoryTitle,
+  &__tagsTitle {
     @extend %body-sm-500;
     color: $gray-1000;
     margin-bottom: 12px;
   }
-  &__categoryValue {
+  &__categoryValue,
+  &__tagsValue {
     @extend %body-sm-400;
     color: $gray-600;
     margin-left: 6px;

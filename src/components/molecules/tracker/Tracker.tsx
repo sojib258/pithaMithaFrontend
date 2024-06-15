@@ -77,19 +77,37 @@ function QontoStepIcon(props: StepIconProps) {
   );
 }
 
-const steps = [
-  "Order Placed",
-  "Order Received",
-  "Processing",
-  "On the Way",
-  "Delivered",
-];
-
 interface Tracker {
   status: string;
+  rootStatus?: string;
 }
 
 const Tracker: React.FC<Tracker> = ({ status }) => {
+  const handleOrderStep = [
+    "Order Placed",
+    "Order Received",
+    "Processing",
+    "On the Way",
+    "Delivered",
+  ];
+
+  // this is for when user cancel order then show cancel tracker
+  const handleCancelOrderStep = ["Order Placed", "Order Cancelled"];
+
+  if (status === "cancelled") {
+    return (
+      <Stack className={styles.tracker} sx={{ width: "100%" }} spacing={4}>
+        <Stepper alternativeLabel activeStep={2} connector={<QontoConnector />}>
+          {handleCancelOrderStep.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </Stack>
+    );
+  }
+
   let step = 0;
 
   switch (status) {
@@ -116,7 +134,7 @@ const Tracker: React.FC<Tracker> = ({ status }) => {
         activeStep={step}
         connector={<QontoConnector />}
       >
-        {steps.map((label) => (
+        {handleOrderStep.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
           </Step>

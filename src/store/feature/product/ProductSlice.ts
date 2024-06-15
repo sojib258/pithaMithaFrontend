@@ -1,9 +1,9 @@
-import fetchData from "@/utils/api/fetchData";
 import {
   FormatImage,
   ProductState,
 } from "@/utils/typesDefine/productSliceTypes";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 // Define initial state
@@ -16,7 +16,19 @@ const initialState: ProductState = {
 // Define async thunk for fetching products
 export const fetchItems = createAsyncThunk("products/fetchItems", async () => {
   try {
-    const response = await fetchData("products?populate=*");
+    const response = await axios.get(`${API_URL}/products`, {
+      params: {
+        populate: {
+          tags: true,
+          category: true,
+          images: true,
+          users_permissions_user: {
+            populate: "image",
+          },
+        },
+      },
+    });
+    console.log("Response from productSlice", response);
     return response?.data.data;
   } catch (error) {
     console.error("Error from productSlice", error);
@@ -59,6 +71,24 @@ const productSlice = createSlice({
               name: item.attributes.category.data?.attributes?.name,
               description:
                 item.attributes.category.data?.attributes?.description,
+            },
+            seller: {
+              sellerId: item.attributes.users_permissions_user.data?.id,
+              firstName:
+                item.attributes.users_permissions_user.data.attributes
+                  .firstName,
+              lastName:
+                item.attributes.users_permissions_user.data.attributes
+                  ?.lastName,
+              sellerImg:
+                item.attributes.users_permissions_user.data.attributes.image
+                  ?.data?.attributes?.url,
+              responseTime:
+                item.attributes.users_permissions_user.data.attributes
+                  ?.responseTime,
+              averageResponseTime:
+                item.attributes.users_permissions_user.data.attributes
+                  ?.averageResponseTime,
             },
             tags: item.attributes.tags.data.map((tag: any) => ({
               id: tag.id,

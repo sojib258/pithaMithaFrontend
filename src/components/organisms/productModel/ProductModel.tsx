@@ -15,14 +15,10 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./productModel.module.scss";
 
-const API_URL = process.env.NEXT_PUBLIC_API_KEY;
-
 type Tag = {
   id: string | number;
   name: string;
 };
-
-type InitialData = {};
 
 type formFields = {
   name: string;
@@ -60,7 +56,7 @@ interface ProductModelProps {
     weight: string;
     completedDays: string;
     tags: {
-      id: string | number;
+      id: number;
     }[];
   };
   loading: boolean;

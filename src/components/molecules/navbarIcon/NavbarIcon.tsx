@@ -25,8 +25,16 @@ const NavbarIcon: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const isAuthenticated = auth.isAuthenticated;
-  const cartItemsTotal = cart.items.length;
-  const wishlistItemsTotal = wishlist.items.length;
+
+  const wishlistItemsTotal = wishlist.items.reduce((acc, seller) => {
+    acc += seller.products.length;
+    return acc;
+  }, 0);
+
+  const cartsTotal = cart.items.reduce((acc, seller) => {
+    acc += seller.products.length;
+    return acc;
+  }, 0);
 
   const handleWishlist = () => {
     if (isAuthenticated) {
@@ -86,7 +94,7 @@ const NavbarIcon: React.FC = () => {
           size="large"
           aria-label={
             isAuthenticated
-              ? `You have ${cartItemsTotal} cart items`
+              ? `You have ${cartsTotal} cart items`
               : `Please login first to see your cart items`
           }
           color="inherit"
@@ -97,7 +105,7 @@ const NavbarIcon: React.FC = () => {
           }}
         >
           <Badge
-            badgeContent={isAuthenticated ? cartItemsTotal : 0}
+            badgeContent={isAuthenticated ? cartsTotal : 0}
             color="success"
             sx={{}}
           >

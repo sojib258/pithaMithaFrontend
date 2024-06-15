@@ -1,10 +1,11 @@
-import fetchData from "@/utils/api/fetchData";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import Cookies from "js-cookie";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 interface UserData {
   id: number | null;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   username: string;
   email: string;
   phone: number | null;
@@ -43,7 +44,11 @@ export const fetchUserData = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      const response = await fetchData(`users/me?populate=image`, headers);
+      const response = await axios.get(`${API_URL}/users/me?populate=image`, {
+        headers,
+      });
+
+      console.log("ResposnesddddddddddddUSerSlice", response);
 
       return response?.data;
     } catch (error) {
@@ -57,15 +62,19 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     clearUser: (state) => {
-      state.id = null;
-      state.firstName = "";
-      state.lastName = "";
-      state.username = "";
-      state.email = "";
-      state.phone = null;
-      state.profileImg.width = null;
-      state.profileImg.height = null;
-      state.profileImg.url = "";
+      console.log("clearUser called");
+      state.id = initialState.id;
+      state.firstName = initialState.firstName;
+      state.lastName = initialState.lastName;
+      state.username = initialState.username;
+      state.email = initialState.email;
+      state.phone = initialState.phone;
+      state.profileImg.id = initialState.profileImg.id;
+      state.profileImg.width = initialState.profileImg.width;
+      state.profileImg.height = initialState.profileImg.height;
+      state.profileImg.url = initialState.profileImg.url;
+      state.loading = initialState.loading;
+      state.errorMsg = initialState.errorMsg;
     },
   },
   extraReducers: (builder) => {
@@ -78,14 +87,14 @@ const userSlice = createSlice({
         state.loading = false;
         state.id = action.payload.id;
         state.firstName = action.payload.firstName;
-        state.lastName = action.payload.lastName;
-        state.username = action.payload.userName;
+        state.lastName = action.payload?.lastName;
+        state.username = action.payload.username;
         state.email = action.payload.email;
         state.phone = action.payload.phone;
-        state.profileImg.id = action.payload.image?.id;
-        state.profileImg.width = action.payload.image?.width;
-        state.profileImg.height = action.payload.image?.height;
-        state.profileImg.url = action.payload.image?.url;
+        state.profileImg.id = action.payload?.image?.id;
+        state.profileImg.width = action.payload?.image?.width;
+        state.profileImg.height = action.payload?.image?.height;
+        state.profileImg.url = action.payload?.image?.url;
       })
       .addCase(fetchUserData.rejected, (state) => {
         state.loading = false;
