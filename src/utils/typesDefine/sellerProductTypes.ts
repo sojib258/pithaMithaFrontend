@@ -55,6 +55,7 @@ export interface Product {
   averageRating?: number;
   images: Image[];
   seller: Seller;
+  location: string;
 }
 
 export interface SellerProductState {

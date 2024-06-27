@@ -3,20 +3,35 @@ import Button from "@/components/atoms/button/Button";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
 import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import useResponsive from "@/hooks/useResponsive";
-import { RootState } from "@/store/store";
+import { fetchFeaturedProducts } from "@/utils/fetchProductsByAttributes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import styles from "./featured.module.scss";
 
 const Featured = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
   const { downSmScreen } = useResponsive();
-  const { items, loading } = useSelector((state: RootState) => state.products);
+  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const featuredProducts = items.filter((item) => item.attributes.isFeatured);
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const products = await fetchFeaturedProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error("Error fetching popular products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    loadProducts();
+  }, []);
+
   return (
     <Box className={styles.featured}>
       <Box className={styles.featured__head}>
@@ -57,7 +72,7 @@ const Featured = () => {
                 <ProductSkeleton />
               </Grid>
             ))
-          : featuredProducts.map((item, index) => (
+          : products.map((item, index) => (
               <Grid
                 flexGrow={1}
                 key={item.id}

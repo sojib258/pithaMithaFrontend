@@ -25,8 +25,6 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     errorMsg: categoryErrorMsg,
   } = category;
 
-  console.log("CategoryItems", categories);
-
   const {
     items: allProducts,
     loading: productsLoading,

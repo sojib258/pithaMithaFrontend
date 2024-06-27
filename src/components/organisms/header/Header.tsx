@@ -56,9 +56,6 @@ const Header: React.FC = () => {
               customStyle={{ width: { xs: "100%", lg: "500px" } }}
               label="Search Products"
               icon
-              onChange={function () {
-                console.log("Hello");
-              }}
             />
           )}
 

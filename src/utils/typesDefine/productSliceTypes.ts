@@ -56,6 +56,7 @@ export interface ProductAttributes {
   isHotDeals: boolean;
   images: ImageData[];
   seller: Seller;
+  location: string;
 }
 
 export interface ProductData {
@@ -67,4 +68,6 @@ export interface ProductState {
   items: ProductData[];
   loading: boolean;
   errorMsg: string;
+  page: number;
+  hasMore: boolean;
 }

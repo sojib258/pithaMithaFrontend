@@ -22,6 +22,7 @@ type formData = {
   images: FileList;
   weights: string;
   selectedTagIds: (string | number)[];
+  location: string;
 };
 
 interface EditProductDialogProps {
@@ -127,6 +128,7 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
         serviceAvailable: isAvailable,
         users_permissions_user: userId,
         tags: data.selectedTagIds,
+        location: data.location,
       };
 
       const productUpdatePromise = axios.put(

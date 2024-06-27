@@ -57,6 +57,7 @@ const sellerProductSlice = createSlice({
             publishedAt: item.publishedAt,
             stock: item.stock,
             isServiceAvailable: item.serviceAvailable,
+            location: item.location,
             category: {
               id: item?.category?.id,
               name: item?.category?.name,

@@ -3,20 +3,35 @@ import Button from "@/components/atoms/button/Button";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
 import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import useResponsive from "@/hooks/useResponsive";
-import { RootState } from "@/store/store";
+import { fetchHotDealsProducts } from "@/utils/fetchProductsByAttributes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import styles from "./hotDeals.module.scss";
 
 const HotDeals = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
   const { downSmScreen } = useResponsive();
-  const { loading, items } = useSelector((state: RootState) => state.products);
+  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const hotDealsProducts = items.filter((item) => item.attributes.isHotDeals);
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const products = await fetchHotDealsProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error("Error fetching popular products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    loadProducts();
+  }, []);
+
   return (
     <Box className={styles.hotDeals}>
       <Box className={styles.hotDeals__head}>
@@ -56,7 +71,7 @@ const HotDeals = () => {
                 <ProductSkeleton />
               </Grid>
             ))
-          : hotDealsProducts.map((item, index) => (
+          : products.map((item, index) => (
               <Grid
                 flexGrow={1}
                 key={item.id}

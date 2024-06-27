@@ -47,9 +47,6 @@ export const fetchUserData = createAsyncThunk(
       const response = await axios.get(`${API_URL}/users/me?populate=image`, {
         headers,
       });
-
-      console.log("ResposnesddddddddddddUSerSlice", response);
-
       return response?.data;
     } catch (error) {
       return `Error fetching userData ${error}`;

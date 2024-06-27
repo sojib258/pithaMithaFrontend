@@ -20,12 +20,15 @@ type formData = {
   weights: string;
   completedDays: string;
   selectedTagIds: (string | number)[];
+  location: string;
 };
 
 const Page = () => {
-  const { category: categories, auth } = useSelector(
-    (state: RootState) => state
-  );
+  const {
+    category: categories,
+    auth,
+    products,
+  } = useSelector((state: RootState) => state);
   const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -88,6 +91,7 @@ const Page = () => {
         discountPrice: discountPrice,
         weight: data.weights,
         completedDays: data.completedDays,
+        location: data.location,
         category: category?.id ?? null,
         images: imagesId,
         serviceAvailable: isAvailable,
@@ -115,7 +119,6 @@ const Page = () => {
       });
 
       await productUploadPromise;
-
       setLoading(false);
     } catch (error) {
       setLoading(false);

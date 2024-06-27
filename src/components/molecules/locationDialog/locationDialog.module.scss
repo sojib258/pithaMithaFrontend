@@ -1,1 +1,25 @@
-
+@import "@/styles/style.scss";
+.location {
+  width: 100%;
+  height: auto;
+  &__head {
+    width: 100%;
+    height: auto;
+    padding: 20px 16px 0px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__headText {
+    @extend %body-md-600;
+    color: $gray-1000;
+  }
+  &__closeIcon {
+    cursor: pointer;
+  }
+  &__content {
+    width: 100%;
+    height: auto;
+    padding: 0px 20px 20px 20px;
+  }
+}

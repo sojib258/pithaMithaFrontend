@@ -1,0 +1,15 @@
+@import "@/styles/style.scss";
+.locationBtn {
+  @extend %body-sm-600;
+  border: 1px solid $gray-300;
+  padding: 6px 12px;
+  color: $primary;
+  transition: 0.3s;
+  &:hover {
+    border: 1px solid $primary;
+  }
+  &__icon {
+    font-size: 1rem;
+    margin-right: 2px;
+  }
+}

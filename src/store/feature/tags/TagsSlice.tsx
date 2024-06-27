@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -23,13 +22,8 @@ const initialState: InitialState = {
 
 export const fetchTags = createAsyncThunk("tags/fetchItems", async () => {
   try {
-    const token = Cookies.get("myAppAuthToken");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const response = await axios.get(`${API_URL}/tags`, { headers });
+    const response = await axios.get(`${API_URL}/tags`);
 
-    console.log("ResponseTags", response);
     return response?.data.data;
   } catch (error: any) {
     console.error("Error from tagsSlice", error);

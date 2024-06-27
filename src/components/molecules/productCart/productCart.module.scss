@@ -33,17 +33,19 @@
     }
   }
   &__header {
+    width: 100%;
     max-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
   }
   &__image {
-    aspect-ratio: 16/9;
     width: 100%;
     height: auto;
-    -o-object-fit: cover;
+    max-height: 200px;
+    overflow: hidden;
     object-fit: cover;
-    -o-object-position: center;
-    object-position: center;
     border-radius: 16px 16px 0px 0px;
   }
   &__link {
@@ -154,7 +156,7 @@
   }
   &__overlay {
     width: 100%;
-    height: 96%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     position: absolute;
     top: 0;

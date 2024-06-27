@@ -129,7 +129,7 @@ const Page = ({ params }: { params: { productId: string } }) => {
           <Description loading={loading} description={description} />
         )}
         {activeBtn === "customerFeedback" &&
-          (ratings.items.length > 1 ? (
+          (ratings.items.length >= 1 ? (
             <Grid container>
               <Grid item xs={12} md={8}>
                 {ratings.items.map((rating) => (

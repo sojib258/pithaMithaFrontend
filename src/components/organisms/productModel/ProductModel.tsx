@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
 import InputText from "@/components/atoms/inputText/InputText";
+import LocationLabel from "@/components/atoms/locationLabel/LocationLabel";
 import RadioAtom from "@/components/atoms/radio/Radio";
 import SelectBox from "@/components/atoms/selectBox/Select";
 import { fetchTags } from "@/store/feature/tags/TagsSlice";
@@ -32,6 +33,7 @@ type formFields = {
   weights: string;
   completedDays: string;
   selectedTagIds: (string | number)[];
+  location: string;
 };
 
 interface ProductModelProps {
@@ -45,6 +47,7 @@ interface ProductModelProps {
     description: string;
     price: number;
     discountPrice?: number | null;
+    location: string;
     category: {
       id: number;
       name: string;
@@ -86,6 +89,7 @@ const ProductModel: React.FC<ProductModelProps> = ({
     getValues,
     reset,
     setError,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm<formFields>();
@@ -143,6 +147,8 @@ const ProductModel: React.FC<ProductModelProps> = ({
       console.error("Error in handleAction", error);
     }
   };
+
+  console.log("GetValues", getValues());
 
   useEffect(() => {
     dispatch(fetchTags() as any);
@@ -396,6 +402,7 @@ const ProductModel: React.FC<ProductModelProps> = ({
               )}
             </Box>
 
+            {/* Product Completed Field */}
             <Box className={styles.product__formField}>
               <Typography
                 component={"label"}
@@ -422,6 +429,7 @@ const ProductModel: React.FC<ProductModelProps> = ({
               )}
             </Box>
 
+            {/* Description Field */}
             <Box className={styles.product__formField}>
               <Typography
                 component={"label"}
@@ -446,13 +454,37 @@ const ProductModel: React.FC<ProductModelProps> = ({
                 </Typography>
               )}
             </Box>
+            {/* Location Field */}
+            <Box className={styles.product__formField}>
+              <Typography
+                component={"label"}
+                className={styles.product__labelText}
+              >
+                Select your location:
+              </Typography>
+              <LocationLabel
+                register={register}
+                setValue={setValue}
+                errors={errors}
+              />
+
+              {errors.location && (
+                <Typography
+                  sx={{ display: "block!important" }}
+                  className={styles.product__errorMsg}
+                >
+                  {errors.location.message}
+                </Typography>
+              )}
+            </Box>
+            {/* Tags Field */}
             <Box className={styles.product__formField}>
               <Typography className={styles.product__labelText}>
                 Tags:
               </Typography>
 
               <Box className={styles.product__tagsList}>
-                {tagsList.map((tag: Tag, index) => (
+                {tagsList.map((tag: Tag, index: number) => (
                   <Box key={index} className={styles.product__tagContents}>
                     <Typography
                       onClick={() => handleTagToggle(tag.id)}

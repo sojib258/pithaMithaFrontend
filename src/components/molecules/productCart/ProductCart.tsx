@@ -77,10 +77,7 @@ const ProductCart: React.FC<productProps> = ({
     setOpen(false);
   };
 
-  console.log("SellerFromCart", seller);
-
   const isAuthenticated = auth.isAuthenticated;
-  console.log("Sllll", seller);
 
   const handleAddToCart = () => {
     if (isAuthenticated) {

@@ -21,7 +21,7 @@ interface SingleProductProps {
 }
 
 const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
-  const { products, ratings } = useSelector((item: RootState) => item);
+  const { products, ratings } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const [activeBtn, setActiveBtn] = useState("description");
 

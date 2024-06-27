@@ -3,27 +3,36 @@ import Button from "@/components/atoms/button/Button";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
 import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import useResponsive from "@/hooks/useResponsive";
-import { fetchItems } from "@/store/feature/product/ProductSlice";
-import { RootState } from "@/store/store";
+import { fetchPopularProducts } from "@/utils/fetchProductsByAttributes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./products.module.scss";
 const Products = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const { items: products, loading } = useSelector(
-    (state: RootState) => state.products
-  );
 
   const { downSmScreen } = useResponsive();
+  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   useEffect(() => {
-    dispatch(fetchItems() as any);
-  }, [dispatch]);
+    const loadProducts = async () => {
+      try {
+        const products = await fetchPopularProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error("Error fetching popular products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    loadProducts();
+  }, []);
+
   return (
     <Box className={styles.products}>
       <Box className={styles.products__head}>

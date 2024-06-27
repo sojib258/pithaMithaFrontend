@@ -2,7 +2,7 @@
 import Label from "@/components/atoms/label/Label";
 import OrderStatus from "@/components/atoms/orderStatus/OrderStatus";
 import dateFormat from "@/utils/dateFormat";
-import { Seller } from "@/utils/typesDefine/orderSliceTypes";
+import { Order, Seller } from "@/utils/typesDefine/orderSliceTypes";
 import { Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -117,8 +117,8 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
       );
       await orderUpdatePromise;
 
-      // handle the average reponse time of an user
-      if (newStatus === "processing" || newStatus === "delivered") {
+      // handle the average reponse time of an seller and update the rootStatus=success if all the seller delivered their product
+      if (newStatus === "delivered") {
         // Fetch all orders for the user
         const userOrdersResponse = await axios.get(`${API_URL}/orders`, {
           headers,
@@ -132,6 +132,8 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
               seller.userId === userId && seller.status === "delivered"
           )
         );
+
+        console.log("DeliveredOrders", deliveredOrders);
 
         // Calculate the average response time
         const totalResponseTime = deliveredOrders.reduce(
@@ -156,6 +158,31 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
           },
           { headers }
         );
+
+        // check if all the sellers deliverd their products then update the rootStatus
+
+        console.log("UserOrders", userOrders);
+        const currentOrder = userOrders.find(
+          (order: Order) => order.id === orderId
+        );
+        console.log("CUrrentOrder", currentOrder);
+        const checkDeliveredStatus = currentOrder.attributes.sellers.every(
+          (seller: Seller) => seller.status === "delivered"
+        );
+        console.log("checkDeliveredStatus", checkDeliveredStatus);
+
+        if (checkDeliveredStatus) {
+          const response = await axios.put(
+            `${API_URL}/orders/${orderId}`,
+            {
+              data: {
+                rootStatus: "success",
+              },
+            },
+            { headers }
+          );
+        }
+        console.log("Response RootStatusUpdate", response);
       }
 
       handleLoading(false);

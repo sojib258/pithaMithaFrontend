@@ -39,6 +39,27 @@
     @extend %body-md-600;
     color: $gray-1000;
   }
+  &__fetchProduct {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__noMoreProducts {
+    width: 100%;
+    height: auto;
+    padding: 25px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: $gray-100;
+    margin: 25px 0px;
+  }
+  &__noMoreText {
+    @extend %body-md-400;
+    color: $gray-1000;
+    margin-bottom: 16px;
+  }
 
   // For Responsive
 

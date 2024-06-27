@@ -501,6 +501,16 @@
 /*=====  End of Review Dialog  ======*/
 
 /*=============================================
+=            Location Dialog            =
+=============================================*/
+.locationDialog .MuiPaper-root {
+  min-width: 400px;
+  min-height: 450px;
+}
+
+/*=====  End of LOcation Dialog  ======*/
+
+/*=============================================
 =            Pagination Area Styling Start          =
 =============================================*/
 .pagination .MuiPaginationItem-root.Mui-selected {
