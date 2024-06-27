@@ -55,7 +55,6 @@ const OrderHistory = () => {
     fetchData(); // Call the async function immediately
   }, [token, userId]);
 
-  console.log("OrderDet", orderDetails);
   return (
     <Box className={styles.history}>
       <Box className={styles.history__orderTable}>

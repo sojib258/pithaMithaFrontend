@@ -148,8 +148,6 @@ const ProductModel: React.FC<ProductModelProps> = ({
     }
   };
 
-  console.log("GetValues", getValues());
-
   useEffect(() => {
     dispatch(fetchTags() as any);
 

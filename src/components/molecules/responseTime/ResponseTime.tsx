@@ -27,7 +27,7 @@ const ResponseTime: React.FC<ResponseTimeProps> = ({
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [startTime, isRunning, elapsedTime]);
+  }, [startTime, isRunning, elapsedTime, onElapsedTimeUpdate]);
 
   return <>{timeFormat(elapsedTime)}</>;
 };

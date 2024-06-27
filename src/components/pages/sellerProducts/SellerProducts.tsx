@@ -25,8 +25,6 @@ const SellerProducts = () => {
     router.push("/sales-dashboard/product/add-product");
   };
 
-  console.log("SlrPr", sellerProducts);
-
   useEffect(() => {
     dispatch(fetchSellerProduct() as any);
   }, [dispatch]);

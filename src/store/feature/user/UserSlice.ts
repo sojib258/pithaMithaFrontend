@@ -59,7 +59,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     clearUser: (state) => {
-      console.log("clearUser called");
       state.id = initialState.id;
       state.firstName = initialState.firstName;
       state.lastName = initialState.lastName;

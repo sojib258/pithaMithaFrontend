@@ -48,7 +48,7 @@ export const fetchRatingData = createAsyncThunk(
       const response = await axios.get(
         `${API_URL}/products/${productId}?populate[ratings][populate][users_permissions_user][populate]=image&populate[ratings][populate]=images`
       );
-      console.log("RatingSliceResponse", response);
+
       return response.data.data;
     } catch (error: any) {
       console.error("Error from RatingSlice", error);

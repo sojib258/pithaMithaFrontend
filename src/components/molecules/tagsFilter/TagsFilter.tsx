@@ -30,7 +30,7 @@ const TagsFilter: React.FC<TagsFilterProps> = ({
   const tagsSkeleton = [1, 2, 3, 4, 5, 6];
 
   if (loading) {
-    return tagsSkeleton.map((item) => <Skeleton width={"100px"} />);
+    return tagsSkeleton.map((item) => <Skeleton key={item} width={"100px"} />);
   }
 
   return (

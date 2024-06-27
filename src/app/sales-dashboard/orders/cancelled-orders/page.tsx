@@ -44,9 +44,6 @@ const Page = () => {
     (order) => order.rootStatus === "cancelled"
   );
 
-  console.log("TTTTTTTTT", sellerOrders);
-  console.log("CCCCCCCCC", cancelledOrders);
-
   useEffect(() => {
     dispatch(fetchSellerProduct() as any);
     dispatch(fetchOrders() as any);

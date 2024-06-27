@@ -274,10 +274,6 @@ const Location: React.FC<LocationProps> = ({
     }
   };
 
-  console.log("selectedCity", selectedCity);
-  console.log("selectedDivision", selectedDivision);
-  console.log("searchTerm", searchTerm);
-
   return (
     <Box className={styles.location}>
       {selectedCity ? (

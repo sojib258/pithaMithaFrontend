@@ -37,9 +37,6 @@ export const fetchItems = createAsyncThunk(
           },
         },
       });
-
-      console.log("Response from productSlice", response);
-
       return {
         data: response?.data.data,
         hasMore:
