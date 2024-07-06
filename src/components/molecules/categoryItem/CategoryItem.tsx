@@ -1,6 +1,8 @@
+"use client";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "./categoryItem.module.scss";
 interface CategoryItemProps {
   imgSrc: string;
@@ -12,8 +14,14 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   text,
   altText,
 }) => {
+  const router = useRouter();
+
+  const handleCategory = () => {
+    console.log("T", text);
+    router.push(`/products?category=${text}`);
+  };
   return (
-    <Box className={styles.category}>
+    <Box onClick={handleCategory} className={styles.category}>
       <Image
         className={styles.category__img}
         width={200}

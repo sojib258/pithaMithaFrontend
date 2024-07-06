@@ -36,7 +36,9 @@ const Shop = () => {
     page,
   } = useSelector((state: RootState) => state.products);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const categoryFromParams = searchParams.get("category") || "All";
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(categoryFromParams);
   const [price, setPrice] = useState<number[]>([0, 20000]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);

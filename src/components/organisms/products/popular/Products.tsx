@@ -7,6 +7,7 @@ import { fetchPopularProducts } from "@/utils/fetchProductsByAttributes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./products.module.scss";
@@ -39,18 +40,20 @@ const Products = () => {
         <Typography className={styles.products__headText}>
           Popular Products
         </Typography>
-        <Button
-          customStyle={{
-            fontSize: "14px",
-            padding: "5px 10px",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            color: "#00B207",
-            paddingRight: "0px",
-          }}
-          arrowIcon
-          text="View All"
-        />
+        <Link href={"/products"}>
+          <Button
+            customStyle={{
+              fontSize: "14px",
+              padding: "5px 10px",
+              backgroundColor: "transparent",
+              boxShadow: "none",
+              color: "#00B207",
+              paddingRight: "0px",
+            }}
+            arrowIcon
+            text="View All"
+          />
+        </Link>
       </Box>
       <Grid container spacing={{ xs: 1, sm: 2 }}>
         {loading

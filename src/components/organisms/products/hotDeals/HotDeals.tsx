@@ -7,6 +7,7 @@ import { fetchHotDealsProducts } from "@/utils/fetchProductsByAttributes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./hotDeals.module.scss";
 
@@ -36,19 +37,20 @@ const HotDeals = () => {
     <Box className={styles.hotDeals}>
       <Box className={styles.hotDeals__head}>
         <Typography className={styles.hotDeals__headText}>Hot Deals</Typography>
-
-        <Button
-          customStyle={{
-            fontSize: "14px",
-            padding: "5px 10px",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            color: "#00B207",
-            paddingRight: "0px",
-          }}
-          arrowIcon
-          text="View All"
-        />
+        <Link href={"/products"}>
+          <Button
+            customStyle={{
+              fontSize: "14px",
+              padding: "5px 10px",
+              backgroundColor: "transparent",
+              boxShadow: "none",
+              color: "#00B207",
+              paddingRight: "0px",
+            }}
+            arrowIcon
+            text="View All"
+          />
+        </Link>
       </Box>
       <Grid container spacing={{ xs: 1, sm: 2 }}>
         {loading
