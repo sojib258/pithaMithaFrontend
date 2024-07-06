@@ -1,4 +1,4 @@
-import NewsletterForm from "@/components/molecules/newsLetterFrom/NewsletterForm";
+import NewsletterForm from "@/components/molecules/newsLetterForm/NewsletterForm";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { IconButton, Typography } from "@mui/material";
 import Box from "@mui/material/Box";

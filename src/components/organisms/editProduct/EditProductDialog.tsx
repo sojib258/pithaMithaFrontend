@@ -1,4 +1,5 @@
 "use client";
+import ProductModel from "@/components/organisms/productModel/ProductModel";
 import { RootState } from "@/store/store";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
@@ -8,7 +9,6 @@ import axios from "axios";
 import React from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import ProductModel from "../productModel/ProductModel";
 import styles from "./editProduct.module.scss";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 type formData = {

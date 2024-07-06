@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
 import CouponCodeDialog from "@/components/molecules/couponCodeDialog/CouponCode";
+import Summary from "@/components/organisms/orderSummary/Summary";
 import { RootState } from "@/store/store";
 import { CartSliceData } from "@/utils/typesDefine/cartSliceTypes";
 import { Typography } from "@mui/material";
@@ -11,7 +12,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import Summary from "../orderSummary/Summary";
 import ShoppingCartTable from "./ShoppingCartTable";
 import styles from "./shoppingCart.module.scss";
 const ShoppingCart = () => {
