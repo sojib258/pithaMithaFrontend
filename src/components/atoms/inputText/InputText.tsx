@@ -1,10 +1,13 @@
 "use client";
 import useResponsive from "@/hooks/useResponsive";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { ChangeEvent } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import styles from "./inputText.module.scss";
+
 interface InputTextProps {
   label?: string;
   onChange?: (value: string) => void;
@@ -17,8 +20,11 @@ interface InputTextProps {
   icon?: boolean;
   placeholder?: string;
   register?: UseFormRegisterReturn;
-  multiline?: boolean; // Add this prop
-  rows?: number; // Add this prop
+  multiline?: boolean;
+  rows?: number;
+  showPasswordIcon?: boolean;
+  showPassword?: boolean;
+  togglePasswordVisibility?: () => void;
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -32,9 +38,12 @@ const InputText: React.FC<InputTextProps> = ({
   customStyle,
   placeholder,
   register,
-  multiline = false, // Default to false
-  rows = 1, // Default to 1
+  multiline = false,
+  rows = 1,
   sx,
+  showPasswordIcon = false,
+  showPassword,
+  togglePasswordVisibility,
 }) => {
   const { downSmScreen } = useResponsive();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +51,7 @@ const InputText: React.FC<InputTextProps> = ({
       onChange(e.target.value);
     }
   };
+
   return (
     <>
       <Box
@@ -61,8 +71,8 @@ const InputText: React.FC<InputTextProps> = ({
           size="small"
           fullWidth={true}
           placeholder={placeholder}
-          multiline={multiline} // Use the multiline prop
-          rows={rows} // Use the rows prop
+          multiline={multiline}
+          rows={rows}
           {...register}
           sx={sx}
         />
@@ -96,34 +106,19 @@ const InputText: React.FC<InputTextProps> = ({
             </svg>
           </Box>
         )}
-        {type === "password" && (
+        {showPasswordIcon && (
           <Box
             className={`${styles.inputText__eyeIcon} ${
               downSmScreen && styles.inputText__eyeIcon_smallScreen
             }`}
+            onClick={togglePasswordVisibility}
+            style={{ cursor: "pointer" }}
           >
-            <svg
-              width="20"
-              height="15"
-              viewBox="0 0 20 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1.66669 7.50033C1.66669 7.50033 4.69669 1.66699 10 1.66699C15.3034 1.66699 18.3334 7.50033 18.3334 7.50033C18.3334 7.50033 15.3034 13.3337 10 13.3337C4.69669 13.3337 1.66669 7.50033 1.66669 7.50033Z"
-                stroke="#1A1A1A"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M10 10C10.663 10 11.2989 9.73661 11.7678 9.26777C12.2366 8.79893 12.5 8.16304 12.5 7.5C12.5 6.83696 12.2366 6.20107 11.7678 5.73223C11.2989 5.26339 10.663 5 10 5C9.33696 5 8.70107 5.26339 8.23223 5.73223C7.76339 6.20107 7.5 6.83696 7.5 7.5C7.5 8.16304 7.76339 8.79893 8.23223 9.26777C8.70107 9.73661 9.33696 10 10 10Z"
-                stroke="#1A1A1A"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {showPassword ? (
+              <VisibilityOffIcon sx={{ color: "#4d4d4d" }} />
+            ) : (
+              <VisibilityIcon sx={{ color: "#4d4d4d" }} />
+            )}
           </Box>
         )}
       </Box>

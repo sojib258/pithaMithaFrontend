@@ -36,6 +36,8 @@ const Register = () => {
     (state: RootState) => state.auth.isAuthenticated
   );
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -46,12 +48,6 @@ const Register = () => {
   } = useForm<FormFields>();
   const { downSmScreen } = useResponsive();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      return router.push("/dashboard");
-    }
-  });
 
   const handleRegisterForm: SubmitHandler<FormFields> = async (
     formData: FormFields
@@ -94,6 +90,24 @@ const Register = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      return router.push("/dashboard");
+    }
+  });
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        handleSubmit(handleRegisterForm)();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleSubmit, handleRegisterForm]);
 
   return (
     <>
@@ -202,7 +216,7 @@ const Register = () => {
           </FormGroup>
           <FormGroup className={styles.register__inputItem}>
             <InputText
-              type="password"
+              type={showPassword ? "text" : "password"}
               label="Password *"
               register={register("password", {
                 required: "password is required",
@@ -211,6 +225,9 @@ const Register = () => {
                   message: "password length min 6 character",
                 },
               })}
+              showPasswordIcon={true}
+              showPassword={showPassword}
+              togglePasswordVisibility={() => setShowPassword(!showPassword)}
             />
             {errors.password && (
               <Typography className={styles.register__errorMsg}>
@@ -220,11 +237,16 @@ const Register = () => {
           </FormGroup>
           <FormGroup className={styles.register__inputItem}>
             <InputText
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               label="Confirm Password *"
               register={register("confirmPassword", {
                 required: "confirm password is required",
               })}
+              showPasswordIcon={true}
+              showPassword={showConfirmPassword}
+              togglePasswordVisibility={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
             />
             {errors.confirmPassword && (
               <Typography className={styles.register__errorMsg}>

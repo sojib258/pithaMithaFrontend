@@ -31,6 +31,7 @@ const Login = () => {
     (state: RootState) => state.auth.isAuthenticated
   );
 
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,12 +41,6 @@ const Login = () => {
     setError,
     formState: { errors },
   } = useForm<FormFields>();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      return router.push("/dashboard");
-    }
-  });
 
   const { downSmScreen } = useResponsive();
 
@@ -88,6 +83,25 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      return router.push("/dashboard");
+    }
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        handleSubmit(handleLoginData)();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleSubmit, handleLoginData]);
+
   return (
     <>
       <Toaster />
@@ -114,7 +128,7 @@ const Login = () => {
           </FormGroup>
           <FormGroup className={styles.login__inputItem}>
             <InputText
-              type="password"
+              type={showPassword ? "text" : "password"}
               label="Password"
               register={register("password", {
                 required: "password is required",
@@ -123,6 +137,9 @@ const Login = () => {
                   message: "password length min 6 character",
                 },
               })}
+              showPasswordIcon={true}
+              showPassword={showPassword}
+              togglePasswordVisibility={() => setShowPassword(!showPassword)}
             />
             {errors.password && (
               <Typography className={styles.login__errorMsg}>

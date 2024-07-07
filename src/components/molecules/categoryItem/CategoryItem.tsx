@@ -17,7 +17,6 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   const router = useRouter();
 
   const handleCategory = () => {
-    console.log("T", text);
     router.push(`/products?category=${text}`);
   };
   return (
