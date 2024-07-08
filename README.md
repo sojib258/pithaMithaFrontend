@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PithaMitha E-commerce Store
 
-## Getting Started
+## Description
+PithaMitha is a multivendor e-commerce platform for buying and selling traditional PithaMitha delicacies. The platform is built with Next.js for the frontend and Strapi CMS for the backend, ensuring a scalable and performant application.
 
-First, run the development server:
+## Table of Contents
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Usage](#usage)
+- [Contact](#contact)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
+- User registration and authentication
+- Vendor dashboard for managing products and orders
+- Customer dashboard for tracking purchases
+- Product search and filtering
+- Infinite scrolling and lazy loading
+- Provide sales-dashboard for seller
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Screenshots
+![Home Page](path/to/homepage-screenshot.png)
+![Vendor Dashboard](path/to/vendor-dashboard-screenshot.png)
+![Product Page](path/to/product-page-screenshot.png)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
+- **Frontend:** React, NextJs, TypeScript, Redux Toolkit, Material-UI
+- **Backend:** Strapi CMS, Node.js
+- **Database:** PostgreSQL(Render)
+- **Authentication:** JWT
+- **Hosting:** Vercel (Frontend), Render (Backend)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+### Prerequisites
+- Backend(you will find it my repositories named pithaMithaBackend)
+- Node.js
+- npm or yarn
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Steps
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/sojib258/pithaMithaFrontend.git
+   cd pithaMithaFrontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   
+2. **Install dependencies:**
+   ```bash
+   npm install or yarn (preferred yarn)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment Variables
+To run this project, you will need to add the following environment variables to your .env files:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **Set up environment variables:**
+   - Create a .env file in your root directory.
+   - Add the necessary environment variables as specified in the .env.example files provided.
+
+2. **Add this necessary info in your .env file:**
+   ```bash
+   NEXT_PUBLIC_API_KEY=http://localhost:1337/api (replace it with your backend api)
+   NEXT_PUBLIC_SSL_COMMERZ_STORE_ID=(your demo store id from ssl commerz)
+   NEXT_PUBLIC_SSL_COMMERZ_SECRET_KEY=(your demo secret key from ssl commerz)
+   NEXT_PUBLIC_FRONTEND_URL=(your ssl domain name, make sure to keep it your frontend server url like-http://localhost:3000 )
+
+
+## Usage
+
+1. **Run the following command:**
+   ```bash
+   cd pithaMithaFrontend
+   npm run dev or
+   yarn dev
+
+## Contact
+If you have any questions or want to get in touch, feel free to reach out:
+ - Email: sojibsrd85@gmail.com
+
