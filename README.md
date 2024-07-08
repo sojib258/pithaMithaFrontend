@@ -4,6 +4,7 @@
 PithaMitha is a multivendor e-commerce platform for buying and selling traditional PithaMitha delicacies. The platform is built with Next.js for the frontend and Strapi CMS for the backend, ensuring a scalable and performant application.
 
 ## Table of Contents
+- [liveDemo](#liveDemo)
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Technologies Used](#technologies-used)
@@ -11,6 +12,9 @@ PithaMitha is a multivendor e-commerce platform for buying and selling tradition
 - [Environment Variables](#environment-variables)
 - [Usage](#usage)
 - [Contact](#contact)
+
+## liveDemo
+- https://pitha-mitha-frontend.vercel.app/
 
 ## Features
 - User registration and authentication
@@ -79,7 +83,7 @@ PithaMitha is a multivendor e-commerce platform for buying and selling tradition
    
 2. **Install dependencies:**
    ```bash
-   npm install or yarn (preferred yarn)
+   npm install or yarn install (preferred yarn)
 
 
 ## Environment Variables
