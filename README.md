@@ -21,9 +21,39 @@ PithaMitha is a multivendor e-commerce platform for buying and selling tradition
 - Provide sales-dashboard for seller
 
 ## Screenshots
-![Home Page](path/to/homepage-screenshot.png)
-![Vendor Dashboard](path/to/vendor-dashboard-screenshot.png)
-![Product Page](path/to/product-page-screenshot.png)
+![Home Page](https://github.com/sojib258/pithaMithaFrontend/assets/77184269/55fcf0d1-8344-45aa-a3ee-434f9d6e5f5d)
+
+
+
+##
+
+
+![Shop Page](https://github.com/sojib258/pithaMithaFrontend/assets/77184269/c13f4c6e-1dd6-46e2-ab02-27f929966faf)
+
+
+
+##
+
+
+
+![Setting Page](https://github.com/sojib258/pithaMithaFrontend/assets/77184269/8d804cbc-9497-4792-9c99-89514e495495)
+
+
+
+##
+
+
+
+![Dashboard](https://github.com/sojib258/pithaMithaFrontend/assets/77184269/080e8b65-6456-4572-bebc-4a7cb75c81d5)
+
+
+
+##
+
+
+
+![Shopping Cart](https://github.com/sojib258/pithaMithaFrontend/assets/77184269/4912a0f1-987e-4edc-989b-d61781b65a8b)
+
 
 ## Technologies Used
 - **Frontend:** React, NextJs, TypeScript, Redux Toolkit, Material-UI
