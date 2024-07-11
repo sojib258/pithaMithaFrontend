@@ -78,6 +78,7 @@ const ProductCart: React.FC<productProps> = ({
   };
 
   const isAuthenticated = auth.isAuthenticated;
+  console.log("NameLength", name.length);
 
   const handleAddToCart = () => {
     if (isAuthenticated) {
@@ -151,8 +152,8 @@ const ProductCart: React.FC<productProps> = ({
 
         <Link className={styles.productCart__link} href={href}>
           <Box className={styles.productCart__content}>
-            <Typography className={styles.productCart__title}>
-              {name}
+            <Typography title={name} className={styles.productCart__title}>
+              {name.length > 20 ? name.slice(0, 20) + `...` : name}
             </Typography>
             {averageRating && (
               <Box mb={1}>
