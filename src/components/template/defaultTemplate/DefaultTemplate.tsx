@@ -5,6 +5,7 @@ import Footer from "@/components/organisms/footer/Footer";
 import Header from "@/components/organisms/header/Header";
 import Newsletter from "@/components/organisms/newsLetter/NewsLetter";
 import Box from "@mui/material/Box";
+import NextTopLoader from "nextjs-toploader";
 import { ReactNode } from "react";
 import styles from "./defaultTemplate.module.scss";
 
@@ -15,6 +16,7 @@ interface DefaultTemplateProps {
 const DefaultTemplate: React.FC<DefaultTemplateProps> = ({ children }) => {
   return (
     <>
+      <NextTopLoader color="#00b207" showSpinner={false} />
       <Providers>
         <Header />
       </Providers>
@@ -24,6 +26,7 @@ const DefaultTemplate: React.FC<DefaultTemplateProps> = ({ children }) => {
           <NavLinks />
         </Box>
       </Box>
+
       {/* BreadCrumb */}
       <Box component={"section"} className={styles.breadcrumb}>
         <Box className={styles.breadcrumb__wrapper}>
