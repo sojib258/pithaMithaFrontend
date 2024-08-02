@@ -105,8 +105,6 @@ const AddressInfo: React.FC<AddressInfoProps> = ({
         { headers }
       );
 
-      console.log("AR", responsePromise);
-
       toast.promise(
         responsePromise,
         {
@@ -122,8 +120,7 @@ const AddressInfo: React.FC<AddressInfoProps> = ({
           },
         }
       );
-      const addressResponse = await responsePromise;
-      console.log("AddressResponse", addressResponse);
+      await responsePromise;
       setLoading(false);
       handleUpdateComponent();
     } catch (error) {

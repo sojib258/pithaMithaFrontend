@@ -6,15 +6,23 @@ import TagsFilter from "@/components/molecules/tagsFilter/TagsFilter";
 import { RootState } from "@/store/store";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./blogSidebar.module.scss";
-const BlogSidebar = () => {
-  let products = useSelector((state: RootState) => state.products.items);
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState("Latest");
+interface BlogSideBarProps {
+  selectedCategory: string;
+  selectedTags: string[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
+  handleSelectedCategory: (value: string) => void;
+}
+
+const BlogSidebar: React.FC<BlogSideBarProps> = ({
+  selectedCategory,
+  selectedTags,
+  handleSelectedCategory,
+  setSelectedTags,
+}) => {
+  let products = useSelector((state: RootState) => state.products.items);
 
   const news = [1, 2, 3];
 
@@ -31,7 +39,8 @@ const BlogSidebar = () => {
         </Typography>
         <CategoryFilter
           selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          setSelectedCategory={handleSelectedCategory}
+          find="blogs"
         />
       </Box>
 

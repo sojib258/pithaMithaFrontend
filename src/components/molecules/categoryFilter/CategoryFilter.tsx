@@ -11,13 +11,17 @@ import styles from "./categoryFIlter.module.scss";
 interface CategoryFilterProps {
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
+  find?: string; // blogs | products
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({
   selectedCategory,
   setSelectedCategory,
+  find = "products",
 }) => {
-  const { category, products } = useSelector((state: RootState) => state);
+  const { category, products, blogs } = useSelector(
+    (state: RootState) => state
+  );
 
   const {
     items: categories,
@@ -31,10 +35,28 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     errorMsg: productErrorMsg,
   } = products;
 
+  const {
+    items: allBlogs,
+    loading: blogsLoading,
+    errorMsg: blogErrorMsg,
+  } = blogs;
+
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
 
+  // Find Blogs for Category
+  const getBlogCountForCategory = (category: string) => {
+    if (category === "All") {
+      return allBlogs.length;
+    } else {
+      return allBlogs.filter(
+        (item) => item.attributes.category.name === category
+      ).length;
+    }
+  };
+
+  // Find Products for Category
   const getProductCountForCategory = (category: string) => {
     if (category === "All") {
       return allProducts.length;
@@ -90,7 +112,11 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         name="radio-buttons-group"
       >
         <RadioAtom
-          count={getProductCountForCategory("All")}
+          count={
+            find === "blogs"
+              ? getBlogCountForCategory("All")
+              : getProductCountForCategory("All")
+          }
           label="All"
           value="All"
           onChange={handleCategoryChange}
@@ -101,7 +127,11 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
             onChange={handleCategoryChange}
             label={item.name}
             value={item.name}
-            count={getProductCountForCategory(item.name)}
+            count={
+              find === "blogs"
+                ? getBlogCountForCategory(item.name)
+                : getProductCountForCategory(item.name)
+            }
           />
         ))}
       </RadioGroup>

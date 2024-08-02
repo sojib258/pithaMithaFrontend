@@ -26,9 +26,7 @@ import styles from "./products.module.scss";
 
 const Shop = () => {
   const dispatch = useDispatch();
-  const searchParams = useSearchParams();
   const { ref, inView } = useInView({ threshold: 0.1 });
-
   const {
     items: products,
     hasMore,
@@ -36,13 +34,15 @@ const Shop = () => {
     page,
   } = useSelector((state: RootState) => state.products);
 
+  const searchParams = useSearchParams();
   const categoryFromParams = searchParams.get("category") || "All";
   const [selectedCategory, setSelectedCategory] =
     useState<string>(categoryFromParams);
+
   const [price, setPrice] = useState<number[]>([0, 20000]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState<string | number>("Random");
+  const [selectValue, setSelectValue] = useState<string | number>("Latest");
 
   const searchValues = searchParams.get("search")?.toLowerCase() || "";
   const selectedLocation = searchParams.get("location") || "";
@@ -230,15 +230,7 @@ const Shop = () => {
         <Box className={styles.shop__rightContent}>
           <Grid container spacing={{ xs: 1, sm: 2 }}>
             {filteredProducts.map((item) => (
-              <Grid
-                flexGrow={1}
-                key={item.id}
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                item
-              >
+              <Grid flexGrow={1} key={item.id} xs={6} md={4} lg={3} item>
                 <ProductCart
                   id={item.id}
                   isServiceAvailable={item.attributes.isServiceAvailable}
@@ -259,7 +251,7 @@ const Shop = () => {
             ))}
             {loading &&
               [1, 2, 3, 4, 5].map((item) => (
-                <Grid flexGrow={1} key={item} xs={12} sm={6} md={4} lg={3} item>
+                <Grid flexGrow={1} key={item} xs={6} md={4} lg={3} item>
                   <ProductSkeleton key={item} />
                 </Grid>
               ))}

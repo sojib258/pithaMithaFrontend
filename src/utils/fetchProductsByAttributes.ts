@@ -35,6 +35,8 @@ const fetchProductsByAttribute = async (
       },
     });
 
+    console.log("RRRRRR", response);
+
     const newProducts: ProductData[] = response.data.data.map((item: any) => ({
       id: item.id,
       attributes: {
@@ -103,6 +105,8 @@ const fetchProductsByAttribute = async (
         },
       },
     }));
+
+    console.log("New Products", newProducts);
 
     products = [...products, ...newProducts];
     hasMore =

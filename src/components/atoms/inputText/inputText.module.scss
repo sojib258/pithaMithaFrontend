@@ -52,7 +52,7 @@
     &_smallScreen {
       top: 9.6px;
       height: 16px;
-      left: 10px;
+      right: 10px;
     }
   }
   &__eyeIcon {
@@ -60,9 +60,9 @@
     top: 10px;
     right: 15px;
     cursor: pointer;
-    &_smallScreen {
-      height: 16px;
-      top: 8px;
-    }
+    // &_smallScreen {
+    //   height: 16px;
+    //   top: 8px;
+    // }
   }
 }

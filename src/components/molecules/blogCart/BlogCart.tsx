@@ -1,7 +1,10 @@
-"use client";
 import Button from "@/components/atoms/button/Button";
-import useResponsive from "@/hooks/useResponsive";
-import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import dateFormat from "@/utils/dateFormat";
+import {
+  Author,
+  Category,
+  FeaturedImage,
+} from "@/utils/typesDefine/blogSliceTypes";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import Box from "@mui/material/Box";
@@ -10,63 +13,61 @@ import Image from "next/image";
 import styles from "./blogCart.module.scss";
 interface newsCartProps {
   title: string;
-  tag: string;
-  admin: string;
-  commentCount: string | number;
-  imgSrc: string;
-  date: string | number;
-  month: string;
-  imgAlt?: string;
+  category: Category;
+  admin: Author;
+  createdAt: string;
+  featuredImage: FeaturedImage;
 }
 const NewsCart: React.FC<newsCartProps> = ({
-  imgSrc,
-  imgAlt = "Blog Image",
-  tag,
+  featuredImage,
+  category,
   admin,
-  commentCount,
   title,
-  date,
-  month,
+  createdAt,
 }) => {
-  const { downLgScreen } = useResponsive();
-  const titleLength = downLgScreen ? 45 : 70;
+  const date = dateFormat(createdAt);
+  const convertedDate = date.date.split("-");
+
   return (
     <Box className={styles.newsCart}>
       <Box className={styles.newsCart__header}>
         <Image
           className={styles.newsCart__img}
-          width={300}
+          width={400}
           height={300}
-          src={imgSrc}
-          alt={imgAlt}
+          src={featuredImage.data.attributes.url}
+          alt={featuredImage.data.attributes.alternativeText || "Blog Image"}
         />
         <Box className={styles.newsCart__date}>
-          <Typography className={styles.newsCart__tarikh}>{date}</Typography>
-          <Typography className={styles.newsCart__month}>{month}</Typography>
+          <Typography className={styles.newsCart__tarikh}>
+            {convertedDate[0]}
+          </Typography>
+          <Typography className={styles.newsCart__month}>
+            {convertedDate[1]}
+          </Typography>
         </Box>
       </Box>
       <Box className={styles.newsCart__contents}>
         <Box className={styles.newsCart__newsInfo}>
-          <Typography className={styles.newsCart__tag}>
+          <Typography className={styles.newsCart__cat}>
             <SellOutlinedIcon className={styles.newsCart__infoIcon} />
-            {tag}
+            {category.data.attributes.name}
           </Typography>
           <Typography className={styles.newsCart__admin}>
             <PermIdentityRoundedIcon
               className={`${styles.newsCart__infoIcon} ${styles.newsCart__infoAdminIcon}`}
             />
             By
-            {` ${admin}`}
+            {` ${admin.data.attributes.firstName}`}
           </Typography>
-          <Typography className={styles.newsCart__comment}>
+          {/* <Typography className={styles.newsCart__comment}>
             <ModeCommentOutlinedIcon className={styles.newsCart__infoIcon} />
             {commentCount} Comment
-          </Typography>
+          </Typography> */}
         </Box>
         <Typography title={title} className={styles.newsCart__title}>
-          {title.length > titleLength
-            ? title.slice(0, titleLength) + `...`
-            : title}
+          {/* {title.length > 40 ? title.slice(0, 40) + `...` : title} */}
+          {title}
         </Typography>
       </Box>
       <Box className={styles.newsCart__button}>

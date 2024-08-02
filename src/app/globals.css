@@ -9,7 +9,9 @@ span,
 button,
 label,
 textarea,
-input {
+input,
+ul,
+li {
   font-family: var(--font-poppins) !important;
 }
 

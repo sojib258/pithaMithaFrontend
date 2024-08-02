@@ -78,7 +78,6 @@ const ProductCart: React.FC<productProps> = ({
   };
 
   const isAuthenticated = auth.isAuthenticated;
-  console.log("NameLength", name.length);
 
   const handleAddToCart = () => {
     if (isAuthenticated) {

@@ -65,7 +65,34 @@
 
   @include downMdScreen {
     &__leftContent {
-      max-width: 190px;
+      max-width: 150px;
+    }
+  }
+
+  @include downSmScreen {
+    &__contentWrapper {
+      flex-direction: column;
+    }
+    &__leftContent {
+      max-width: 100%;
+      width: 100%;
+      margin-bottom: 25px;
+      display: initial;
+      // justify-content: space-between;
+      // align-items: flex-start;
+    }
+    &__rightContent {
+      max-width: 100%;
+      width: 100%;
+    }
+    &__priceFilterSection {
+      margin-top: 0px;
+    }
+    &__ratingFilterSection {
+      margin-top: 0px;
+    }
+    &__tagsFilterSection {
+      margin-top: 0px;
     }
   }
 }

@@ -1,0 +1,23 @@
+@import "@/styles/style.scss";
+
+.comment {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  &__labelText {
+    @extend %body-xs-400;
+    color: $gray-1000;
+  }
+  &__textBox {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border-radius: 8px;
+    @extend %body-sm-400;
+    color: $gray-1000;
+    &::placeholder {
+      @extend %body-sm-400;
+      color: $gray-800;
+    }
+  }
+}

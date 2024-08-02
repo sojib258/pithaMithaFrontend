@@ -1,64 +1,78 @@
 "use client";
 import BlogCart from "@/components/molecules/blogCart/BlogCart";
+import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import BlogSidebar from "@/components/organisms/blogSidebar/BlogSidebar";
 import TopFilter from "@/components/organisms/shopTopFilter/Filter";
+import { fetchBlogs } from "@/store/feature/blog/BlogSlice";
+import { fetchCategory } from "@/store/feature/category/CategorySlice";
+import { fetchTags } from "@/store/feature/tags/TagsSlice";
 import { RootState } from "@/store/store";
+import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./blog.module.scss";
 
 const BlogList = () => {
-  let products = useSelector((state: RootState) => state.products.items);
-
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const {
+    items: blogs,
+    loading,
+    errorMsg,
+  } = useSelector((state: RootState) => state.blogs);
+  const searchParams = useSearchParams();
+  const categoryFromParams = searchParams.get("category") || "All";
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(categoryFromParams);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState<string | number>("Latest");
-  const resultFound = products.length;
-  const selectBoxValue = ["Latest", "Popular", "Low to High", "High to Low"];
+  const [selectValue, setSelectValue] = useState<string | number>("Random");
+  const dispatch = useDispatch();
 
-  const news = [
-    {
-      imgSrc: "/img/7.jpg",
-      title:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut",
-      tag: "Food",
-      admin: "Sojib",
-      commentCount: 199,
-      imgAlt: "Blog Image",
-      date: 12,
-      month: "Jan",
-    },
-    {
-      imgSrc: "/img/9.jpg",
-      title: "Lorem ipsum dolor sit ame",
-      tag: "Food",
-      admin: "Sojib",
-      commentCount: 59,
-      imgAlt: "Blog Image",
-      date: 13,
-      month: "Aug",
-    },
-    {
-      imgSrc: "/img/11.jpg",
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      tag: "Food",
-      admin: "Sojib",
-      commentCount: 199,
-      imgAlt: "Blog Image",
-      date: 31,
-      month: "Mar",
-    },
-  ];
+  const selectBoxValue = ["Latest", "Popular", "Random"];
+
+  useEffect(() => {
+    dispatch(fetchBlogs() as any);
+    dispatch(fetchCategory() as any);
+    dispatch(fetchTags() as any);
+  }, [dispatch]);
 
   const handleSelectValue = (value: string | number) => {
     setSelectValue(value);
   };
 
+  const handleSelectedCategory = (value: string) => {
+    setSelectedCategory(value);
+  };
+
+  const filterBlogs = useCallback(() => {
+    let filteredBlogs = blogs;
+
+    // filter by categories
+    if (selectedCategory !== "All") {
+      filteredBlogs = filteredBlogs.filter(
+        (item) => item.attributes.category.name === selectedCategory
+      );
+    }
+
+    // filter by tags
+    if (selectedTags.length > 0) {
+      filteredBlogs = filteredBlogs.filter((item) =>
+        item.attributes.tags.some((tag) => selectedTags.includes(tag.name))
+      );
+    }
+
+    return filteredBlogs;
+  }, [blogs, selectedCategory, selectedTags]);
+
+  const filteredBlogs = filterBlogs();
+  const resultFound = filteredBlogs.length;
+
   return (
     <Box className={styles.blog}>
-      {/* Blog Page Top Section Area */}
       <TopFilter
         resultFound={resultFound}
         selectBoxValue={selectBoxValue}
@@ -67,25 +81,49 @@ const BlogList = () => {
       />
       <Box className={styles.blog__contentWrapper}>
         <Box className={styles.blog__leftContent}>
-          {/* Blog Left Sidebar Area */}
-          <BlogSidebar />
+          <BlogSidebar
+            selectedCategory={selectedCategory}
+            handleSelectedCategory={handleSelectedCategory}
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
+          />
         </Box>
         <Box className={styles.blog__rightContent}>
           <Grid container spacing={{ xs: 1, sm: 2 }}>
-            {news.map((item, index) => (
-              <Grid flexGrow={1} key={index} sm={12} md={6} xl={4} item>
-                <BlogCart
-                  title={item.title}
-                  admin={item.admin}
-                  commentCount={item.commentCount}
-                  tag={item.tag}
-                  imgAlt={item.imgAlt}
-                  imgSrc={item.imgSrc}
-                  date={item.date}
-                  month={item.month}
-                />
-              </Grid>
-            ))}
+            {resultFound > 0 ? (
+              filteredBlogs.map((item: BlogData) => {
+                const { title, author, category, featuredImage, createdAt } =
+                  item.attributes;
+                return (
+                  <Grid flexGrow={1} key={item.id} sm={12} md={6} xl={4} item>
+                    <Link href={`/blogs/${item.id}`}>
+                      <BlogCart
+                        title={title}
+                        admin={author}
+                        category={category}
+                        featuredImage={featuredImage}
+                        createdAt={createdAt}
+                      />
+                    </Link>
+                  </Grid>
+                );
+              })
+            ) : loading ? (
+              [1, 2, 3].map((item) => (
+                <Stack
+                  key={item}
+                  mr={2}
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                >
+                  <ProductSkeleton />
+                </Stack>
+              ))
+            ) : (
+              <Typography className={styles.blog__nothing}>
+                No blogs are found!😊😊
+              </Typography>
+            )}
           </Grid>
         </Box>
       </Box>

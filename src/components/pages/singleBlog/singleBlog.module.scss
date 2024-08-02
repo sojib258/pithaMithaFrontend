@@ -7,18 +7,113 @@
   justify-content: center;
   align-items: flex-start;
   &__leftContent {
+    width: 98%;
+    height: auto;
+    margin-right: auto;
+  }
+  &__featuredImage {
     width: 100%;
     height: auto;
-    margin-right: 48px;
+    border-radius: 8px;
+    margin-bottom: 18px;
   }
-  &__rightContent {
+  &__info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  &__infoIcon {
+    font-size: 16px;
+    color: $primary;
+    margin-right: 4px;
+  }
+  &__infoIcon {
+    font-size: 18px !important;
+  }
+  &__infoText {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: $gray-800;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
+    margin-right: 16px;
+  }
+  &__title {
+    @extend %body-xl-600;
+    color: $gray-1000;
+    margin: 15px 0px;
+  }
+  &__commentLeaveText {
+    @extend %body-lg-500;
+    color: $gray-1000;
+    margin: 12px 0px 12px 0px;
+  }
+  &__commentText {
+    @extend %body-lg-500;
+    color: $gray-1000;
+    margin: 32px 0px 12px 0px;
+  }
+  &__adminInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  &__para {
+    @extend %body-sm-400;
+    color: $gray-1000;
+    margin-bottom: 18px;
+    a {
+      color: $primary;
+      text-decoration: underline;
+    }
+  }
+  &__ul {
+    margin: 0px 0px 18px 18px;
+    li {
+      @extend %body-sm-400;
+      color: $gray-1000;
+    }
+  }
+  &__insideImg {
     width: 100%;
-    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 18px;
+  }
+
+  &__rightContent {
+    width: 98%;
+    margin-left: auto;
+  }
+  &__recentText {
+    position: relative;
+    margin-left: 8px;
+    @extend %body-lg-500;
+    color: $gray-1000;
+    margin-bottom: 24px;
+    &::before {
+      position: absolute;
+      content: "";
+      width: 4px;
+      height: 26px;
+      background-color: $primary;
+      margin-left: -8px;
+    }
   }
 
   @include downMdScreen {
     &__leftContent {
-      margin-right: 0px;
+      width: 100%;
     }
   }
 }

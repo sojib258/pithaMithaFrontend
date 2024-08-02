@@ -58,8 +58,7 @@ const HotDeals = () => {
               <Grid
                 flexGrow={1}
                 key={item}
-                xs={12}
-                sm={6}
+                xs={6}
                 md={4}
                 lg={3}
                 xl={2.4}
@@ -77,8 +76,7 @@ const HotDeals = () => {
               <Grid
                 flexGrow={1}
                 key={item.id}
-                xs={12}
-                sm={6}
+                xs={6}
                 md={4}
                 lg={3}
                 xl={2.4}

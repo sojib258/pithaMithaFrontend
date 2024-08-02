@@ -44,7 +44,7 @@ const Categories = () => {
     },
     xs: {
       breakpoint: { max: 599, min: 0 },
-      items: 3,
+      items: 2,
     },
   };
 
