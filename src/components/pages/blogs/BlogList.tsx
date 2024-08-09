@@ -1,44 +1,56 @@
 "use client";
+import Button from "@/components/atoms/button/Button";
 import BlogCart from "@/components/molecules/blogCart/BlogCart";
-import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
+import BlogCartSkeleton from "@/components/molecules/skeleton/blogCartSkeleton/BlogCartSkeleton";
 import BlogSidebar from "@/components/organisms/blogSidebar/BlogSidebar";
 import TopFilter from "@/components/organisms/shopTopFilter/Filter";
-import { fetchBlogs } from "@/store/feature/blog/BlogSlice";
-import { fetchCategory } from "@/store/feature/category/CategorySlice";
-import { fetchTags } from "@/store/feature/tags/TagsSlice";
-import { RootState } from "@/store/store";
-import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
+import { BlogData, BlogsMeta } from "@/utils/typesDefine/blogSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./blog.module.scss";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 const BlogList = () => {
-  const {
-    items: blogs,
-    loading,
-    errorMsg,
-  } = useSelector((state: RootState) => state.blogs);
+  const [blogs, setBlogs] = useState<BlogData[]>([]);
+  const [blogsMeta, setBlogsMeta] = useState<BlogsMeta>();
+  const [start, setStart] = useState(0);
+  const [limit, setLimit] = useState(3);
+  const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const categoryFromParams = searchParams.get("category") || "All";
+  const searchValues = searchParams.get("blogsearch") || "";
   const [selectedCategory, setSelectedCategory] =
     useState<string>(categoryFromParams);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectValue, setSelectValue] = useState<string | number>("Random");
-  const dispatch = useDispatch();
+  const [selectValue, setSelectValue] = useState<string | number>("Latest");
 
-  const selectBoxValue = ["Latest", "Popular", "Random"];
+  const selectBoxValue = ["Latest", "Random", "Oldest"];
 
   useEffect(() => {
-    dispatch(fetchBlogs() as any);
-    dispatch(fetchCategory() as any);
-    dispatch(fetchTags() as any);
-  }, [dispatch]);
+    const fetchingBlogs = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/blogs?populate[category]=true&populate[tags]=true&populate[comments]=true&populate[featuredImage]=true&populate[users_permissions_user]=true&pagination[start]=${start}&pagination[limit]=${limit}`
+        );
+
+        setLoading(false);
+        setBlogsMeta(response.data.meta);
+        setBlogs((prev) => [...prev, ...response.data.data]);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error from fetching blogs");
+      }
+    };
+
+    fetchingBlogs();
+  }, [start, limit]);
+
+  console.log("Render");
 
   const handleSelectValue = (value: string | number) => {
     setSelectValue(value);
@@ -48,25 +60,61 @@ const BlogList = () => {
     setSelectedCategory(value);
   };
 
+  const handleFetchBlogs = () => {
+    setLoading(true);
+    setStart(start + limit);
+  };
+
   const filterBlogs = useCallback(() => {
     let filteredBlogs = blogs;
 
     // filter by categories
     if (selectedCategory !== "All") {
       filteredBlogs = filteredBlogs.filter(
-        (item) => item.attributes.category.name === selectedCategory
+        (item) =>
+          item.attributes.category.data.attributes.name === selectedCategory
       );
     }
 
     // filter by tags
     if (selectedTags.length > 0) {
       filteredBlogs = filteredBlogs.filter((item) =>
-        item.attributes.tags.some((tag) => selectedTags.includes(tag.name))
+        item.attributes.tags.data.some((tag) =>
+          selectedTags.includes(tag.attributes.name)
+        )
       );
     }
 
+    // filter by search values
+    if (searchValues) {
+      filteredBlogs = filteredBlogs.filter((item) =>
+        item.attributes.title.toLowerCase().includes(searchValues)
+      );
+    }
+
+    // filter by selectValue
+    switch (selectValue) {
+      case "Latest":
+        filteredBlogs = filteredBlogs.sort(
+          (a, b) =>
+            new Date(b.attributes.createdAt).getTime() -
+            new Date(a.attributes.createdAt).getTime()
+        );
+        break;
+      case "Random":
+        filteredBlogs = filteredBlogs.sort(() => Math.random() - 0.5);
+        break;
+      case "Oldest":
+        filteredBlogs = filteredBlogs.sort(
+          (a, b) =>
+            new Date(a.attributes.createdAt).getTime() -
+            new Date(b.attributes.createdAt).getTime()
+        );
+        break;
+    }
+
     return filteredBlogs;
-  }, [blogs, selectedCategory, selectedTags]);
+  }, [blogs, selectedCategory, selectedTags, selectValue, searchValues]);
 
   const filteredBlogs = filterBlogs();
   const resultFound = filteredBlogs.length;
@@ -86,45 +134,62 @@ const BlogList = () => {
             handleSelectedCategory={handleSelectedCategory}
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
+            data={blogs}
           />
         </Box>
         <Box className={styles.blog__rightContent}>
           <Grid container spacing={{ xs: 1, sm: 2 }}>
-            {resultFound > 0 ? (
-              filteredBlogs.map((item: BlogData) => {
-                const { title, author, category, featuredImage, createdAt } =
-                  item.attributes;
-                return (
-                  <Grid flexGrow={1} key={item.id} sm={12} md={6} xl={4} item>
-                    <Link href={`/blogs/${item.id}`}>
-                      <BlogCart
-                        title={title}
-                        admin={author}
-                        category={category}
-                        featuredImage={featuredImage}
-                        createdAt={createdAt}
-                      />
-                    </Link>
-                  </Grid>
-                );
-              })
-            ) : loading ? (
+            {filteredBlogs.map((item: BlogData) => {
+              const {
+                title,
+                users_permissions_user,
+                category,
+                comments,
+                featuredImage,
+                createdAt,
+              } = item.attributes;
+              const commentCount = comments.data.length;
+              return (
+                <Grid flexGrow={1} key={item.id} sm={12} md={6} xl={4} item>
+                  <Link href={`/blogs/${item.id}`}>
+                    <BlogCart
+                      title={title}
+                      admin={users_permissions_user}
+                      category={category}
+                      featuredImage={featuredImage}
+                      createdAt={createdAt}
+                      commentCount={commentCount}
+                    />
+                  </Link>
+                </Grid>
+              );
+            })}
+
+            {loading &&
               [1, 2, 3].map((item) => (
-                <Stack
-                  key={item}
-                  mr={2}
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                >
-                  <ProductSkeleton />
-                </Stack>
-              ))
-            ) : (
+                <Grid item key={item} sm={12} md={6} xl={4}>
+                  <BlogCartSkeleton />
+                </Grid>
+              ))}
+
+            {resultFound <= 0 && !loading && (
               <Typography className={styles.blog__nothing}>
                 No blogs are found!😊😊
               </Typography>
             )}
           </Grid>
+          <Box className={styles.blog__loadBtn}>
+            {blogsMeta &&
+            blogsMeta.pagination.total < blogsMeta.pagination.limit ? (
+              <Button disabled text="You Reachout the End >" />
+            ) : (
+              <Button
+                disabled={loading}
+                onClick={handleFetchBlogs}
+                text="Load More Blogs >"
+              />
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

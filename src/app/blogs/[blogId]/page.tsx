@@ -2,7 +2,8 @@ import BlogSkeleton from "@/components/molecules/skeleton/blogSkeleton/BlogSkele
 import SingleBlog from "@/components/pages/singleBlog/SingleBlog";
 import Box from "@mui/material/Box";
 import { Suspense } from "react";
-const BlogDetails = ({ params }: { params: { slug: string } }) => {
+const BlogDetails = ({ params }: { params: { blogId: string } }) => {
+  const integerBlogId = parseInt(params.blogId);
   return (
     <Box sx={{ width: "100%", height: "auto", backgroundColor: "#fff" }}>
       <Box
@@ -13,7 +14,7 @@ const BlogDetails = ({ params }: { params: { slug: string } }) => {
         }}
       >
         <Suspense fallback={<BlogSkeleton />}>
-          <SingleBlog slug={params.slug} />
+          <SingleBlog blogId={integerBlogId} />
         </Suspense>
       </Box>
     </Box>

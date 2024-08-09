@@ -1,5 +1,5 @@
 import BlogCart from "@/components/molecules/blogCart/BlogCart";
-import fetchBlogs from "@/utils/fetchBlog";
+import { fetchBlogs } from "@/utils/fetchBlog";
 import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -9,7 +9,7 @@ import styles from "./latestNews.module.scss";
 const LatestNews = async () => {
   // Fetch Only Three Blogs
   const blogData = await fetchBlogs(
-    `filters[isFeatured][$eq]=true&fields[0]=title&fields[1]=createdAt&fields[2]=slug&populate[users_permissions_user][populate]=image&populate[category]=true&populate[featuredImage]=true`
+    `filters[isFeatured][$eq]=true&fields[0]=title&fields[1]=createdAt&populate[users_permissions_user][populate]=image&populate[comments]=true&populate[category]=true&populate[featuredImage]=true`
   );
 
   return (
@@ -22,20 +22,20 @@ const LatestNews = async () => {
             category,
             featuredImage,
             createdAt,
+            comments,
             users_permissions_user,
-            slug,
           } = item.attributes;
-          const decodedSlug = decodeURIComponent(slug);
-          console.log("Slug", decodedSlug);
+          const commentCount = comments.data.length;
           return (
             <Grid flexGrow={1} key={item.id} sm={12} md={6} xl={4} item>
-              <Link href={`/blogs/${decodedSlug}`}>
+              <Link href={`/blogs/${item.id}`}>
                 <BlogCart
                   title={title}
                   admin={users_permissions_user}
                   category={category}
                   featuredImage={featuredImage}
                   createdAt={createdAt}
+                  commentCount={commentCount}
                 />
               </Link>
             </Grid>

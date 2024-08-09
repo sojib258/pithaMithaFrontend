@@ -2,6 +2,7 @@
 import RadioAtom from "@/components/atoms/radio/Radio";
 import CategoryItem from "@/components/molecules/skeleton/categories/CategoryItem";
 import { RootState } from "@/store/store";
+import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -12,16 +13,16 @@ interface CategoryFilterProps {
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
   find?: string; // blogs | products
+  data?: BlogData[];
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({
   selectedCategory,
   setSelectedCategory,
   find = "products",
+  data = [],
 }) => {
-  const { category, products, blogs } = useSelector(
-    (state: RootState) => state
-  );
+  const { category, products } = useSelector((state: RootState) => state);
 
   const {
     items: categories,
@@ -35,12 +36,6 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     errorMsg: productErrorMsg,
   } = products;
 
-  const {
-    items: allBlogs,
-    loading: blogsLoading,
-    errorMsg: blogErrorMsg,
-  } = blogs;
-
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
@@ -48,10 +43,10 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   // Find Blogs for Category
   const getBlogCountForCategory = (category: string) => {
     if (category === "All") {
-      return allBlogs.length;
+      return data.length;
     } else {
-      return allBlogs.filter(
-        (item) => item.attributes.category.name === category
+      return data.filter(
+        (item) => item.attributes.category.data.attributes.name === category
       ).length;
     }
   };

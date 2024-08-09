@@ -1,0 +1,29 @@
+.blog {
+  width: 100%;
+  height: auto;
+  &__img {
+    width: 100%;
+    height: 250px;
+    margin-bottom: 24px;
+  }
+  &__author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  &__text1,
+  &__text2,
+  &__text3 {
+    width: 100px;
+    height: 20px;
+  }
+  &__text4 {
+    width: 100%;
+    height: 20px;
+  }
+  &__text5 {
+    width: 60%;
+    height: 20px;
+  }
+}

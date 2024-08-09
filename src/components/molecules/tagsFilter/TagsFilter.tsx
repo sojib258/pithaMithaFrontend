@@ -1,9 +1,11 @@
+"use client";
 import TagAtom from "@/components/atoms/tagButton/TagButton";
-import { RootState } from "@/store/store";
+import { TagData } from "@/utils/typesDefine/tagSliceTypes";
 import { Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
-import React from "react";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 interface TagsFilterProps {
   selectedTags: string[];
@@ -14,9 +16,21 @@ const TagsFilter: React.FC<TagsFilterProps> = ({
   selectedTags,
   setSelectedTags,
 }) => {
-  const { items: tagItems, loading } = useSelector(
-    (state: RootState) => state.tags
-  );
+  const [tags, setTags] = useState<TagData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchingTags = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/tags`);
+        setLoading(false);
+        setTags(response.data.data);
+      } catch (error) {
+        console.error("Error from fetching tags");
+      }
+    };
+    fetchingTags();
+  }, []);
 
   const handleTagClick = (tag: string) => {
     if (selectedTags.includes(tag)) {
@@ -39,12 +53,12 @@ const TagsFilter: React.FC<TagsFilterProps> = ({
       display="flex"
       flexWrap="wrap"
     >
-      {tagItems.map((tag) => (
+      {tags.map((tag) => (
         <TagAtom
           key={tag.id}
-          label={tag.name}
-          selected={selectedTags.includes(tag.name)}
-          onClick={() => handleTagClick(tag.name)}
+          label={tag.attributes.name}
+          selected={selectedTags.includes(tag.attributes.name)}
+          onClick={() => handleTagClick(tag.attributes.name)}
           sx={{
             margin: "0px 5px 10px 0px",
             padding: "3px 8px!important",

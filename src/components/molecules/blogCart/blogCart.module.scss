@@ -93,7 +93,7 @@
   &__infoAdminIcon {
     font-size: 16px !important;
   }
-  &__cat {
+  &__infoText {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -110,39 +110,7 @@
     line-height: 150%; /* 21px */
     margin-right: 16px;
   }
-  &__admin {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    color: $gray-800;
-    font-size: $fs-xxs;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 21px */
-    margin-right: 16px;
-  }
-  &__comment {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    color: $gray-800;
-    font-size: $fs-xxs;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 21px */
-  }
+
   &__title {
     color: $hardPrimary;
     font-size: $fs-xs;
@@ -157,36 +125,12 @@
   }
 
   @include smScreen {
-    .newsCart__infoIcon {
-      font-size: 10px;
-    }
-    .newsCart__cat {
-      font-size: 8px;
-    }
-    .newsCart__admin {
-      font-size: 8px;
-    }
-    .newsCart__comment {
-      font-size: 8px;
-    }
     .newsCart__title {
       font-size: 14px;
     }
   }
 
   @include mdScreen {
-    .newsCart__infoIcon {
-      font-size: 14px;
-    }
-    .newsCart__cat {
-      font-size: 12px;
-    }
-    .newsCart__admin {
-      font-size: 12px;
-    }
-    .newsCart__comment {
-      font-size: 12px;
-    }
     .newsCart__title {
       font-size: 18px;
     }
@@ -195,18 +139,6 @@
     }
   }
   @include lgScreen {
-    .newsCart__infoIcon {
-      font-size: 14px;
-    }
-    .newsCart__cat {
-      font-size: 14px;
-    }
-    .newsCart__admin {
-      font-size: 14px;
-    }
-    .newsCart__comment {
-      font-size: 14px;
-    }
     .newsCart__title {
       font-size: 18px;
     }

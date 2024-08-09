@@ -1,12 +1,12 @@
 "use client";
 import InputText from "@/components/atoms/inputText/InputText";
 import CategoryFilter from "@/components/molecules/categoryFilter/CategoryFilter";
-import RecentBlogCart from "@/components/molecules/recentBlogCart/RecentBlogCart";
 import TagsFilter from "@/components/molecules/tagsFilter/TagsFilter";
-import { RootState } from "@/store/store";
-import { Typography } from "@mui/material";
+import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
 import Box from "@mui/material/Box";
-import { useSelector } from "react-redux";
+import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import styles from "./blogSidebar.module.scss";
 
 interface BlogSideBarProps {
@@ -14,6 +14,7 @@ interface BlogSideBarProps {
   selectedTags: string[];
   setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
   handleSelectedCategory: (value: string) => void;
+  data?: BlogData[];
 }
 
 const BlogSidebar: React.FC<BlogSideBarProps> = ({
@@ -21,15 +22,26 @@ const BlogSidebar: React.FC<BlogSideBarProps> = ({
   selectedTags,
   handleSelectedCategory,
   setSelectedTags,
+  data = [],
 }) => {
-  let products = useSelector((state: RootState) => state.products.items);
+  const [blogSearch, setBlogSearch] = useState<string>("");
+  const router = useRouter();
 
-  const news = [1, 2, 3];
+  const handleBlogSearch = (value: string) => {
+    setBlogSearch(value);
+    const queryParams = new URLSearchParams();
+    if (value) {
+      queryParams.set("blogsearch", value);
+    } else {
+      queryParams.delete("blogsearch");
+    }
+    router.push(`/blogs?${queryParams.toString()}`);
+  };
 
   return (
     <Box className={styles.blogSidebar}>
       <Box className={styles.blogSidebar__searchBar}>
-        <InputText icon placeholder="Search..." />
+        <InputText onChange={handleBlogSearch} icon placeholder="Search..." />
       </Box>
 
       {/* Categories Filter Area */}
@@ -41,6 +53,7 @@ const BlogSidebar: React.FC<BlogSideBarProps> = ({
           selectedCategory={selectedCategory}
           setSelectedCategory={handleSelectedCategory}
           find="blogs"
+          data={data}
         />
       </Box>
 
@@ -51,16 +64,6 @@ const BlogSidebar: React.FC<BlogSideBarProps> = ({
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
         />
-      </Box>
-
-      {/* Recent Blog Area */}
-      <Box className={styles.blogSidebar__recectBlogArea}>
-        <Typography className={styles.blogSidebar__recentText}>
-          Recently Added
-        </Typography>
-        {news.map((item, index) => (
-          <RecentBlogCart key={index} />
-        ))}
       </Box>
     </Box>
   );

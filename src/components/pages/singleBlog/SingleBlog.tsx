@@ -3,7 +3,8 @@ import RecentBlogCart from "@/components/molecules/recentBlogCart/RecentBlogCart
 import SocialIcon from "@/components/molecules/socialIcons/SocialIcon";
 import CommentCart from "@/components/organisms/commentCart/CommentCart";
 import CommentForm from "@/components/organisms/commentForm/CommentForm";
-import fetchBlogs from "@/utils/fetchBlog";
+import { fetchBlogs, fetchSingleBlog } from "@/utils/fetchBlog";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import Box from "@mui/material/Box";
@@ -17,18 +18,17 @@ import styles from "./singleBlog.module.scss";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 interface SingleBlogProps {
-  slug: string;
+  blogId: number;
 }
 
-const SingleBlog: React.FC<SingleBlogProps> = async ({ slug }) => {
-  const decodedSlug = decodeURIComponent(slug);
-
-  console.log("DecodedSlug", decodedSlug);
-
+import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
+import { CommentData } from "@/utils/typesDefine/commentSliceTypes";
+const SingleBlog: React.FC<SingleBlogProps> = async ({ blogId }) => {
   // // find single blog by using slug
-  const [blogData, latestBlogs] = await Promise.all([
-    await fetchBlogs(
-      `filters[slug][$eq]=${decodedSlug}&populate[category]=true&populate[featuredImage]=true&populate[users_permissions_user][populate]=image`
+  const [blogData, latestBlogs]: [BlogData, BlogData[]] = await Promise.all([
+    await fetchSingleBlog(
+      blogId,
+      `populate[category]=true&populate[featuredImage]=true&populate[users_permissions_user][populate]=image&populate[comments][populate][users_permissions_user][populate]=image`
     ),
     await fetchBlogs(
       `sort[0]=createdAt:desc&pagination[limit]=3&fields[0]=title&fields[1]=createdAt&populate[featuredImage]=*`
@@ -46,15 +46,14 @@ const SingleBlog: React.FC<SingleBlogProps> = async ({ slug }) => {
     createdAt,
   } = blogData.attributes;
 
-  console.log("UUUUDDDD", userDetails);
-
   const {
     firstName,
     lastName,
     image: authorImage,
   } = userDetails.data.attributes;
 
-  console.log("BlogData", blogData);
+  const comments = blogData.attributes.comments.data.reverse();
+  const commentCount = comments.length;
 
   return (
     <Box className={styles.blog}>
@@ -71,24 +70,23 @@ const SingleBlog: React.FC<SingleBlogProps> = async ({ slug }) => {
             <Box className={styles.blog__info}>
               <Typography className={styles.blog__infoText}>
                 <SellOutlinedIcon className={styles.blog__infoIcon} />
-                {"Category"}
+                {category.data.attributes.name}
               </Typography>
               <Typography className={styles.blog__infoText}>
                 <PermIdentityRoundedIcon
-                  className={`${styles.blog__infoIcon} ${styles.blog__infoIcon}`}
+                  className={`${styles.blog__infoIcon}`}
                 />
                 By
-                {" Sajib"}
+                {` ${firstName}`}
               </Typography>
-              {/* <Typography className={styles.newsCart__comment}>
-            <ModeCommentOutlinedIcon className={styles.newsCart__infoIcon} />
-            {commentCount} Comment
-          </Typography> */}
+              <Typography className={styles.blog__infoText}>
+                <ChatBubbleOutlineOutlinedIcon
+                  className={styles.blog__infoIcon}
+                />
+                {commentCount} Comment
+              </Typography>
             </Box>
-            <Typography className={styles.blog__title}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero
-              repudiandae quos quaerat quae itaque.
-            </Typography>
+            <Typography className={styles.blog__title}>{title}</Typography>
 
             {/* admin info content */}
             <Box className={styles.blog__adminInfo}>
@@ -107,15 +105,21 @@ const SingleBlog: React.FC<SingleBlogProps> = async ({ slug }) => {
             <Box className={styles.blog__details}>
               <BlocksRendererComponent content={description} />
             </Box>
+
             <Box className={styles.blog__commentSection}>
               <Typography className={styles.blog__commentLeaveText}>
                 Leave a Comment
               </Typography>
-              <CommentForm />
+              {/* Comment Form */}
+              <CommentForm blogId={blogData.id} />
+
               <Typography className={styles.blog__commentText}>
                 Comments
               </Typography>
-              <CommentCart />
+              {comments.map((commentData: CommentData) => (
+                <CommentCart key={commentData.id} commentData={commentData} />
+              ))}
+              {}
             </Box>
           </Box>
         </Grid>

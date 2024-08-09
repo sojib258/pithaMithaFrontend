@@ -5,6 +5,7 @@ import {
   Category,
   FeaturedImage,
 } from "@/utils/typesDefine/blogSliceTypes";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import Box from "@mui/material/Box";
@@ -17,6 +18,7 @@ interface newsCartProps {
   admin: Author;
   createdAt: string;
   featuredImage: FeaturedImage;
+  commentCount: number;
 }
 const NewsCart: React.FC<newsCartProps> = ({
   featuredImage,
@@ -24,6 +26,7 @@ const NewsCart: React.FC<newsCartProps> = ({
   admin,
   title,
   createdAt,
+  commentCount,
 }) => {
   const date = dateFormat(createdAt);
   const convertedDate = date.date.split("-");
@@ -49,21 +52,23 @@ const NewsCart: React.FC<newsCartProps> = ({
       </Box>
       <Box className={styles.newsCart__contents}>
         <Box className={styles.newsCart__newsInfo}>
-          <Typography className={styles.newsCart__cat}>
+          <Typography className={styles.newsCart__infoText}>
             <SellOutlinedIcon className={styles.newsCart__infoIcon} />
             {category.data.attributes.name}
           </Typography>
-          <Typography className={styles.newsCart__admin}>
+          <Typography className={styles.newsCart__infoText}>
             <PermIdentityRoundedIcon
               className={`${styles.newsCart__infoIcon} ${styles.newsCart__infoAdminIcon}`}
             />
             By
             {` ${admin.data.attributes.firstName}`}
           </Typography>
-          {/* <Typography className={styles.newsCart__comment}>
-            <ModeCommentOutlinedIcon className={styles.newsCart__infoIcon} />
+          <Typography className={styles.newsCart__infoText}>
+            <ChatBubbleOutlineOutlinedIcon
+              className={styles.newsCart__infoIcon}
+            />
             {commentCount} Comment
-          </Typography> */}
+          </Typography>
         </Box>
         <Typography title={title} className={styles.newsCart__title}>
           {/* {title.length > 40 ? title.slice(0, 40) + `...` : title} */}

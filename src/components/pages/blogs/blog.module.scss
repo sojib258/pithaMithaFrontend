@@ -21,6 +21,10 @@
     color: $gray-1000;
     margin: 25px;
   }
+  &__loadBtn {
+    text-align: center;
+    padding: 30px 0px;
+  }
 
   @include downSmScreen {
     &__contentWrapper {

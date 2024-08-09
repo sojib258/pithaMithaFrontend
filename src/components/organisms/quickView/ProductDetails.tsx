@@ -74,6 +74,8 @@ const QuickView: React.FC<quickViewProps> = ({
   const { auth, cart, wishlist, ratings } = useSelector(
     (state: RootState) => state
   );
+
+  console.log("Ra", ratings);
   const [imgSrc, setImgSrc] = useState(images[0].url);
   const { downSmScreen, downMdScreen, mediumToLarge } = useResponsive();
   const [quantity, setQuantity] = useState(1);
