@@ -11,6 +11,7 @@ interface FilterProps {
   selectValue: string | number;
   handleSelectValue: (value: string | number) => void;
   resultFound: number;
+  resetFilter?: () => void;
 }
 
 const Filter: React.FC<FilterProps> = ({
@@ -18,12 +19,13 @@ const Filter: React.FC<FilterProps> = ({
   selectValue,
   handleSelectValue,
   resultFound,
+  resetFilter,
 }) => {
   return (
     <Box className={styles.filter}>
       <Box className={styles.filter__BtnArea}>
-        <Button className={styles.filter__Btn}>
-          Filter
+        <Button onClick={resetFilter} className={styles.filter__Btn}>
+          Reset
           <Image
             className={styles.filter__BtnIcon}
             width={22}

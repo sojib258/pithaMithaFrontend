@@ -6,34 +6,48 @@ export interface FormatImage {
 
 export interface ImageData {
   id: number;
-  alternativeText: string;
-  width: number;
-  height: number;
-  url: string;
-  formats: Record<string, FormatImage>;
+  attributes: {
+    alternativeText: string;
+    width: number;
+    height: number;
+    url: string;
+    formats: {
+      small: FormatImage;
+      medium: FormatImage;
+      thumbnail: FormatImage;
+      large: FormatImage;
+    };
+  };
 }
 
 export interface Seller {
-  sellerId: number;
-  firstName: string;
-  lastName?: string;
-  sellerImg?: string;
-  responseTime?: number;
-  averageResponseTime?: number;
+  id: number;
+  attributes: {
+    firstName: string;
+    lastName?: string;
+    image?: ImageData;
+    responseTime?: number;
+    averageResponseTime?: number;
+  };
 }
 
 export interface Category {
   id: number;
-  name: string;
-  description: string | null;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
+  attributes: {
+    name: string;
+    description: string | null;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
 }
 
 export interface Tag {
   id: number;
-  name: string;
+  attributes: {
+    name: string;
+    createdAt: string;
+  };
 }
 
 export interface ProductAttributes {
@@ -48,15 +62,23 @@ export interface ProductAttributes {
   discountPrice?: number; // Make this optional
   isServiceAvailable: boolean;
   averageRating?: number;
-  category: Category;
-  tags: Tag[];
   weight: string;
   isPopular: boolean;
   isFeatured: boolean;
   isHotDeals: boolean;
-  images: ImageData[];
-  seller: Seller;
   location: string;
+  category: {
+    data: Category;
+  };
+  tags: {
+    data: Tag[];
+  };
+  images: {
+    data: ImageData[];
+  };
+  users_permissions_user: {
+    data: Seller;
+  };
 }
 
 export interface ProductData {
@@ -68,6 +90,11 @@ export interface ProductState {
   items: ProductData[];
   loading: boolean;
   errorMsg: string;
-  page: number;
-  hasMore: boolean;
+  meta?: {
+    pagination?: {
+      start?: number;
+      limit?: number;
+      total?: number;
+    };
+  };
 }

@@ -1,5 +1,4 @@
 "use client";
-import Button from "@/components/atoms/button/Button";
 import CategoryFilter from "@/components/molecules/categoryFilter/CategoryFilter";
 import FilterAccordion from "@/components/molecules/filterAccordion/FilterAccordion";
 import PriceFilter from "@/components/molecules/priceFilter/PriceRange";
@@ -8,68 +7,78 @@ import RatingFilter from "@/components/molecules/ratingFilter/RatingFilter";
 import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import TagsFilter from "@/components/molecules/tagsFilter/TagsFilter";
 import TopFilter from "@/components/organisms/shopTopFilter/Filter";
-import { fetchCategory } from "@/store/feature/category/CategorySlice";
-import {
-  fetchItems,
-  resetProducts,
-} from "@/store/feature/product/ProductSlice";
 import { fetchTags } from "@/store/feature/tags/TagsSlice";
-import { RootState } from "@/store/store";
+import { Meta } from "@/utils/typesDefine/blogSliceTypes";
+import { ProductData } from "@/utils/typesDefine/productSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./products.module.scss";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 const Shop = () => {
-  const dispatch = useDispatch();
-  const { ref, inView } = useInView({ threshold: 0.1 });
-  const {
-    items: products,
-    hasMore,
-    loading,
-    page,
-  } = useSelector((state: RootState) => state.products);
-
+  const [products, setProducts] = useState<ProductData[]>([]);
   const searchParams = useSearchParams();
   const categoryFromParams = searchParams.get("category") || "All";
+
+  // For Filters
   const [selectedCategory, setSelectedCategory] =
     useState<string>(categoryFromParams);
-
-  const [price, setPrice] = useState<number[]>([0, 20000]);
+  const [price, setPrice] = useState<number[]>([0, 2000]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectValue, setSelectValue] = useState<string | number>("Latest");
-
   const searchValues = searchParams.get("search")?.toLowerCase() || "";
   const selectedLocation = searchParams.get("location") || "";
+
+  // For Pagination
+  const [start, setStart] = useState(0);
+  const [limit] = useState(5);
+  const [productsMeta, setProductsMeta] = useState<Meta>();
+  const [loading, setLoading] = useState(true);
+
+  const { ref, inView } = useInView({ threshold: 0.1 });
+  const dispatch = useDispatch();
 
   // Handle SelectBox Value
   const handleSelectValue = (value: string | number) => {
     setSelectValue(value);
   };
 
-  // handle reset products
-  const handleReloadProduct = () => {
-    dispatch(resetProducts());
-    dispatch(fetchItems(1) as any);
-  };
-
   useEffect(() => {
-    dispatch(fetchCategory() as any);
     dispatch(fetchTags() as any);
   }, [dispatch]);
 
   useEffect(() => {
-    if (inView && hasMore && !loading) {
-      dispatch(fetchItems(page) as any);
-    }
-  }, [inView, hasMore, loading, dispatch, page]);
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${API_URL}/products?populate[tags]=true&populate[category]=true&populate[images]=treu&populate[users_permissions_user][populate]=image&pagination[start]=${start}&pagination[limit]=${limit}`
+        );
 
-  // Filter Products by location
+        setLoading(false);
+        setProductsMeta(response.data.meta);
+        setProducts((prev) => [...prev, ...response.data.data]);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error from fetching blogs");
+      }
+    };
+
+    fetchProducts();
+  }, [start, limit]);
+
+  useEffect(() => {
+    if (inView) {
+      setStart((prevStart) => prevStart + limit);
+    }
+  }, [inView]);
 
   const filterProducts = useCallback(() => {
     let filteredProducts = products;
@@ -77,7 +86,8 @@ const Shop = () => {
     // filter by categories
     if (selectedCategory !== "All") {
       filteredProducts = filteredProducts.filter(
-        (item) => item.attributes.category.name === selectedCategory
+        (item) =>
+          item.attributes.category.data.attributes.name === selectedCategory
       );
     }
 
@@ -113,7 +123,9 @@ const Shop = () => {
     // filter by tags
     if (selectedTags.length > 0) {
       filteredProducts = filteredProducts.filter((item) =>
-        item.attributes.tags.some((tag) => selectedTags.includes(tag.name))
+        item.attributes.tags.data.some((tag) =>
+          selectedTags.includes(tag.attributes.name)
+        )
       );
     }
 
@@ -173,8 +185,18 @@ const Shop = () => {
     selectValue,
   ]);
 
+  const handleResetFilter = () => {
+    setSelectedCategory("All");
+    setSelectValue("Latest");
+    setPrice([0, 2000]);
+    setSelectedRatings([]);
+    setSelectedTags([]);
+  };
+
   const filteredProducts = filterProducts();
   const resultFound = filteredProducts.length;
+
+  console.log("FilteredProducts", filteredProducts);
 
   return (
     <Box className={`shopPage ${styles.shop}`}>
@@ -191,6 +213,7 @@ const Shop = () => {
         ]}
         selectValue={selectValue}
         handleSelectValue={handleSelectValue}
+        resetFilter={handleResetFilter}
       />
       <Box className={styles.shop__contentWrapper}>
         <Box className={styles.shop__leftContent}>
@@ -199,6 +222,7 @@ const Shop = () => {
               <CategoryFilter
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
+                data={products}
               />
             </FilterAccordion>
           </Box>
@@ -236,16 +260,16 @@ const Shop = () => {
                   isServiceAvailable={item.attributes.isServiceAvailable}
                   price={item.attributes.price}
                   name={item.attributes.name}
-                  category={item.attributes.category.name}
+                  category={item.attributes.category.data.attributes.name}
                   description={item.attributes.description}
                   discountPrice={item.attributes.discountPrice}
-                  images={item.attributes.images}
+                  images={item.attributes.images.data}
                   averageRating={item.attributes.averageRating}
                   href={`/products/${item.id}`}
                   shortDescription={item.attributes.shortDescription}
                   weight={item.attributes.weight}
-                  seller={item.attributes.seller}
-                  tags={item.attributes.tags}
+                  seller={item.attributes.users_permissions_user.data}
+                  tags={item.attributes.tags.data}
                 />
               </Grid>
             ))}
@@ -256,15 +280,17 @@ const Shop = () => {
                 </Grid>
               ))}
           </Grid>
-          {!hasMore && (
-            <Box className={styles.shop__noMoreProducts}>
+
+          <Box>
+            {productsMeta &&
+            productsMeta.pagination.start > productsMeta.pagination.total ? (
               <Typography className={styles.shop__noMoreText}>
-                No More Products😊😊
+                No more products😊😊
               </Typography>
-              <Button onClick={handleReloadProduct} text={"Reload Products"} />
-            </Box>
-          )}
-          <Box ref={ref}></Box>
+            ) : (
+              <Box ref={ref}></Box>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

@@ -41,7 +41,6 @@ export const fetchCategory = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${API_URL}/categories?populate=image`);
-      console.log("C", response);
       return response.data.data;
     } catch (error) {
       return `Error fetching Categories ${error}`;

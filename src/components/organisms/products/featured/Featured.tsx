@@ -3,7 +3,8 @@ import Button from "@/components/atoms/button/Button";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
 import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import useResponsive from "@/hooks/useResponsive";
-import { fetchFeaturedProducts } from "@/utils/fetchProductsByAttributes";
+import { fetchProducts } from "@/utils/fetchProduct";
+import { ProductData } from "@/utils/typesDefine/productSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -11,7 +12,7 @@ import { useEffect, useState } from "react";
 import styles from "./featured.module.scss";
 
 const Featured = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<ProductData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const { downSmScreen } = useResponsive();
@@ -20,7 +21,9 @@ const Featured = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const products = await fetchFeaturedProducts();
+        const products = await fetchProducts(
+          `filters[isFeatured]=true&populate[category]=true&populate[tags]=true&populate[images]=true&populate[users_permissions_user][populate]=image`
+        );
         setProducts(products);
       } catch (error) {
         console.error("Error fetching popular products:", error);
@@ -91,16 +94,16 @@ const Featured = () => {
                   isServiceAvailable={item.attributes.isServiceAvailable}
                   price={item.attributes.price}
                   name={item.attributes.name}
-                  category={item.attributes.category.name}
+                  category={item.attributes.category.data.attributes.name}
                   description={item.attributes.description}
                   discountPrice={item.attributes.discountPrice}
-                  images={item.attributes.images}
+                  images={item.attributes.images.data}
                   averageRating={item.attributes.averageRating}
                   href={`/products/${item.id}`}
                   shortDescription={item.attributes.shortDescription}
                   weight={item.attributes.weight}
-                  seller={item.attributes.seller}
-                  tags={item.attributes.tags}
+                  seller={item.attributes.users_permissions_user.data}
+                  tags={item.attributes.tags.data}
                 />
               </Grid>
             ))}

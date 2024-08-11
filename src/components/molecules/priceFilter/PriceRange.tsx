@@ -22,7 +22,7 @@ const PriceRange: React.FC<PriceFilterProps> = ({ price, setPrice }) => {
           onChange={handleChange}
           valueLabelDisplay="auto"
           min={0} // Set the minimum value of the range
-          max={12000} // Set the maximum value of the range
+          max={2000} // Set the maximum value of the range
           step={1} // Set the step value for the slider
         />
       </Box>

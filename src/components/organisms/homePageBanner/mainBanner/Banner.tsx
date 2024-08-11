@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
+import BannerImage from "../../../../../public/img/bannerImg.png";
 import styles from "./banner.module.scss";
 
 const Banner = () => {
@@ -44,10 +45,11 @@ const Banner = () => {
             <Box className={styles.banner__rightContent}>
               <Image
                 className={styles.banner__Img}
-                width={800}
-                height={800}
-                src={"/img/bannerImg.png"}
+                width={4000}
+                height={4000}
+                src={BannerImage}
                 alt="Banner Image"
+                // placeholder="blur"
               />
             </Box>
           </Grid>

@@ -1,12 +1,14 @@
 "use client";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
 import useResponsive from "@/hooks/useResponsive";
+import { fetchProducts } from "@/store/feature/product/ProductSlice";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./relatedProduct.module.scss";
 
 interface RelatedProductProps {
@@ -16,18 +18,24 @@ interface RelatedProductProps {
 const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
   const { items } = useSelector((state: RootState) => state.products);
   const { smScreen } = useResponsive();
+  const dispatch = useDispatch();
 
   // Get the category of the current product based on its ID
   const currentProduct = items.find((item) => item.id === productId);
   const currentCategory = currentProduct
-    ? currentProduct.attributes.category.name
+    ? currentProduct.attributes.category.data.attributes.name
     : null;
 
   // Filter products to find related products with the same category
   const relatedProducts = items.filter(
     (item) =>
-      item.id !== productId && item.attributes.category.name === currentCategory
+      item.id !== productId &&
+      item.attributes.category.data.attributes.name === currentCategory
   );
+
+  useEffect(() => {
+    dispatch(fetchProducts(1) as any);
+  }, [dispatch]);
 
   const responsive = {
     xxl: {
@@ -69,21 +77,20 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
       <Carousel responsive={responsive} ssr={true}>
         {relatedProducts.map((item) => (
           <ProductCart
-            key={item.id}
             id={item.id}
             isServiceAvailable={item.attributes.isServiceAvailable}
             price={item.attributes.price}
             name={item.attributes.name}
-            category={item.attributes.category.name}
+            category={item.attributes.category.data.attributes.name}
             description={item.attributes.description}
             discountPrice={item.attributes.discountPrice}
-            images={item.attributes.images}
+            images={item.attributes.images.data}
             averageRating={item.attributes.averageRating}
             href={`/products/${item.id}`}
             shortDescription={item.attributes.shortDescription}
             weight={item.attributes.weight}
-            seller={item.attributes.seller}
-            tags={item.attributes.tags}
+            seller={item.attributes.users_permissions_user.data}
+            tags={item.attributes.tags.data}
           />
         ))}
       </Carousel>

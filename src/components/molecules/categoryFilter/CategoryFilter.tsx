@@ -1,19 +1,22 @@
 "use client";
 import RadioAtom from "@/components/atoms/radio/Radio";
 import CategoryItem from "@/components/molecules/skeleton/categories/CategoryItem";
+import { fetchCategory } from "@/store/feature/category/CategorySlice";
 import { RootState } from "@/store/store";
 import { BlogData } from "@/utils/typesDefine/blogSliceTypes";
+import { ProductData } from "@/utils/typesDefine/productSliceTypes";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./categoryFIlter.module.scss";
 
 interface CategoryFilterProps {
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
   find?: string; // blogs | products
-  data?: BlogData[];
+  data?: BlogData[] | ProductData[];
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({
@@ -23,6 +26,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   data = [],
 }) => {
   const { category, products } = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
 
   const {
     items: categories,
@@ -30,11 +34,9 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     errorMsg: categoryErrorMsg,
   } = category;
 
-  const {
-    items: allProducts,
-    loading: productsLoading,
-    errorMsg: productErrorMsg,
-  } = products;
+  useEffect(() => {
+    dispatch(fetchCategory() as any);
+  }, [dispatch]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -54,10 +56,10 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   // Find Products for Category
   const getProductCountForCategory = (category: string) => {
     if (category === "All") {
-      return allProducts.length;
+      return data.length;
     } else {
-      return allProducts.filter(
-        (item) => item.attributes.category.name === category
+      return data.filter(
+        (item) => item.attributes.category.data.attributes.name === category
       ).length;
     }
   };

@@ -4,7 +4,7 @@ import BlogCart from "@/components/molecules/blogCart/BlogCart";
 import BlogCartSkeleton from "@/components/molecules/skeleton/blogCartSkeleton/BlogCartSkeleton";
 import BlogSidebar from "@/components/organisms/blogSidebar/BlogSidebar";
 import TopFilter from "@/components/organisms/shopTopFilter/Filter";
-import { BlogData, BlogsMeta } from "@/utils/typesDefine/blogSliceTypes";
+import { BlogData, Meta } from "@/utils/typesDefine/blogSliceTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -12,12 +12,13 @@ import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./blog.module.scss";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
-  const [blogsMeta, setBlogsMeta] = useState<BlogsMeta>();
+  const [blogsMeta, setBlogsMeta] = useState<Meta>();
   const [start, setStart] = useState(0);
   const [limit, setLimit] = useState(3);
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ const BlogList = () => {
   const [selectedCategory, setSelectedCategory] =
     useState<string>(categoryFromParams);
   const [selectValue, setSelectValue] = useState<string | number>("Latest");
+  const dispatch = useDispatch();
 
   const selectBoxValue = ["Latest", "Random", "Oldest"];
 
@@ -49,8 +51,6 @@ const BlogList = () => {
 
     fetchingBlogs();
   }, [start, limit]);
-
-  console.log("Render");
 
   const handleSelectValue = (value: string | number) => {
     setSelectValue(value);

@@ -44,21 +44,11 @@
     justify-content: flex-start;
     align-items: center;
   }
-  &__noMoreProducts {
-    width: 100%;
-    height: auto;
-    padding: 25px 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: $gray-100;
-    margin: 25px 0px;
-  }
   &__noMoreText {
-    @extend %body-md-400;
+    @extend %body-lg-500;
     color: $gray-1000;
-    margin-bottom: 16px;
+    text-align: center;
+    padding: 32px 0px 20px 0px;
   }
 
   // For Responsive

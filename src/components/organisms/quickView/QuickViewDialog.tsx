@@ -1,25 +1,12 @@
 "use client";
-import { Seller } from "@/utils/typesDefine/productSliceTypes";
+import { ImageData, Seller, Tag } from "@/utils/typesDefine/productSliceTypes";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
-import Image from "next/image";
 import ProductDetails from "./ProductDetails";
 import styles from "./quickView.module.scss";
-interface Image {
-  id: number;
-  width: number;
-  height: number;
-  url: string;
-  alternativeText?: string | undefined;
-}
-
-interface Tags {
-  id: number;
-  name: string;
-}
 
 interface quickViewProps {
   id: number;
@@ -31,8 +18,8 @@ interface quickViewProps {
   shortDescription?: string;
   ratingValue?: number;
   category?: string;
-  tags?: Tags[];
-  images: Image[];
+  tags?: Tag[];
+  images: ImageData[];
   isServiceAvailable: boolean;
   seller: Seller;
   weight: string;

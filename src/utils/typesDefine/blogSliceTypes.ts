@@ -73,7 +73,7 @@ export interface BlogData {
   attributes: BlogAttributes;
 }
 
-export interface BlogsMeta {
+export interface Meta {
   pagination: {
     start: number;
     limit: number;

@@ -11,7 +11,7 @@ import { fetchRatingData } from "@/store/feature/rating/RatingSlice";
 import { toggleWishList } from "@/store/feature/wishlist/WishlistSlice";
 import { RootState } from "@/store/store";
 import { ProductData } from "@/utils/typesDefine/cartSliceTypes";
-import { Seller } from "@/utils/typesDefine/productSliceTypes";
+import { ImageData, Seller, Tag } from "@/utils/typesDefine/productSliceTypes";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { Stack } from "@mui/material";
@@ -25,19 +25,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import QuickViewSlider from "./QuickViewSlider";
 import styles from "./quickView.module.scss";
-interface Image {
-  id: number;
-  width: number;
-  height: number;
-  url: string;
-  alternativeText?: string | undefined;
-}
-interface Tags {
-  id: number;
-  name: string;
-}
+import QuickViewSlider from "./QuickViewSlider";
+
 interface quickViewProps {
   id: number;
   discountPrice?: number;
@@ -46,15 +36,13 @@ interface quickViewProps {
   shortDescription?: string;
   ratingValue?: number;
   category?: string;
-  tags?: Tags[];
-  images: Image[];
+  tags?: Tag[];
+  images: ImageData[];
   customStyle?: object;
   isServiceAvailable: boolean;
   weight: string;
   seller: Seller;
 }
-
-const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 const QuickView: React.FC<quickViewProps> = ({
   id: productId,
@@ -75,8 +63,7 @@ const QuickView: React.FC<quickViewProps> = ({
     (state: RootState) => state
   );
 
-  console.log("Ra", ratings);
-  const [imgSrc, setImgSrc] = useState(images[0].url);
+  const [imgSrc, setImgSrc] = useState(images[0].attributes.url);
   const { downSmScreen, downMdScreen, mediumToLarge } = useResponsive();
   const [quantity, setQuantity] = useState(1);
 
@@ -87,7 +74,6 @@ const QuickView: React.FC<quickViewProps> = ({
   const { isAuthenticated } = auth;
   const { items: cartItems } = cart;
   const { items: wishlistItems } = wishlist;
-  const { alternativeText } = images[0];
   const totalRatings = ratings.items.length;
 
   const discount = discountPrice
@@ -102,27 +88,44 @@ const QuickView: React.FC<quickViewProps> = ({
     setQuantity(value);
   };
 
+  console.log(
+    productTitle,
+    shortDescription,
+    ratingValue,
+    category,
+    (tags = []),
+    discountPrice,
+    images,
+    customStyle,
+    isServiceAvailable,
+    weight,
+    seller
+  );
+  const { firstName, lastName, averageResponseTime, responseTime, image } =
+    seller.attributes;
+  const { url, alternativeText } = images[0].attributes;
+
   const handleAddToCart = () => {
     if (isAuthenticated) {
       const toastId = toast.loading("Adding to Cart...");
       setLoading(true);
       dispatch(
         addToCart({
-          sellerId: seller.sellerId,
-          sellerImg: seller.sellerImg,
-          firstName: seller.firstName,
-          lastName: seller.lastName,
-          responseTime: seller.responseTime,
-          averageResponseTime: seller.averageResponseTime,
+          sellerId: seller.id,
+          sellerImg: image?.attributes.url,
+          firstName: firstName,
+          lastName: lastName,
+          responseTime: responseTime,
+          averageResponseTime: averageResponseTime,
           product: {
             productId: productId,
-            imgSrc: images[0].url,
+            imgSrc: url,
             isServiceAvailable: isServiceAvailable,
             price: price,
             discountPrice: discountPrice,
             quantity: quantity,
             title: productTitle,
-            altText: images[0].alternativeText,
+            altText: alternativeText,
           },
         })
       );
@@ -149,20 +152,20 @@ const QuickView: React.FC<quickViewProps> = ({
     if (isAuthenticated) {
       dispatch(
         toggleWishList({
-          sellerId: seller.sellerId,
-          sellerImg: seller.sellerImg,
-          firstName: seller.firstName,
-          lastName: seller.lastName,
-          averageResponseTime: seller.averageResponseTime,
+          sellerId: seller.id,
+          sellerImg: image?.attributes.url,
+          firstName: firstName,
+          lastName: lastName,
+          averageResponseTime: averageResponseTime,
           product: {
             productId: productId,
-            imgSrc: images[0].url,
+            imgSrc: url,
             isServiceAvailable: isServiceAvailable,
             price: price,
             discountPrice: discountPrice,
             quantity: 1,
             title: productTitle,
-            altText: images[0].alternativeText,
+            altText: alternativeText,
           },
         })
       );
@@ -199,11 +202,13 @@ const QuickView: React.FC<quickViewProps> = ({
                 key={item.id}
                 width={100}
                 height={100}
-                src={item.url}
+                src={item.attributes.url}
                 alt={
-                  item.alternativeText ? item.alternativeText : "product image"
+                  item.attributes.alternativeText
+                    ? item.attributes.alternativeText
+                    : "product image"
                 }
-                onClick={() => handleImgSrc(item.url)}
+                onClick={() => handleImgSrc(item.attributes.url)}
                 className={styles.quickView__images}
               />
             ))}
@@ -338,14 +343,14 @@ const QuickView: React.FC<quickViewProps> = ({
           {/* Product Tags Area */}
           {tags.length > 0 && (
             <Typography className={styles.quickView__tagsTitle}>
-              Category:{" "}
+              Tags:{" "}
               {tags?.map((tag) => (
                 <Typography
                   key={tag.id}
                   component={"span"}
                   className={styles.quickView__tagsValue}
                 >
-                  {tag.name}
+                  {tag.attributes.name}
                 </Typography>
               ))}
             </Typography>

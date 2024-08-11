@@ -72,7 +72,7 @@ const Login = () => {
       dispatch((await fetchUserData()) as any);
 
       setLoading(false);
-      router.push("/dashboard");
+      router.push("/sales-dashboard");
     } catch (error: any) {
       setLoading(false);
       if (error?.response?.data?.error?.status === 400) {
