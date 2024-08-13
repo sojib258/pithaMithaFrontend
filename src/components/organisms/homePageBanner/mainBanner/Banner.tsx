@@ -45,8 +45,8 @@ const Banner = () => {
             <Box className={styles.banner__rightContent}>
               <Image
                 className={styles.banner__Img}
-                width={4000}
-                height={4000}
+                width={800}
+                height={800}
                 src={BannerImage}
                 alt="Banner Image"
                 // placeholder="blur"

@@ -1,0 +1,58 @@
+@import "@/styles/style.scss";
+.skeleton {
+  width: 100%;
+  height: 60vh;
+  padding: 50px 0px 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  &__leftPart {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__textOne {
+    width: 40%;
+    height: 30px;
+  }
+  &__textTwo {
+    width: 100%;
+    height: 70px;
+  }
+  &__textThree {
+    width: 60%;
+    height: 70px;
+  }
+  &__textFour {
+    width: 45%;
+    height: 40px;
+  }
+  &__textFive {
+    width: 100%;
+    height: 30px;
+  }
+  &__textSix {
+    width: 180px;
+    height: 80px;
+    border-radius: 18px;
+  }
+
+  &__rightPart {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__img {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+  }
+  // For Responsive
+  @include smScreen {
+    &__wrapper {
+      width: 90%;
+    }
+  }
+}

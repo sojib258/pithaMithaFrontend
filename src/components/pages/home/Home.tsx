@@ -12,8 +12,6 @@ import Testimonial from "@/components/organisms/testimonial/Testimonial";
 import Box from "@mui/material/Box";
 import styles from "./home.module.scss";
 
-console.log("Console from home");
-
 const Home = () => {
   return (
     <>
