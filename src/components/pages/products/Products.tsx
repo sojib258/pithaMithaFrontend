@@ -78,7 +78,7 @@ const Shop = () => {
     if (inView) {
       setStart((prevStart) => prevStart + limit);
     }
-  }, [inView]);
+  }, [inView, limit]);
 
   const filterProducts = useCallback(() => {
     let filteredProducts = products;

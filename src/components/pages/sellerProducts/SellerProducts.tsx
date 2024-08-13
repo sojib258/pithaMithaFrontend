@@ -1,7 +1,8 @@
 "use client";
 import Button from "@/components/atoms/button/Button";
 import InputText from "@/components/atoms/inputText/InputText";
-import ProductCart from "@/components/molecules/productCart/ProductCart";
+import SellerProductCart from "@/components/molecules/sellerProductCart/SellerProductCart";
+import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import { fetchSellerProduct } from "@/store/feature/sellerProduct/SellerProductSlice";
 import { RootState } from "@/store/store";
 import { Grid, Typography } from "@mui/material";
@@ -13,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./sellerProducts.module.scss";
 
 const SellerProducts = () => {
-  const { items: sellerProducts } = useSelector(
+  const { items: sellerProducts, loading } = useSelector(
     (state: RootState) => state.sellerProduct
   );
   const dispatch = useDispatch();
@@ -45,12 +46,20 @@ const SellerProducts = () => {
         </Box>
       </Box>
       <Box className={styles.product__content}>
-        {sellerProducts.length > 0 ? (
+        {loading ? (
+          <Grid container spacing={2}>
+            {[1, 2, 3, 4, 5].map((item) => (
+              <Grid key={item} item xs={12} sm={6} md={3} lg={3}>
+                <ProductSkeleton />
+              </Grid>
+            ))}
+          </Grid>
+        ) : sellerProducts.length > 0 ? (
           <Grid container>
             {sellerProducts.map((item) => (
               <Grid key={item.id} item xs={12} sm={6} md={4} lg={3}>
                 <Box className={styles.product__cart}>
-                  <ProductCart
+                  <SellerProductCart
                     id={item.id}
                     name={item.name}
                     description={item.description}

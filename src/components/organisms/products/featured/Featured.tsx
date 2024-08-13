@@ -26,7 +26,7 @@ const Featured = () => {
         );
         setProducts(products);
       } catch (error) {
-        console.error("Error fetching popular products:", error);
+        console.error("Error fetching featured products:", error);
       } finally {
         setLoading(false);
       }
@@ -34,6 +34,8 @@ const Featured = () => {
 
     loadProducts();
   }, []);
+
+  console.log("FeaturedProducts", products);
 
   return (
     <Box className={styles.featured}>

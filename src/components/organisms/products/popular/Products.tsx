@@ -10,12 +10,10 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import styles from "./products.module.scss";
 const Products = () => {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const dispatch = useDispatch();
 
   const { downSmScreen } = useResponsive();
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -37,7 +35,7 @@ const Products = () => {
     loadProducts();
   }, []);
 
-  console.log("Productsssss", products);
+  console.log("Popular Products", products);
 
   return (
     <Box className={styles.products}>

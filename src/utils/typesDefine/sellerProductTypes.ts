@@ -45,14 +45,14 @@ export interface Product {
   stock: number;
   discountPrice?: number;
   isServiceAvailable: boolean;
-  category: CategoryData;
-  tags: TagData[];
   weight: string;
   completedDays: string;
   isPopular: boolean;
   isFeatured: boolean;
   isHotDeals: boolean;
   averageRating?: number;
+  category: CategoryData;
+  tags: TagData[];
   images: Image[];
   seller: Seller;
   location: string;

@@ -65,3 +65,21 @@
     }
   }
 }
+
+.skeleton {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  padding: 50px 0px 25px 0px;
+  &__wrapper {
+    width: 95%;
+    margin: 0px auto;
+  }
+
+  // For Responsive
+  @include smScreen {
+    &__wrapper {
+      width: 90%;
+    }
+  }
+}

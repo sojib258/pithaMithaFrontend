@@ -1,11 +1,9 @@
 "use client";
-// import { ImageData, Seller, Tag } from "@/utils/typesDefine/productSliceTypes";
 import Button from "@/components/atoms/button/Button";
-import QuickViewDialog from "@/components/organisms/quickView/QuickViewDialog";
 import useResponsive from "@/hooks/useResponsive";
 import { addToCart } from "@/store/feature/cart/CartSlice";
 import { RootState } from "@/store/store";
-import { ImageData, Seller, Tag } from "@/utils/typesDefine/productSliceTypes";
+import { Seller } from "@/utils/typesDefine/sellerProductTypes";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
@@ -15,12 +13,22 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Rating from "../../atoms/ratings/Rating";
-import ProductIcon from "../productCartIcons/ProductIcons";
-import styles from "./productCart.module.scss";
+import styles from "./sellerProductCart.module.scss";
 
+interface Image {
+  id: number;
+  width: number;
+  height: number;
+  url: string;
+  alternativeText?: string | undefined;
+}
+interface Tags {
+  id: number;
+  name: string;
+}
 interface productProps {
   id: number;
-  images: ImageData[];
+  images: Image[];
   name: string;
   price: number;
   discountPrice?: number;
@@ -28,7 +36,7 @@ interface productProps {
   description: string;
   shortDescription: string;
   category?: string;
-  tags: Tag[];
+  tags: Tags[];
   isServiceAvailable: boolean;
   href: string;
   weight: string;
@@ -37,7 +45,7 @@ interface productProps {
 
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
-const ProductCart: React.FC<productProps> = ({
+const SellerProductCart: React.FC<productProps> = ({
   id,
   images,
   price,
@@ -52,11 +60,12 @@ const ProductCart: React.FC<productProps> = ({
   seller,
   tags,
 }) => {
-  const { downSmScreen } = useResponsive();
-  const { auth } = useSelector((state: RootState) => state);
+  const { downMdScreen, downSmScreen } = useResponsive();
+  const { cart, auth } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleOpen = () => {
@@ -66,39 +75,37 @@ const ProductCart: React.FC<productProps> = ({
     setOpen(false);
   };
 
-  const { firstName, lastName, averageResponseTime, responseTime, image } =
-    seller.attributes;
-  const { url, alternativeText } = images[0].attributes;
-
   const isAuthenticated = auth.isAuthenticated;
 
   const handleAddToCart = () => {
     if (isAuthenticated) {
       const toastId = toast.loading("Adding to Cart...");
+      setLoading(true);
 
       dispatch(
         addToCart({
-          sellerId: seller.id,
-          sellerImg: image?.attributes.url,
-          firstName: firstName,
-          lastName: lastName,
-          responseTime: responseTime,
-          averageResponseTime: averageResponseTime,
+          sellerId: seller.sellerId,
+          sellerImg: seller.sellerImg,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          responseTime: seller.responseTime,
+          averageResponseTime: seller.averageResponseTime,
           product: {
             productId: id,
-            imgSrc: url,
+            imgSrc: images[0].url,
             isServiceAvailable: isServiceAvailable,
             price: price,
             discountPrice: discountPrice,
             quantity: 1,
             title: name,
-            altText: alternativeText,
+            altText: images[0].alternativeText,
           },
         })
       );
       toast.success("Added to Cart", {
         id: toastId,
       });
+      setLoading(false);
     } else {
       toast.error("You have to login first for adding to cart");
       router.push("/login");
@@ -113,27 +120,14 @@ const ProductCart: React.FC<productProps> = ({
           <Image
             width={210}
             height={210}
-            src={url}
-            alt={alternativeText ? alternativeText : "Product Image"}
+            src={images[0].url}
+            alt={
+              images[0].alternativeText
+                ? images[0].alternativeText
+                : "Product Image"
+            }
             className={styles.productCart__image}
-            // placeholder="blur"
           />
-          {/* For Hover Overlay */}
-          <Box className={styles.productCart__overlay}>
-            <Box className={styles.productCart__hoverIcon}>
-              <ProductIcon
-                id={id}
-                name={name}
-                imgSrc={url}
-                price={price}
-                discountPrice={discountPrice}
-                isServiceAvailable={isServiceAvailable}
-                altText={alternativeText}
-                handleOpen={handleOpen}
-                seller={seller}
-              />
-            </Box>
-          </Box>
         </Box>
 
         <Link className={styles.productCart__link} href={href}>
@@ -199,26 +193,8 @@ const ProductCart: React.FC<productProps> = ({
           />
         </Box>
       </Box>
-      {open && (
-        <QuickViewDialog
-          id={id}
-          shortDescription={shortDescription}
-          price={price}
-          discountPrice={discountPrice}
-          productTitle={name}
-          ratingValue={averageRating}
-          category={category}
-          tags={tags}
-          handleClose={handleClose}
-          open={open}
-          images={images}
-          isServiceAvailable={isServiceAvailable}
-          weight={weight}
-          seller={seller}
-        />
-      )}
     </>
   );
 };
 
-export default ProductCart;
+export default SellerProductCart;

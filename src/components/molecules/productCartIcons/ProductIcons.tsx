@@ -18,7 +18,7 @@ import styles from "./productIcons.module.scss";
 
 interface productIconProps {
   id: number;
-  title: string;
+  name: string;
   imgSrc: string;
   price: number;
   discountPrice?: number;
@@ -31,7 +31,7 @@ interface productIconProps {
 const ProductIcon: React.FC<productIconProps> = ({
   handleOpen,
   id,
-  title,
+  name,
   imgSrc,
   altText,
   price,
@@ -43,6 +43,8 @@ const ProductIcon: React.FC<productIconProps> = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { firstName, lastName, averageResponseTime, responseTime, image } =
+    seller.attributes;
   const isAuthenticated = auth.isAuthenticated;
 
   const handleAddToCart = () => {
@@ -51,12 +53,12 @@ const ProductIcon: React.FC<productIconProps> = ({
 
       dispatch(
         addToCart({
-          sellerId: seller.sellerId,
-          sellerImg: seller.sellerImg,
-          firstName: seller.firstName,
-          lastName: seller.lastName,
-          responseTime: seller.responseTime,
-          averageResponseTime: seller.averageResponseTime,
+          sellerId: seller.id,
+          sellerImg: image?.attributes.url,
+          firstName: firstName,
+          lastName: lastName,
+          responseTime: responseTime,
+          averageResponseTime: averageResponseTime,
           product: {
             productId: id,
             imgSrc: imgSrc,
@@ -64,7 +66,7 @@ const ProductIcon: React.FC<productIconProps> = ({
             price: price,
             discountPrice: discountPrice,
             quantity: 1,
-            title: title,
+            title: name,
             altText: altText,
           },
         })
@@ -90,12 +92,12 @@ const ProductIcon: React.FC<productIconProps> = ({
     if (isAuthenticated) {
       dispatch(
         toggleWishList({
-          sellerId: seller.sellerId,
-          sellerImg: seller.sellerImg,
-          firstName: seller.firstName,
-          lastName: seller.lastName,
-          responseTime: seller.responseTime,
-          averageResponseTime: seller.averageResponseTime,
+          sellerId: seller.id,
+          sellerImg: image?.attributes.url,
+          firstName: firstName,
+          lastName: lastName,
+          responseTime: responseTime,
+          averageResponseTime: averageResponseTime,
           product: {
             productId: id,
             imgSrc: imgSrc,
@@ -103,7 +105,7 @@ const ProductIcon: React.FC<productIconProps> = ({
             price: price,
             discountPrice: discountPrice,
             quantity: 1,
-            title: title,
+            title: name,
             altText: altText,
           },
         })

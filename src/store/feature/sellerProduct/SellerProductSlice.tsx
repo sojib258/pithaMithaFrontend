@@ -25,6 +25,8 @@ export const fetchSellerProduct = createAsyncThunk(
         { headers }
       );
 
+      console.log("Response.Data", response.data);
+
       return response?.data;
     } catch (error: any) {
       console.error("Error from sellerProductSlice", error);
@@ -32,6 +34,7 @@ export const fetchSellerProduct = createAsyncThunk(
     }
   }
 );
+
 const sellerProductSlice = createSlice({
   name: "sellerProduct",
   initialState: initialState,

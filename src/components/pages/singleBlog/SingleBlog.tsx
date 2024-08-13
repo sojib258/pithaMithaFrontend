@@ -35,8 +35,6 @@ const SingleBlog: React.FC<SingleBlogProps> = async ({ blogId }) => {
     ),
   ]);
 
-  console.log("BLogData", blogData.attributes.users_permissions_user);
-
   const {
     users_permissions_user: userDetails,
     category,

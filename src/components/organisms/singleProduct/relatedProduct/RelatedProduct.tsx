@@ -1,40 +1,46 @@
 "use client";
 import ProductCart from "@/components/molecules/productCart/ProductCart";
+import ProductSkeleton from "@/components/molecules/skeleton/product/ProductSkeleton";
 import useResponsive from "@/hooks/useResponsive";
-import { fetchProducts } from "@/store/feature/product/ProductSlice";
-import { RootState } from "@/store/store";
+import { ProductData } from "@/utils/typesDefine/productSliceTypes";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./relatedProduct.module.scss";
-
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 interface RelatedProductProps {
-  productId: string | number;
+  category: string;
 }
 
-const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
-  const { items } = useSelector((state: RootState) => state.products);
+const RelatedProduct: React.FC<RelatedProductProps> = ({ category }) => {
+  const [relatedProducts, setRelatedProducts] = useState<ProductData[]>([]);
+  const [loading, setLoading] = useState(false);
   const { smScreen } = useResponsive();
   const dispatch = useDispatch();
 
-  // Get the category of the current product based on its ID
-  const currentProduct = items.find((item) => item.id === productId);
-  const currentCategory = currentProduct
-    ? currentProduct.attributes.category.data.attributes.name
-    : null;
-
   // Filter products to find related products with the same category
-  const relatedProducts = items.filter(
-    (item) =>
-      item.id !== productId &&
-      item.attributes.category.data.attributes.name === currentCategory
-  );
 
   useEffect(() => {
-    dispatch(fetchProducts(1) as any);
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${API_URL}/products?populate[tags]=true&populate[category]=true&populate[images]=treu&populate[users_permissions_user][populate]=image`
+        );
+
+        setLoading(false);
+        setRelatedProducts(response.data.data);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error from fetching related products");
+      }
+    };
+
+    fetchProducts();
   }, [dispatch]);
 
   const responsive = {
@@ -77,6 +83,7 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
       <Carousel responsive={responsive} ssr={true}>
         {relatedProducts.map((item) => (
           <ProductCart
+            key={item.id}
             id={item.id}
             isServiceAvailable={item.attributes.isServiceAvailable}
             price={item.attributes.price}
@@ -93,6 +100,8 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ productId }) => {
             tags={item.attributes.tags.data}
           />
         ))}
+        {loading &&
+          [1, 2, 3, 4, 5].map((item) => <ProductSkeleton key={item} />)}
       </Carousel>
     </Box>
   );

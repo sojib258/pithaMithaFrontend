@@ -54,7 +54,8 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
     fetchData();
   }, [dispatch, productId]);
 
-  console.log("OutsideUseEffectProduct", product);
+  console.log("Loading", loading);
+  console.log("Product", product);
 
   return (
     <>
@@ -136,7 +137,9 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
           {/* Related Product Area*/}
           <Box component={"section"} className={styles.relatedProduct}>
             <Box className={styles.relatedProduct__wrapper}>
-              <RelatedProduct productId={productId} />
+              <RelatedProduct
+                category={product.attributes.category.data.attributes.name}
+              />
             </Box>
           </Box>
         </>
