@@ -54,7 +54,7 @@ const ProductIcon: React.FC<productIconProps> = ({
       dispatch(
         addToCart({
           sellerId: seller.id,
-          sellerImg: image?.attributes.url,
+          sellerImg: image?.attributes?.url,
           firstName: firstName,
           lastName: lastName,
           responseTime: responseTime,
@@ -93,7 +93,7 @@ const ProductIcon: React.FC<productIconProps> = ({
       dispatch(
         toggleWishList({
           sellerId: seller.id,
-          sellerImg: image?.attributes.url,
+          sellerImg: image?.attributes?.url,
           firstName: firstName,
           lastName: lastName,
           responseTime: responseTime,

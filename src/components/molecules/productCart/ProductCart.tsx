@@ -79,7 +79,7 @@ const ProductCart: React.FC<productProps> = ({
       dispatch(
         addToCart({
           sellerId: seller.id,
-          sellerImg: image?.attributes.url,
+          sellerImg: image?.attributes?.url,
           firstName: firstName,
           lastName: lastName,
           responseTime: responseTime,

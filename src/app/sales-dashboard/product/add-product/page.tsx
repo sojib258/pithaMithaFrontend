@@ -1,11 +1,12 @@
 "use client";
 import ProductModel from "@/components/organisms/productModel/ProductModel";
+import { fetchCategory } from "@/store/feature/category/CategorySlice";
 import { RootState } from "@/store/store";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
 type formData = {
@@ -31,6 +32,7 @@ const Page = () => {
   } = useSelector((state: RootState) => state);
   const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const { token, userId } = auth;
 
@@ -125,6 +127,10 @@ const Page = () => {
       console.error("Error uploading product", error);
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchCategory() as any);
+  }, [dispatch]);
 
   return (
     <Box>

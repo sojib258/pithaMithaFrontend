@@ -112,7 +112,7 @@ const QuickView: React.FC<quickViewProps> = ({
       dispatch(
         addToCart({
           sellerId: seller.id,
-          sellerImg: image?.attributes.url,
+          sellerImg: image?.attributes?.url,
           firstName: firstName,
           lastName: lastName,
           responseTime: responseTime,
@@ -153,7 +153,7 @@ const QuickView: React.FC<quickViewProps> = ({
       dispatch(
         toggleWishList({
           sellerId: seller.id,
-          sellerImg: image?.attributes.url,
+          sellerImg: image?.attributes?.url,
           firstName: firstName,
           lastName: lastName,
           averageResponseTime: averageResponseTime,
