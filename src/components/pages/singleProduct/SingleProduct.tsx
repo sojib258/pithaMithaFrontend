@@ -46,16 +46,12 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
         );
 
         setProduct(productData);
-        console.log("ProductsFromSinglePageInsideUseEffect", product);
       }
       setLoading(false);
     };
 
     fetchData();
   }, [dispatch, productId]);
-
-  console.log("Loading", loading);
-  console.log("Product", product);
 
   return (
     <>

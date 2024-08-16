@@ -60,7 +60,7 @@ export interface ProductAttributes {
   publishedAt: string;
   stock: number;
   discountPrice?: number; // Make this optional
-  isServiceAvailable: boolean;
+  serviceAvailable: boolean;
   averageRating?: number;
   weight: string;
   isPopular: boolean;

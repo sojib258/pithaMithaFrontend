@@ -12,23 +12,10 @@ import TagsSlice from "./feature/tags/TagsSlice";
 import UserReducer from "./feature/user/UserSlice";
 import WishlistReducer from "./feature/wishlist/WishlistSlice";
 
-// const rootReducer = combineReducers({
-//   products: ProductReducer,
-//   category: CategoryReducer,
-//   auth: AuthReducer,
-//   user: UserReducer,
-//   cart: CartReducer,
-//   wishlist: WishlistReducer,
-//   tags: TagsSlice,
-//   sellerProduct: SellerProductSlice,
-//   ratings: RatingSlice,
-//   orders: OrderSlice,
-// });
-
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart", "wishlist"],
+  whitelist: ["auth", "cart", "wishlist", "user"],
 };
 
 const rootReducer = combineReducers({

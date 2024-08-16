@@ -92,7 +92,7 @@ const HotDeals = () => {
               >
                 <ProductCart
                   id={item.id}
-                  isServiceAvailable={item.attributes.isServiceAvailable}
+                  isServiceAvailable={item.attributes.serviceAvailable}
                   price={item.attributes.price}
                   name={item.attributes.name}
                   category={item.attributes.category.data.attributes.name}

@@ -10,7 +10,6 @@ interface SliderProps {
 }
 
 const QuickViewSlider: React.FC<SliderProps> = ({ imageSrc, loading }) => {
-  console.log("ImageSource From GlassMagnifier", imageSrc);
   return (
     <>
       <Box className={styles.slider}>

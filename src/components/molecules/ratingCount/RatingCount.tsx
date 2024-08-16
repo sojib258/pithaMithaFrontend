@@ -25,8 +25,6 @@ const RatingCount: React.FC<RatingCountProps> = ({
   // Count the number of ratings for each star value
   const ratingCounts = [0, 0, 0, 0, 0]; // Indices 0 to 4 represent 1 to 5 stars
 
-  console.log("Rat", ratings);
-
   ratings.forEach((rating) => {
     if (rating.ratingValue >= 1 && rating.ratingValue <= 5) {
       ratingCounts[rating.ratingValue - 1]++;

@@ -88,19 +88,6 @@ const QuickView: React.FC<quickViewProps> = ({
     setQuantity(value);
   };
 
-  console.log(
-    productTitle,
-    shortDescription,
-    ratingValue,
-    category,
-    (tags = []),
-    discountPrice,
-    images,
-    customStyle,
-    isServiceAvailable,
-    weight,
-    seller
-  );
   const { firstName, lastName, averageResponseTime, responseTime, image } =
     seller.attributes;
   const { url, alternativeText } = images[0].attributes;

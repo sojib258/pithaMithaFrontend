@@ -196,8 +196,6 @@ const Shop = () => {
   const filteredProducts = filterProducts();
   const resultFound = filteredProducts.length;
 
-  console.log("FilteredProducts", filteredProducts);
-
   return (
     <Box className={`shopPage ${styles.shop}`}>
       <TopFilter
@@ -257,7 +255,7 @@ const Shop = () => {
               <Grid flexGrow={1} key={item.id} xs={6} md={4} lg={3} item>
                 <ProductCart
                   id={item.id}
-                  isServiceAvailable={item.attributes.isServiceAvailable}
+                  isServiceAvailable={item.attributes.serviceAvailable}
                   price={item.attributes.price}
                   name={item.attributes.name}
                   category={item.attributes.category.data.attributes.name}

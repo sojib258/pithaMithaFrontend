@@ -50,7 +50,6 @@ const CommentForm: React.FC<CommentFormProps> = ({ blogId }) => {
           });
 
           await postResponse;
-          console.log("ReRendering from inside function");
           setLoading(false);
           setCommentText("");
           router.refresh();
@@ -71,8 +70,6 @@ const CommentForm: React.FC<CommentFormProps> = ({ blogId }) => {
     event.preventDefault();
     setCommentText(event.target.value);
   };
-
-  console.log("ReRendering");
 
   return (
     <Box className={styles.comment}>

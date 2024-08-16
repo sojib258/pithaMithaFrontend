@@ -5,7 +5,6 @@ interface ProductDetailsProps {
   productDetails: ProductData;
 }
 const ProductDetails: React.FC<ProductDetailsProps> = ({ productDetails }) => {
-  console.log("ProductDetails", productDetails);
   const {
     price,
     name,
@@ -13,7 +12,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productDetails }) => {
     category,
     discountPrice,
     images,
-    isServiceAvailable,
+    serviceAvailable,
     shortDescription,
     weight,
     users_permissions_user,
@@ -32,7 +31,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productDetails }) => {
         discountPrice={discountPrice}
         images={images.data}
         customStyle={{ width: "100%", padding: "0px" }}
-        isServiceAvailable={isServiceAvailable}
+        isServiceAvailable={serviceAvailable}
         weight={weight}
         seller={users_permissions_user.data}
         ratingValue={averageRating}

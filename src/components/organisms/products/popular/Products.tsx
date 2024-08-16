@@ -35,8 +35,6 @@ const Products = () => {
     loadProducts();
   }, []);
 
-  console.log("Popular Products", products);
-
   return (
     <Box className={styles.products}>
       <Box className={styles.products__head}>
@@ -95,7 +93,7 @@ const Products = () => {
               >
                 <ProductCart
                   id={item.id}
-                  isServiceAvailable={item.attributes.isServiceAvailable}
+                  isServiceAvailable={item.attributes.serviceAvailable}
                   price={item.attributes.price}
                   name={item.attributes.name}
                   category={item.attributes.category.data.attributes.name}

@@ -35,8 +35,6 @@ const Featured = () => {
     loadProducts();
   }, []);
 
-  console.log("FeaturedProducts", products);
-
   return (
     <Box className={styles.featured}>
       <Box className={styles.featured__head}>
@@ -93,7 +91,7 @@ const Featured = () => {
               >
                 <ProductCart
                   id={item.id}
-                  isServiceAvailable={item.attributes.isServiceAvailable}
+                  isServiceAvailable={item.attributes.serviceAvailable}
                   price={item.attributes.price}
                   name={item.attributes.name}
                   category={item.attributes.category.data.attributes.name}

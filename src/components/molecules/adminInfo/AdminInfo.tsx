@@ -22,7 +22,6 @@ const AdminInfo: React.FC<AdminInfoProps> = ({
   date,
   minRead,
 }) => {
-  console.log("ImgSrc", src);
   const { date: formatedDate } = dateFormat(date);
   return (
     <Box className={styles.admin}>

@@ -41,8 +41,6 @@ const Feedback: React.FC<FeedbackProps> = ({
 }) => {
   const timesAgo = timeAgo(publishedAt);
 
-  console.log("Images", images);
-
   return (
     <>
       <Box className={styles.feedback}>
