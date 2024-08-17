@@ -8,9 +8,7 @@ const HomePageSkeleton = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Box className={styles.skeleton__leftPart}>
-              <Skeleton className={styles.skeleton__textOne}>
-                Please Wait...
-              </Skeleton>
+              <Skeleton className={styles.skeleton__textOne} />
               <Skeleton className={styles.skeleton__textTwo} />
               <Skeleton className={styles.skeleton__textThree} />
               <Skeleton className={styles.skeleton__textFour} />

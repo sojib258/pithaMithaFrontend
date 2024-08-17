@@ -1,13 +1,21 @@
 import Button from "@/components/atoms/button/Button";
+import { bannerData } from "@/utils/typesDefine/bannerDataTypes";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import BannerImage from "../../../../../public/img/bannerImg.png";
 import styles from "./banner.module.scss";
+const API_URL = process.env.NEXT_PUBLIC_API_KEY;
 
-const Banner = () => {
+const Banner = async () => {
+  const bannerData = await axios.get(`${API_URL}/banners/1?populate=image`);
+
+  const mainData: bannerData = bannerData.data.data;
+  const { heading, image, para, sellText, sellDiscount, welcome } =
+    mainData.attributes;
+
   return (
     <>
       <Box className={styles.banner}>
@@ -15,24 +23,23 @@ const Banner = () => {
           <Grid className={styles.banner__leftContentGrid} item xs={12} sm={7}>
             <Box className={styles.banner__leftContent}>
               <Typography className={styles.banner__welcome}>
-                Welcome to pitha-mitha
+                {welcome}
               </Typography>
               <Typography variant="h2" className={styles.banner__title}>
-                Unveiling Culinary Wonders in Every Bite
+                {heading}
               </Typography>
               <Typography className={styles.banner__sale}>
-                Sale up to{" "}
+                {`${sellText} `}
                 <Typography
                   component={"span"}
                   className={styles.banner__saleDiscount}
                 >
-                  30% OFF
+                  {sellDiscount}
                 </Typography>
               </Typography>
 
               <Typography className={styles.banner__description}>
-                Delivered fresh to your doorstep, so you can savor the magic
-                without leaving your home. we deliver, you enjoy!
+                {para}
               </Typography>
               <Box>
                 <Link href={"/products"}>
@@ -47,9 +54,8 @@ const Banner = () => {
                 className={styles.banner__Img}
                 width={800}
                 height={800}
-                src={BannerImage}
+                src={image.data.attributes.url}
                 alt="Banner Image"
-                // placeholder="blur"
               />
             </Box>
           </Grid>
