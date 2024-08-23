@@ -72,7 +72,6 @@ const Login = () => {
       dispatch((await fetchUserData()) as any);
 
       setLoading(false);
-      router.push("/sales-dashboard");
     } catch (error: any) {
       setLoading(false);
       if (error?.response?.data?.error?.status === 400) {
@@ -85,7 +84,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      return router.push("/dashboard");
+      return router.push("/sales-dashboard");
     }
   });
 
