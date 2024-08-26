@@ -14,7 +14,9 @@ PithaMitha is a multivendor e-commerce platform for buying and selling tradition
 - [Contact](#contact)
 
 ## liveDemo
-- https://pitha-mitha-frontend.vercel.app/
+- [Live Demo](https://pitha-mitha-frontend.vercel.app/)
+
+> **Note:** The first time you load the demo, it may take some time because I am using the Render free version for backend hosting. In the free version, the server is disabled after a period of inactivity, so it may take up to a minute to load the first time. Please be patient!
 
 ## Features
 - User registration and authentication
