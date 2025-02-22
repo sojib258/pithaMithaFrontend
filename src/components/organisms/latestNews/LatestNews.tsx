@@ -12,8 +12,6 @@ const LatestNews = async () => {
     `filters[isFeatured][$eq]=true&fields[0]=title&fields[1]=createdAt&populate[users_permissions_user][populate]=image&populate[comments]=true&populate[category]=true&populate[featuredImage]=true`
   );
 
-  console.log("BLogData", blogData);
-
   return (
     <Box className={styles.news}>
       <Typography className={styles.news__headText}>Latest News</Typography>

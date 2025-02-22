@@ -89,7 +89,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ productId }) => {
                 (ratings.items.length >= 1 ? (
                   <Grid container>
                     <Grid item xs={12} md={8}>
-                      {ratingItems.map((rating) => (
+                      {ratingItems.map((rating: any) => (
                         <Box
                           key={rating.ratingId}
                           className={styles.productDetails__cusRating}
