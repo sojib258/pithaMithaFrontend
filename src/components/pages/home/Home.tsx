@@ -1,3 +1,4 @@
+"use client";
 import Categories from "@/components/organisms/categories/Categories";
 import CompanyLogo from "@/components/organisms/company/Company";
 import FeaturedService from "@/components/organisms/featuredService/FeaturedService";
