@@ -15,6 +15,9 @@
     align-items: center;
     z-index: 1000;
   }
+  &__carouselItem {
+    padding-right: 10px;
+  }
   // For Responsive
   @include smScreen {
     &__headText {

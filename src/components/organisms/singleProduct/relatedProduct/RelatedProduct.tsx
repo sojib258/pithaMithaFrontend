@@ -80,7 +80,11 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({ category }) => {
       <Typography className={styles.relatedProduct__headText}>
         Related Product
       </Typography>
-      <Carousel responsive={responsive} ssr={true}>
+      <Carousel
+        itemClass={styles?.relatedProduct__carouselItem}
+        responsive={responsive}
+        ssr={true}
+      >
         {relatedProducts.map((item) => (
           <ProductCart
             key={item.id}
